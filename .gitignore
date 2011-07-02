@@ -1,7 +1,11 @@
-[Oo]bj/
-[Bb]in/
+*resharper.user
+# Visual Studio
+[Dd]ebug/
+[Rr]elease/
+*.sln.cache
 *.suo
-*.user
-/TestResults
-*.vspscc
-*.vssscc
+*.csproj.user
+
+# Resharper
+*[Rr]e[Ss]harper.user
+_ReSharper.*/
