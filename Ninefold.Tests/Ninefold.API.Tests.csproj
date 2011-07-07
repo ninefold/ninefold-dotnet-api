@@ -48,6 +48,7 @@
     </CodeAnalysisDependentAssemblyPaths>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AssertHelpers.cs" />
     <Compile Include="CommandTests\StartVirtualMachineTests.cs" />
     <Compile Include="Fakes\ResponseStub.cs" />
     <Compile Include="Fakes\ComputeServiceStub.cs" />
