@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Compute\ComputeService.cs" />
     <Compile Include="Core\INinefoldService.cs" />
     <Compile Include="Compute\Commands\StartVirtualMachine.cs" />
     <Compile Include="Compute\Messages\MachineResponse.cs" />

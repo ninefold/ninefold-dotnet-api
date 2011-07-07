@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Linq;
-using System.Security.Policy;
-using Ninefold.API.Core;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Ninefold.API.Compute.Commands;
 using Ninefold.API.Tests.Fakes;
@@ -17,8 +14,8 @@ namespace Ninefold.API.Tests.CommandTests
         public void StartVirtualMachine_Execute_ShouldSendAPostRequestWhenExecuted()
         {
             //Arrange
-            var stubService = new ComputeServiceStub { Response = new ResponseStub() };
-            var command = new StartVirtualMachine(stubService, new RestClient("http://tempuri.org/"), new byte[] { 0x0, 0x1 }) { ApiKey = "1", MachineId = "1" };
+            var stubService = new ComputeServiceStub();
+            var command = new StartVirtualMachine(stubService, new byte[] { 0x0, 0x1 }) { ApiKey = "1", MachineId = "1" };
             
             //Act
             command.Execute();
@@ -31,8 +28,8 @@ namespace Ninefold.API.Tests.CommandTests
         public void StartVirtualMachine_Execute_ShouldSetCommandQueryStringParamToStartVirtualMachine()
         {
             //Arrange
-            var stubService = new ComputeServiceStub { Response = new ResponseStub() };
-            var command = new StartVirtualMachine(stubService, new RestClient("http://tempuri.org/"), new byte[] { 0x0, 0x1 }) { ApiKey = "1", MachineId = "1" };
+            var stubService = new ComputeServiceStub();
+            var command = new StartVirtualMachine(stubService, new byte[] { 0x0, 0x1 }) { ApiKey = "1", MachineId = "1" };
 
             //Act
             command.Execute();
@@ -45,8 +42,8 @@ namespace Ninefold.API.Tests.CommandTests
         public void StartVirtualMachine_Execute_ShouldThrowAnArgumentNullExceptionForNoApiKey()
         {
             //Arrange
-            var stubService = new ComputeServiceStub { Response = new ResponseStub() };
-            var command = new StartVirtualMachine(stubService, new RestClient("http://tempuri.org/"), new byte[] {0x0, 0x1}) { MachineId = "1"};
+            var stubService = new ComputeServiceStub();
+            var command = new StartVirtualMachine(stubService, new byte[] {0x0, 0x1}) { MachineId = "1"};
 
             //Act
             try
@@ -64,8 +61,8 @@ namespace Ninefold.API.Tests.CommandTests
         public void StartVirtualMachine_Execute_ShouldThrowAnArgumentNullExceptionForNoMachineId()
         {
             //Arrange
-            var stubService = new ComputeServiceStub { Response = new ResponseStub() };
-            var command = new StartVirtualMachine(stubService, new RestClient("http://tempuri.org/"), new byte[] { 0x0, 0x1 }) { ApiKey = "1" };
+            var stubService = new ComputeServiceStub();
+            var command = new StartVirtualMachine(stubService, new byte[] { 0x0, 0x1 }) { ApiKey = "1" };
 
             //Act
             try
@@ -84,8 +81,8 @@ namespace Ninefold.API.Tests.CommandTests
         public void StartVirtualMachine_Execute_ShouldContainMachineIdQueryStringParamWithValue()
         {
             //Arrange
-            var stubService = new ComputeServiceStub { Response = new ResponseStub() };
-            var command = new StartVirtualMachine(stubService, new RestClient("http://tempuri.org/"), new byte[] { 0x0, 0x1 }) { ApiKey = "1", MachineId = "1" };
+            var stubService = new ComputeServiceStub();
+            var command = new StartVirtualMachine(stubService, new byte[] { 0x0, 0x1 }) { ApiKey = "1", MachineId = "1" };
             
             //Act
             command.Execute();
@@ -99,8 +96,8 @@ namespace Ninefold.API.Tests.CommandTests
         public void StartVirtualMachine_Execute_ParametersShouldIncludeAnApiKey()
         {
             //Arrange
-            var stubService = new ComputeServiceStub { Response = new ResponseStub() };
-            var command = new StartVirtualMachine(stubService, new RestClient("http://tempuri.org/"), new byte[] { 0x0, 0x1 }) { ApiKey = "123", MachineId = "1" };
+            var stubService = new ComputeServiceStub();
+            var command = new StartVirtualMachine(stubService, new byte[] { 0x0, 0x1 }) { ApiKey = "123", MachineId = "1" };
             
             //Act
             command.Execute();
@@ -114,8 +111,8 @@ namespace Ninefold.API.Tests.CommandTests
         public void StartVirtualMachine_Execute_RequestParametersShouldBeURLEncoded()
         {
             //Arrange
-            var stubService = new ComputeServiceStub { Response = new ResponseStub() };
-            var command = new StartVirtualMachine(stubService, new RestClient("http://tempuri.org/"), new byte[] { 0x0, 0x1 }) { ApiKey = "123&", MachineId = "1" };
+            var stubService = new ComputeServiceStub();
+            var command = new StartVirtualMachine(stubService, new byte[] { 0x0, 0x1 }) { ApiKey = "123&", MachineId = "1" };
 
             //Act
             command.Execute();
@@ -131,8 +128,8 @@ namespace Ninefold.API.Tests.CommandTests
         public void StartVirtualMachine_Execute_RequestParametersShouldNotIncludePlus()
         {
             //Arrange
-            var stubService = new ComputeServiceStub { Response = new ResponseStub() };
-            var command = new StartVirtualMachine(stubService, new RestClient("http://tempuri.org/"), new byte[] { 0x0, 0x1 }) { ApiKey = "123+455", MachineId = "+1+" };
+            var stubService = new ComputeServiceStub();
+            var command = new StartVirtualMachine(stubService, new byte[] { 0x0, 0x1 }) { ApiKey = "123+455", MachineId = "+1+" };
 
             //Act
             command.Execute();
@@ -150,8 +147,8 @@ namespace Ninefold.API.Tests.CommandTests
         public void StartVirtualMachine_Execute_RequestParametersShouldBeAlphaOrdered()
         {
             //Arrange
-            var stubService = new ComputeServiceStub { Response = new ResponseStub() };
-            var command = new StartVirtualMachine(stubService, new RestClient("http://tempuri.org/"), new byte[] { 0x0, 0x1 }) { ApiKey = "123+455", MachineId = "+1+" };
+            var stubService = new ComputeServiceStub();
+            var command = new StartVirtualMachine(stubService, new byte[] { 0x0, 0x1 }) { ApiKey = "123+455", MachineId = "+1+" };
 
             //Act
             command.Execute();

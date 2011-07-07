@@ -11,7 +11,6 @@ namespace Ninefold.API.Compute.Commands
     public class StartVirtualMachine
     {
         readonly INinefoldService _computeService;
-        readonly RestClient _client;
         readonly byte[] _secret;
 
         public string ApiKey { get; set; }
@@ -19,16 +18,14 @@ namespace Ninefold.API.Compute.Commands
         
         public StartVirtualMachine()
         {
-            _computeService = new ComputeService();
-            _client = new RestClient("http://tempuri.org");
+            _computeService = new ComputeService("http://tempuri.org/");
             _secret = new byte[] {0x0, 0x1};
         }
 
-        public StartVirtualMachine(INinefoldService ninefoldService, RestClient client, byte[] secret)
+        public StartVirtualMachine(INinefoldService ninefoldService, byte[] secret)
         {
             _computeService = ninefoldService;
             _secret = secret;
-            _client = client;
         }
 
         public MachineResponse Execute()
@@ -37,7 +34,6 @@ namespace Ninefold.API.Compute.Commands
             if (string.IsNullOrWhiteSpace(MachineId)) throw new ArgumentNullException("MachineId");
 
             var request = BuildRequest();
-
             SignRequest(request);
 
             return _computeService.ExecuteRequest<MachineResponse>(request);
@@ -45,7 +41,7 @@ namespace Ninefold.API.Compute.Commands
 
         private void SignRequest(RestRequest request)
         {
-            var uri = _client.BuildUri(request);
+            var uri = _computeService.Client.BuildUri(request);
             var hashingAlg = new System.Security.Cryptography.HMACSHA1(_secret);
             var signature = hashingAlg.ComputeHash(Encoding.UTF8.GetBytes(uri.ToString()));
             request.AddParameter("signature", signature);
@@ -67,15 +63,6 @@ namespace Ninefold.API.Compute.Commands
             }
 
             return request;
-        }
-    }
-
-    public class ComputeService : INinefoldService
-    {
-        public TReturnType ExecuteRequest<TReturnType>(RestRequest request)
-            where TReturnType : class, IResponse
-        {
-            return default(TReturnType);
         }
     }
 }

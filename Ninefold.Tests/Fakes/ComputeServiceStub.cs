@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Net;
 using Ninefold.API.Compute.Messages;
 using Ninefold.API.Core;
 using RestSharp;
@@ -11,18 +13,160 @@ namespace Ninefold.API.Tests.Fakes
 
         public RestClient Client { get; set; }
 
-        public IResponse Response { get; set; }
-
         public Uri RequestedUri { get; set; }
 
         public TReturnType ExecuteRequest<TReturnType>(RestRequest request)
-            where TReturnType : class, IResponse
+            where TReturnType : class, new()
         {
+            Client.HttpFactory = new StubHttpFactory();
             Request = request;
             RequestedUri = Client.BuildUri(request);
-            return Response as TReturnType;
+            return default(TReturnType);
+        }
+    }
+
+    public class StubHttpFactory : IHttpFactory
+    {
+        public IHttp Create()
+        {
+            return new StubHttp();
+        }
+    }
+
+    public class StubHttp : IHttp
+    {
+        public void DeleteAsync(Action<HttpResponse> action)
+        {
+            throw new NotImplementedException();
         }
 
-        
+        public void GetAsync(Action<HttpResponse> action)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void HeadAsync(Action<HttpResponse> action)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void OptionsAsync(Action<HttpResponse> action)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void PostAsync(Action<HttpResponse> action)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void PutAsync(Action<HttpResponse> action)
+        {
+            throw new NotImplementedException();
+        }
+
+        public HttpResponse Delete()
+        {
+            throw new NotImplementedException();
+        }
+
+        public HttpResponse Get()
+        {
+            throw new NotImplementedException();
+        }
+
+        public HttpResponse Head()
+        {
+            throw new NotImplementedException();
+        }
+
+        public HttpResponse Options()
+        {
+            throw new NotImplementedException();
+        }
+
+        public HttpResponse Post()
+        {
+            throw new NotImplementedException();
+        }
+
+        public HttpResponse Put()
+        {
+            throw new NotImplementedException();
+        }
+
+        public ICredentials Credentials
+        {
+            get { throw new NotImplementedException(); }
+            set { throw new NotImplementedException(); }
+        }
+
+        public string UserAgent
+        {
+            get { throw new NotImplementedException(); }
+            set { throw new NotImplementedException(); }
+        }
+
+        public int Timeout
+        {
+            get { throw new NotImplementedException(); }
+            set { throw new NotImplementedException(); }
+        }
+
+        public bool FollowRedirects
+        {
+            get { throw new NotImplementedException(); }
+            set { throw new NotImplementedException(); }
+        }
+
+        public int? MaxRedirects
+        {
+            get { throw new NotImplementedException(); }
+            set { throw new NotImplementedException(); }
+        }
+
+        public IList<HttpHeader> Headers
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public IList<HttpParameter> Parameters
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public IList<HttpFile> Files
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public IList<HttpCookie> Cookies
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public string RequestBody
+        {
+            get { throw new NotImplementedException(); }
+            set { throw new NotImplementedException(); }
+        }
+
+        public string RequestContentType
+        {
+            get { throw new NotImplementedException(); }
+            set { throw new NotImplementedException(); }
+        }
+
+        public Uri Url
+        {
+            get { throw new NotImplementedException(); }
+            set { throw new NotImplementedException(); }
+        }
+
+        public IWebProxy Proxy
+        {
+            get { throw new NotImplementedException(); }
+            set { throw new NotImplementedException(); }
+        }
     }
 }

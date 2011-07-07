@@ -2,7 +2,7 @@
 
 namespace Ninefold.API.Tests.Fakes
 {
-    public class ResponseStub : IResponse
+    public class ResponseStub 
     {
     }
 }
