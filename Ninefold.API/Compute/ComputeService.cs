@@ -7,13 +7,13 @@ namespace Ninefold.API.Compute
 {
     public class ComputeService : INinefoldService
     {
+        public RestClient Client { get; private set; }
+
         public ComputeService(string rootUrl)
         {
             Client = new RestClient(rootUrl);
         }
-
-        public RestClient Client { get; private set; }
-
+        
         public TReturnType ExecuteRequest<TReturnType>(RestRequest request)
             where TReturnType : class, new()
         {
