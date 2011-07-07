@@ -38,5 +38,20 @@ namespace Ninefold.API.Tests.CommandTests
             Assert.IsTrue(stubService.Request.Parameters.Exists(p => p.Name == "command" && p.Type == ParameterType.UrlSegment), "No command URL parameter is associated with the request");
             Assert.AreEqual("startvirtualmachine", stubService.Request.Parameters.Find(p => p.Name == "command").Value);
         }
+
+        [TestMethod]
+        public void StartVirtualMachine_Execute_ParametersShouldIncludeAnApiKey()
+        {
+            //Arrange
+            var stubService = new ComputeServiceStub { Response = new ResponseStub() };
+            var command = new StartVirtualMachine(stubService) { ApiKey = "123" };
+            
+            //Act
+            command.Execute();
+
+            //Assert
+            Assert.IsTrue(stubService.Request.Parameters.Exists(p => p.Name == "apikey" && p.Type == ParameterType.UrlSegment), "No apikey parameter is associated with the request");
+            Assert.IsTrue(stubService.Request.Parameters.Find(p => p.Name == "apikey").Value.ToString() == "123");
+        }
     }
 }

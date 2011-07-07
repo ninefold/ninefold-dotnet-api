@@ -32,7 +32,10 @@ namespace Ninefold.API.Compute.Commands
         private RestRequest BuildRequest()
         {
             var request = new RestRequest(Method.POST);
+
             request.AddUrlSegment("command", "startvirtualmachine");
+            request.AddUrlSegment("apikey", ApiKey);
+
             return request;
         }
 
