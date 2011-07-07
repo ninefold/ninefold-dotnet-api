@@ -9,6 +9,7 @@ namespace Ninefold.API.DemoClient
     {
         static void Main(string[] args)
         {
+            //var vm = VirtualMachine.Start(apiKey, machineId);
         }
     }
 }
