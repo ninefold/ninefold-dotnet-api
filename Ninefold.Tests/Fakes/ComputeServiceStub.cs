@@ -7,6 +7,8 @@ namespace Ninefold.API.Tests.Fakes
 {
     public class ComputeServiceStub : INinefoldService 
     {
+        public RestRequest Request { get; set; }
+
         public RestClient Client { get; set; }
 
         public IResponse Response { get; set; }
@@ -16,10 +18,11 @@ namespace Ninefold.API.Tests.Fakes
         public TReturnType ExecuteRequest<TReturnType>(RestRequest request)
             where TReturnType : class, IResponse
         {
+            Request = request;
             RequestedUri = Client.BuildUri(request);
             return Response as TReturnType;
         }
 
-
+        
     }
 }
