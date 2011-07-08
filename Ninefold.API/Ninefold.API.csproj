@@ -49,6 +49,8 @@
     <Compile Include="Compute\Messages\MachineResponse.cs" />
     <Compile Include="Compute\VirtualMachine.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Storage\Commands\CreateObject.cs" />
+    <Compile Include="Storage\Messages\CreateObjectResponse.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
