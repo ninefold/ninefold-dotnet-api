@@ -36,7 +36,7 @@ namespace Ninefold.API.Storage.Commands
         public CreateObjectResponse Execute()
         {
             var request = new RestRequest("rest/objects", Method.POST);
-            request.AddHeader("content-type", ContentType);
+            request.AddHeader("content-type", string.IsNullOrWhiteSpace(ContentType) ? "application/octet-stream" : ContentType );
             request.AddHeader("content-length", Content.Length.ToString());
             request.AddHeader("x-emc-date", DateTime.UtcNow.ToString());
             request.AddHeader("x-emc-groupacl", string.Format("other={0}", GroupACL));
