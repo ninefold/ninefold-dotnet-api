@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using Ninefold.API.Core;
 using Ninefold.API.Storage.Commands;
 using Ninefold.API.Storage.Messages;
@@ -15,15 +16,17 @@ namespace Ninefold.API.Storage
         }
 
 
-        public CreateObjectResponse Create(byte[] content,
+        public static CreateObjectResponse Create(string storageServiceBaseUrl,
+                                                                    byte[] content,
                                                                     IEnumerable<KeyValuePair<string, string>> acl,
                                                                     IEnumerable<KeyValuePair<string, string>> listableMetadata,
                                                                     IEnumerable<KeyValuePair<string, string>> metadata,
-                                                                    IEnumerable<KeyValuePair<string, string>> optionalHeaders,
+                                                                    IEnumerable<KeyValuePair<string, string>> optionalHeaders = null,
                                                                     string contentType = "application/octet-stream",
                                                                     string groupAcl = "NONE")
         {
-            var createObject = new CreateObject(_storageService)
+            var storageService = new StorageService(storageServiceBaseUrl);
+            var createObject = new CreateObject(storageService)
                                    {
                                        ACL = acl,
                                        Content = content,
