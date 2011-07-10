@@ -12,10 +12,18 @@ namespace Ninefold.API.Storage.Commands
     {
         readonly INinefoldService _storageService;
 
+        public string UserId { get; set; }
+
         public string GroupACL { get; set; }
 
         public IEnumerable<KeyValuePair<string, string>> ACL { get; set; }
 
+        public IEnumerable<KeyValuePair<string, string>> ListableMetadata { get; set; }
+
+        public IEnumerable<KeyValuePair<string, string>> Metadata { get; set; }
+
+        public IEnumerable<KeyValuePair<string, string>> OptionalHeaders { get; set; }
+        
         public CreateObject(INinefoldService storageService)
         {
             _storageService = storageService;
@@ -26,26 +34,32 @@ namespace Ninefold.API.Storage.Commands
             var request = new RestRequest("rest/objects", Method.POST);
             request.AddHeader("x-emc-date", DateTime.UtcNow.ToString());
             request.AddHeader("x-emc-groupacl", string.Format("other={0}", GroupACL));
-            request.AddHeader("x-emc-acl", BuildACLString());
+            request.AddHeader("x-emc-useracl", BuildKeyPairString(ACL));
+            request.AddHeader("x-emc-listable-meta", BuildKeyPairString(ListableMetadata));
+            request.AddHeader("x-emc-meta", BuildKeyPairString(Metadata));
+            request.AddHeader("x-emc-uid", UserId);
+
+            foreach (var optionalHeader in OptionalHeaders)
+            {
+                request.AddHeader(optionalHeader.Key, optionalHeader.Value);
+            }
 
             return _storageService.ExecuteRequest<CreateObjectResponse>(request);
         }
-
-        private string BuildACLString()
+        
+        private static string BuildKeyPairString(IEnumerable<KeyValuePair<string, string>> keyValuePairs)
         {
-            if ((ACL == null) || (ACL.Count() == 0))
+            if ((keyValuePairs == null) || (keyValuePairs.Count() == 0)) return string.Empty;
+
+            var keyValueString = new StringBuilder();
+
+            foreach (var pair in keyValuePairs)
             {
-                return "NONE";
+                keyValueString.Append(string.Format("{0}={1},", pair.Key, pair.Value));
             }
-
-            var aclString = new StringBuilder();
-
-            foreach (var aclEntry in ACL)
-            {
-                aclString.Append(string.Format("{0}{1}", aclEntry.Key, aclEntry.Value));
-            }
-
-            return aclString.ToString();
+            keyValueString.Remove(keyValueString.Length - 1, 1);
+            
+            return keyValueString.ToString();
         }
     }
 }
