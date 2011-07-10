@@ -15,6 +15,11 @@ namespace Ninefold.API.Tests.Fakes
 
         public Uri RequestedUri { get; set; }
 
+        public ComputeServiceStub()
+        {
+            Client = new RestClient("http://tempuri.org/");
+        } 
+
         public TReturnType ExecuteRequest<TReturnType>(RestRequest request)
             where TReturnType : class, new()
         {

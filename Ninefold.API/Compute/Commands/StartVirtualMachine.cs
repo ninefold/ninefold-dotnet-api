@@ -41,6 +41,7 @@ namespace Ninefold.API.Compute.Commands
 
         private void SignRequest(RestRequest request)
         {
+            //BuildUri will html encode params....
             var uri = _computeService.Client.BuildUri(request);
             var hashingAlg = new System.Security.Cryptography.HMACSHA1(_secret);
             var signature = hashingAlg.ComputeHash(Encoding.UTF8.GetBytes(uri.ToString()));
@@ -52,11 +53,11 @@ namespace Ninefold.API.Compute.Commands
             var requestParams = new Dictionary<string, string>
                                     {
                                         {"command", "startvirtualmachine"},
-                                        {"apikey", ApiKey.Replace("+", "%20")},
+                                        {"apikey", ApiKey },
                                         {"machineid", MachineId}
                                     }.OrderBy(p => p.Key);
             
-            var request = new RestRequest(Method.POST);
+            var request = new RestRequest("", Method.POST);
             foreach (var param in requestParams)
             {
                 request.AddUrlSegment(param.Key, param.Value.Replace("+", "%20"));

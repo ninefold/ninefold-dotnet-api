@@ -8,8 +8,7 @@ namespace Ninefold.API.Tests.CommandTests
 {
     [TestClass]
     public class StartVirtualMachineTests
-    {
-        
+    {        
         [TestMethod]
         public void StartVirtualMachine_Execute_ShouldSendAPostRequestWhenExecuted()
         {
@@ -111,17 +110,15 @@ namespace Ninefold.API.Tests.CommandTests
         public void StartVirtualMachine_Execute_RequestParametersShouldBeURLEncoded()
         {
             //Arrange
-            var stubService = new ComputeServiceStub();
+            var client = new RestClient("http://tempuri.org/");
+            var stubService = new ComputeServiceStub { Client = client };
             var command = new StartVirtualMachine(stubService, new byte[] { 0x0, 0x1 }) { ApiKey = "123&", MachineId = "1" };
-
+            
             //Act
             command.Execute();
-
-            //Assert
-            foreach (var param in stubService.Request.Parameters)
-            {
-                AssertHelper.IsEncoded(param.Value.ToString());
-            }
+            
+            //Assert (Note: the BuildUri call encodes parameters)
+            Assert.AreEqual(client.BuildUri(stubService.Request), stubService.RequestedUri);
         }
 
         [TestMethod]
@@ -131,10 +128,8 @@ namespace Ninefold.API.Tests.CommandTests
             var stubService = new ComputeServiceStub();
             var command = new StartVirtualMachine(stubService, new byte[] { 0x0, 0x1 }) { ApiKey = "123+455", MachineId = "+1+" };
 
-            //Act
+            //Act   
             command.Execute();
-
-            Assert.AreEqual("", stubService.RequestedUri);
 
             //Assert
             foreach (var param in stubService.Request.Parameters)
