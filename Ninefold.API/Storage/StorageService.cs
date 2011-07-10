@@ -1,28 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Ninefold.API.Core;
+﻿using Ninefold.API.Core;
 using RestSharp;
 
 namespace Ninefold.API.Storage
 {
     public class StorageService : INinefoldService
     {
-        readonly RestClient _client;
-        public RestClient Client
-        {
-            get { return _client; }
-        }
+        public RestClient Client { get; private set; }
 
         public StorageService(string baseUrl)
         {
-            _client = new RestClient(baseUrl);
+            Client = new RestClient(baseUrl);
         }
 
         public TReturnType ExecuteRequest<TReturnType>(RestRequest request) where TReturnType : class, new()
         {
-            return _client.Execute<TReturnType>(request).Data;
+            var response = Client.Execute<TReturnType>(request);
+            if (response.ErrorException != null) throw new NinefoldApiException(response.ErrorException);
+            return response.Data;
         }
     }
 }

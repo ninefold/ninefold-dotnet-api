@@ -1,6 +1,4 @@
-﻿using System;
-using Ninefold.API.Compute.Messages;
-using Ninefold.API.Core;
+﻿using Ninefold.API.Core;
 using RestSharp;
 
 namespace Ninefold.API.Compute
@@ -17,7 +15,9 @@ namespace Ninefold.API.Compute
         public TReturnType ExecuteRequest<TReturnType>(RestRequest request)
             where TReturnType : class, new()
         {
-            return Client.Execute<TReturnType>(request).Data;
+            var response = Client.Execute<TReturnType>(request);
+            if (response.ErrorException != null) throw new NinefoldApiException(response.ErrorException);
+            return response.Data;
         }
     }
 }
