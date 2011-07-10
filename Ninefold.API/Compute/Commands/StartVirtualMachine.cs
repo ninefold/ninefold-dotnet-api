@@ -45,7 +45,7 @@ namespace Ninefold.API.Compute.Commands
             var uri = _computeService.Client.BuildUri(request);
             var hashingAlg = new System.Security.Cryptography.HMACSHA1(_secret);
             var signature = hashingAlg.ComputeHash(Encoding.UTF8.GetBytes(uri.ToString()));
-            request.AddParameter("signature", signature);
+            request.AddParameter("signature", Encoding.UTF8.GetString(signature));
         }
 
         private RestRequest BuildRequest()

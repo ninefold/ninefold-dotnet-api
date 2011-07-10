@@ -16,8 +16,12 @@ namespace Ninefold.API.Tests.CommandTests
         public void CreateObject_Execute_ShouldCreatePostRequest()
         {
             var stubService = new StorageServiceStub();
-            var command = new CreateObject(stubService);
-            
+            var command = new CreateObject(stubService, new byte[] { 0x0, 0x1 })
+            {
+                Content = new byte[] { 0x1, 0x0 },
+                ResourcePath = "objects/seattle/sun.jpg"
+            };
+
             command.Execute();
 
             Assert.AreEqual(Method.POST, stubService.Request.Method);
@@ -27,18 +31,26 @@ namespace Ninefold.API.Tests.CommandTests
         public void CreateObject_Execute_ShouldCreateRequestWithObjectsURL()
         {
             var stubService = new StorageServiceStub();
-            var command = new CreateObject(stubService);
+            var command = new CreateObject(stubService, new byte[] {0x0, 0x1})
+                              {
+                                  Content = new byte[] {0x1, 0x0},
+                                  ResourcePath = "objects/seattle/sun.jpg"
+                              };
 
             command.Execute();
 
-            Assert.IsTrue(stubService.Uri.ToString().Contains("rest/objects"), "Url is not using the objects path");
+            Assert.IsTrue(stubService.Uri.ToString().Contains("objects/seattle/sun.jpg"), "Object url not contained in request");
         }
 
         [TestMethod]
         public void CreateObject_Execute_ShouldCreateRequestWithOneOfTheDateHeaders()
         {
             var stubService = new StorageServiceStub();
-            var command = new CreateObject(stubService);
+            var command = new CreateObject(stubService, new byte[] { 0x0, 0x1 })
+            {
+                Content = new byte[] { 0x1, 0x0 },
+                ResourcePath = "objects/seattle/sun.jpg"
+            };
 
             command.Execute();
             

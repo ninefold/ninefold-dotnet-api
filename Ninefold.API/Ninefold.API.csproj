@@ -51,6 +51,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Storage\Commands\CreateObject.cs" />
     <Compile Include="Storage\Messages\CreateObjectResponse.cs" />
+    <Compile Include="Storage\StorageObject.cs" />
+    <Compile Include="Storage\StorageService.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

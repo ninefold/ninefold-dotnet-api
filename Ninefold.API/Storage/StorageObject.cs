@@ -18,6 +18,7 @@ namespace Ninefold.API.Storage
 
         public static CreateObjectResponse Create(string storageServiceBaseUrl,
                                                                     byte[] content,
+                                                                    byte[] secret,
                                                                     IEnumerable<KeyValuePair<string, string>> acl,
                                                                     IEnumerable<KeyValuePair<string, string>> listableMetadata,
                                                                     IEnumerable<KeyValuePair<string, string>> metadata,
@@ -26,7 +27,7 @@ namespace Ninefold.API.Storage
                                                                     string groupAcl = "NONE")
         {
             var storageService = new StorageService(storageServiceBaseUrl);
-            var createObject = new CreateObject(storageService)
+            var createObject = new CreateObject(storageService, secret)
                                    {
                                        ACL = acl,
                                        Content = content,
