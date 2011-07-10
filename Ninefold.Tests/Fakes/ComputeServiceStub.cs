@@ -23,7 +23,6 @@ namespace Ninefold.API.Tests.Fakes
         public TReturnType ExecuteRequest<TReturnType>(RestRequest request)
             where TReturnType : class, new()
         {
-            Client.HttpFactory = new StubHttpFactory();
             Request = request;
             RequestedUri = Client.BuildUri(request);
             return default(TReturnType);

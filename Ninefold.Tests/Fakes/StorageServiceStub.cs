@@ -16,17 +16,11 @@ namespace Ninefold.API.Tests.Fakes
 
         public Uri Uri { get; set; }
 
-        public IList<HttpHeader> Headers { get; private set; }
-
-        public HttpFactoryStub HttpFactory { get; set; }
-
         public StorageServiceStub()
         {            
-            HttpFactory = new HttpFactoryStub();
             Client = new RestClient
                          {
                 BaseUrl = "http://tempuri.org/",
-                HttpFactory = HttpFactory
             };
         }
 
@@ -35,10 +29,7 @@ namespace Ninefold.API.Tests.Fakes
         {
             Request = request;
             Uri = Client.BuildUri(request);
-
-            Client.Execute(request);
-            Headers = HttpFactory.HttpStub.Headers;
-
+            
             return default(TReturnType);
         }
     }

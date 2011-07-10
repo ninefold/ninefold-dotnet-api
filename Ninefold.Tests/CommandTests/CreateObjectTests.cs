@@ -35,18 +35,22 @@ namespace Ninefold.API.Tests.CommandTests
         }
 
         [TestMethod]
-        public void CreateObject_Execute_ShouldCreateRequestWithDateHeader()
+        public void CreateObject_Execute_ShouldCreateRequestWithOneOfTheDateHeaders()
         {
             var stubService = new StorageServiceStub();
             var command = new CreateObject(stubService);
 
             command.Execute();
             
-            var x =
-                stubService.Headers.FirstOrDefault(
-                    p => p.Name.Equals("date", StringComparison.InvariantCultureIgnoreCase));
+            var dateHeader =
+                stubService.Request.Parameters.FirstOrDefault(
+                    p => p.Name.Equals("x-emc-date", StringComparison.InvariantCultureIgnoreCase)
+                                && p.Type == ParameterType.HttpHeader) ??
+                stubService.Request.Parameters.FirstOrDefault(
+                        p => p.Name.Equals("date", StringComparison.InvariantCultureIgnoreCase)
+                                && p.Type == ParameterType.HttpHeader);
 
-            Assert.IsNotNull(x, "Date parameter not found on request");
+            Assert.IsNotNull(dateHeader, "Date parameter not found on request");
         }
     }
 }

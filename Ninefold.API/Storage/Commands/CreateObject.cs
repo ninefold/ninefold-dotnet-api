@@ -20,7 +20,7 @@ namespace Ninefold.API.Storage.Commands
         public CreateObjectResponse Execute()
         {
             var request = new RestRequest("rest/objects", Method.POST);
-            request.AddHeader("date", DateTime.UtcNow.ToString());
+            request.AddHeader("x-emc-date", DateTime.UtcNow.ToString());
 
             return _storageService.ExecuteRequest<CreateObjectResponse>(request);
         }
