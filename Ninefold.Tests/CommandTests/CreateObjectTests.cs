@@ -64,5 +64,20 @@ namespace Ninefold.API.Tests.CommandTests
 
             Assert.IsNotNull(dateHeader, "Date parameter not found on request");
         }
+
+        [TestMethod]
+        public void CreateObject_Execute_ShouldCreateASignedRequest()
+        {
+            var stubService = new StorageServiceStub();
+            var command = new CreateObject(stubService, new byte[] { 0x0, 0x1 })
+            {
+                Content = new byte[] { 0x1, 0x0 },
+                ResourcePath = "objects/seattle/sun.jpg"
+            };
+
+            command.Execute();
+
+            Assert.IsNotNull(stubService.Request.Parameters.FirstOrDefault(p => p.Name.Equals("x-emc-signature") && p.Type == ParameterType.HttpHeader));
+        }
     }
 }
