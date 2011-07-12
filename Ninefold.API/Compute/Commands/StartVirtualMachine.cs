@@ -8,30 +8,25 @@ using RestSharp;
 
 namespace Ninefold.API.Compute.Commands
 {
-    public class StartVirtualMachine
+    public class StartVirtualMachine : ICommand<MachineResponse>
     {
         readonly INinefoldService _computeService;
         readonly byte[] _secret;
-
-        public string ApiKey { get; set; }
-        public string MachineId { get; set; }
+        readonly string _apiKey;
+        readonly string _machineId;
         
-        public StartVirtualMachine()
-        {
-            _computeService = new ComputeService("http://tempuri.org/");
-            _secret = new byte[] {0x0, 0x1};
-        }
-
-        public StartVirtualMachine(INinefoldService ninefoldService, byte[] secret)
+        public StartVirtualMachine(INinefoldService ninefoldService, byte[] secret, string apiKey, string machineId)
         {
             _computeService = ninefoldService;
+            _machineId = machineId;
+            _apiKey = apiKey;
             _secret = secret;
         }
 
         public MachineResponse Execute()
         {
-            if (string.IsNullOrWhiteSpace(ApiKey)) throw new ArgumentNullException("ApiKey");
-            if (string.IsNullOrWhiteSpace(MachineId)) throw new ArgumentNullException("MachineId");
+            if (string.IsNullOrWhiteSpace(_apiKey)) throw new ArgumentNullException("ApiKey");
+            if (string.IsNullOrWhiteSpace(_machineId)) throw new ArgumentNullException("MachineId");
 
             var request = BuildRequest();
             SignRequest(request);
@@ -39,31 +34,35 @@ namespace Ninefold.API.Compute.Commands
             return _computeService.ExecuteRequest<MachineResponse>(request);
         }
 
-        private void SignRequest(RestRequest request)
-        {
-            //BuildUri will html encode params....
-            var uri = _computeService.Client.BuildUri(request);
-            var hashingAlg = new System.Security.Cryptography.HMACSHA1(_secret);
-            var signature = hashingAlg.ComputeHash(Encoding.UTF8.GetBytes(uri.ToString()));
-            request.AddParameter("signature", Encoding.UTF8.GetString(signature));
-        }
-
         private RestRequest BuildRequest()
         {
             var requestParams = new Dictionary<string, string>
                                     {
                                         {"command", "startvirtualmachine"},
-                                        {"apikey", ApiKey },
-                                        {"machineid", MachineId}
+                                        {"apikey", _apiKey },
+                                        {"machineid", _machineId}
                                     }.OrderBy(p => p.Key);
-            
-            var request = new RestRequest("", Method.POST);
+
+            var request = new RestRequest(string.Empty, Method.POST);
             foreach (var param in requestParams)
             {
-                request.AddUrlSegment(param.Key, param.Value.Replace("+", "%20"));
+                request.AddUrlSegment(param.Key, param.Value);
             }
 
             return request;
         }
+
+        private void SignRequest(RestRequest request)
+        {
+            var uri = _computeService.Client.BuildUri(request);
+            var hashingAlg = new System.Security.Cryptography.HMACSHA1(_secret);
+            var signature = hashingAlg.ComputeHash(Encoding.UTF8.GetBytes(uri.ToString()));
+            request.AddParameter("signature", Encoding.UTF8.GetString(signature));
+        }
+    }
+
+    public interface ICommand<out TResponse>
+    {
+        TResponse Execute();
     }
 }

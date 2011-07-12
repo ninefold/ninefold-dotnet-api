@@ -1,4 +1,5 @@
-﻿using Ninefold.API.Compute.Commands;
+﻿using System.Collections.Generic;
+using Ninefold.API.Compute.Commands;
 using Ninefold.API.Compute.Messages;
 using Ninefold.API.Core;
 
@@ -10,28 +11,38 @@ namespace Ninefold.API.Compute
         readonly string _machineId;
         readonly INinefoldService _computeService;
 
-        public VirtualMachine(string apiKey, string machineId, string computeServiceBaseUrl)
+        public VirtualMachine(string apiKey,  string computeServiceBaseUrl)
         {
             _apiKey = apiKey;
             _computeService = new ComputeService(computeServiceBaseUrl);
-            _machineId = machineId;
+        }
+
+        public static VirtualMachine Deploy(string apiKey, string computeServiceRootUrl, byte[] secret, string serviceOfferingId, string templateId, string zoneId, IDictionary<string, string> additionalValues = null)
+        {
+            var virtualMachine = new VirtualMachine(apiKey, computeServiceRootUrl);
+            virtualMachine.Deploy(secret);
+            return virtualMachine;
         }
 
         public static VirtualMachine Start(string apiKey, string machineId, string computeServiceRootUrl, byte[] secret)
         {
-            var virtualMachine = new VirtualMachine(apiKey, machineId, computeServiceRootUrl);
-            virtualMachine.Start(secret);
-            
+            var virtualMachine = new VirtualMachine(apiKey, computeServiceRootUrl);
+            virtualMachine.Start(secret, machineId);            
             return virtualMachine;
         }
 
-        public MachineResponse Start(byte[] secret)
+        public MachineResponse Deploy(byte[] secret)
         {
-            var startCommand = new StartVirtualMachine(_computeService, secret);
-            startCommand.ApiKey = _apiKey;
-            startCommand.MachineId = _machineId;
+            var deployCommand = new DeployVirtualMachine(_apiKey, secret, _computeService);
+            return deployCommand.Execute();
+        }
+
+        public MachineResponse Start(byte[] secret, string machineId)
+        {
+            var startCommand = new StartVirtualMachine(_computeService, secret, _apiKey, machineId);
             return startCommand.Execute();
         }
 
+        
     }
 }
