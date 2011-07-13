@@ -25,9 +25,6 @@ namespace Ninefold.API.Compute.Commands
 
         public MachineResponse Execute()
         {
-            if (string.IsNullOrWhiteSpace(_apiKey)) throw new ArgumentNullException("ApiKey");
-            if (string.IsNullOrWhiteSpace(_machineId)) throw new ArgumentNullException("MachineId");
-
             var request = BuildRequest();
             SignRequest(request);
 
@@ -52,12 +49,12 @@ namespace Ninefold.API.Compute.Commands
             return request;
         }
 
-        private void SignRequest(RestRequest request)
+        private string SignRequest(RestRequest request)
         {
             var uri = _computeService.Client.BuildUri(request);
             var hashingAlg = new System.Security.Cryptography.HMACSHA1(_secret);
             var signature = hashingAlg.ComputeHash(Encoding.UTF8.GetBytes(uri.ToString()));
-            request.AddParameter("signature", Encoding.UTF8.GetString(signature));
+            return signature.ToString();
         }
     }
 

@@ -50,6 +50,7 @@
     <Compile Include="Compute\Messages\MachineResponse.cs" />
     <Compile Include="Compute\VirtualMachine.cs" />
     <Compile Include="Core\NinefoldApiException.cs" />
+    <Compile Include="Core\Command.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Storage\Commands\CreateObject.cs" />
     <Compile Include="Storage\Messages\CreateObjectResponse.cs" />
