@@ -3,15 +3,15 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using Ninefold.API.Compute.Commands;
 using Ninefold.API.Core;
-using Ninefold.API.Storage.Messages;
 using RestSharp;
 
 namespace Ninefold.API.Storage.Commands
 {
-    public class CreateObject
+    public class CreateObject : ICommand
     {
-        readonly INinefoldService _storageService;
+        readonly Core.ICommandExecutor _storageService;
         readonly byte[] _secret;
 
         public string ResourcePath { get; set; }
@@ -32,13 +32,13 @@ namespace Ninefold.API.Storage.Commands
 
         public IEnumerable<KeyValuePair<string, string>> OptionalHeaders { get; set; }
 
-        public CreateObject(INinefoldService storageService, byte[] secret)
+        public CreateObject(Core.ICommandExecutor storageService, byte[] secret)
         {
             _storageService = storageService;
             _secret = secret;
         }
 
-        public CreateObjectResponse Execute()
+        public ICommandResponse Execute()
         {
             if (((Content == null) || (Content.Length == 0)
                 && (!ResourcePath[ResourcePath.Length].Equals('/'))))
@@ -65,17 +65,7 @@ namespace Ninefold.API.Storage.Commands
             }
             
             request.AddBody(Convert.ToBase64String(Content));
-            SignRequest(request);
-
-            return _storageService.ExecuteRequest<CreateObjectResponse>(request);
-        }
-
-        private void SignRequest(RestRequest request)
-        {
-            var uri = _storageService.Client.BuildUri(request);
-            var hashingAlg = new System.Security.Cryptography.HMACSHA1(_secret);
-            var signature = hashingAlg.ComputeHash(Encoding.UTF8.GetBytes(uri.ToString()));
-            request.AddHeader("x-emc-signature", Encoding.UTF8.GetString(signature));
+            return _storageService.Execute(this);
         }
 
         private static string BuildKeyPairString(IEnumerable<KeyValuePair<string, string>> keyValuePairs)

@@ -1,60 +1,46 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using Ninefold.API.Compute.Messages;
 using Ninefold.API.Core;
 using RestSharp;
 
 namespace Ninefold.API.Compute.Commands
 {
-    public class DeployVirtualMachine 
+    public class DeployVirtualMachine : ICommand
     {
+        readonly IRequestSigningService _signingService;
+        readonly IRestClient _client;
+        readonly IRequestBuilder _requestService;
         readonly string _apiKey;
-        readonly byte[] _secret;
-        readonly INinefoldService _computeService;
+        readonly string _base64Secret;
 
         public IDictionary<string, string> Parameters { get; set; }
 
-        public DeployVirtualMachine(string apiKey, byte[] secret, INinefoldService computeService)
+        public DeployVirtualMachine(string apiKey, 
+                                                        string base64Secret,
+                                                        string serviceUrlRoot, 
+                                                        IRequestSigningService signingService, 
+                                                        IRequestBuilder requestService)
         {
+            _signingService = signingService;
+            _requestService = requestService;
             _apiKey = apiKey;
-            _computeService = computeService;
-            _secret = secret;
+            _base64Secret = base64Secret;
+            _client = new RestClient(serviceUrlRoot);
         }
 
-        public MachineResponse Execute()
-        {
-            var request = BuildRequest();
-            var uri = _computeService.Client.BuildUri(request);
-            SignRequest(request);
-
-            return _computeService.ExecuteRequest<MachineResponse>(request);
-        }
-
-        private RestRequest BuildRequest()
+        public ICommandResponse Execute()
         {
             var requestParams = new Dictionary<string, string>
                                     {
                                         {"command", "startvirtualmachine"},
-                                        {"apikey", _apiKey }
-                                    }.OrderBy(p => p.Key);
+                                        {"apikey", _apiKey}
+                                    };
 
-            var request = new RestRequest(string.Empty, Method.POST);
-            foreach (var param in requestParams)
-            {
-                request.AddUrlSegment(param.Key, param.Value);
-            }
+            var request = _requestService.GenerateRequest(requestParams);
+            var signature = _signingService.GenerateRequestSignature(((RestClient)_client).BuildUri((RestRequest)request), _base64Secret);
+            request.AddUrlSegment("signature", signature);
 
-            return request;
-        }
-
-        private void SignRequest(RestRequest request)
-        {
-            var uri = _computeService.Client.BuildUri(request);
-            var hashingAlg = new System.Security.Cryptography.HMACSHA1(_secret);
-            var signature = hashingAlg.ComputeHash(Encoding.UTF8.GetBytes(uri.ToString()));
-            request.AddHeader("x-emc-signature", Encoding.UTF8.GetString(signature));
+            return _client.Execute<MachineResponse>((RestRequest)request).Data;
         }
     }
 }

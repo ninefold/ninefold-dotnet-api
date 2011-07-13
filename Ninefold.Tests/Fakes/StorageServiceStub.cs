@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Text;
+using Ninefold.API.Compute.Commands;
 using Ninefold.API.Core;
 using RestSharp;
 
 namespace Ninefold.API.Tests.Fakes
 {
-    public class StorageServiceStub : INinefoldService
+    public class StorageServiceStub : Core.ICommandExecutor
     {
         public RestRequest Request { get; set; }
 
@@ -31,6 +32,11 @@ namespace Ninefold.API.Tests.Fakes
             Uri = Client.BuildUri(request);
             
             return default(TReturnType);
+        }
+
+        public ICommandResponse Execute(ICommand command)
+        {
+            throw new NotImplementedException();
         }
     }
 }

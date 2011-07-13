@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Ninefold.API.Compute.Messages;
@@ -8,58 +7,43 @@ using RestSharp;
 
 namespace Ninefold.API.Compute.Commands
 {
-    public class StartVirtualMachine : ICommand<MachineResponse>
+    public class StartVirtualMachine : ICommand
     {
-        readonly INinefoldService _computeService;
-        readonly byte[] _secret;
+        readonly IRequestSigningService _signingService;
+        readonly IRestClient _client;
+        readonly IRequestBuilder _requestService;
         readonly string _apiKey;
+        readonly string _base64Secret;
         readonly string _machineId;
-        
-        public StartVirtualMachine(INinefoldService ninefoldService, byte[] secret, string apiKey, string machineId)
+
+        public StartVirtualMachine(string apiKey, 
+                                                    string base64Secret, 
+                                                    string machineId, 
+                                                    string serviceUrlRoot, 
+                                                    IRequestSigningService signingService, 
+                                                    IRequestBuilder requestService)
         {
-            _computeService = ninefoldService;
             _machineId = machineId;
+            _requestService = requestService;
+            _signingService = signingService;
             _apiKey = apiKey;
-            _secret = secret;
+            _base64Secret = base64Secret;
+            _client = new RestClient();
         }
 
-        public MachineResponse Execute()
-        {
-            var request = BuildRequest();
-            SignRequest(request);
-
-            return _computeService.ExecuteRequest<MachineResponse>(request);
-        }
-
-        private RestRequest BuildRequest()
+        public ICommandResponse Execute()
         {
             var requestParams = new Dictionary<string, string>
                                     {
                                         {"command", "startvirtualmachine"},
-                                        {"apikey", _apiKey },
-                                        {"machineid", _machineId}
-                                    }.OrderBy(p => p.Key);
+                                        {"apikey", _apiKey}
+                                    };
 
-            var request = new RestRequest(string.Empty, Method.POST);
-            foreach (var param in requestParams)
-            {
-                request.AddUrlSegment(param.Key, param.Value);
-            }
+            var request = _requestService.GenerateRequest(requestParams);
+            var signature = _signingService.GenerateRequestSignature(((RestClient)_client).BuildUri((RestRequest)request), _base64Secret);
+            request.AddUrlSegment("signature", signature);
 
-            return request;
+            return _client.Execute<MachineResponse>((RestRequest)request).Data;
         }
-
-        private string SignRequest(RestRequest request)
-        {
-            var uri = _computeService.Client.BuildUri(request);
-            var hashingAlg = new System.Security.Cryptography.HMACSHA1(_secret);
-            var signature = hashingAlg.ComputeHash(Encoding.UTF8.GetBytes(uri.ToString()));
-            return signature.ToString();
-        }
-    }
-
-    public interface ICommand<out TResponse>
-    {
-        TResponse Execute();
     }
 }

@@ -12,17 +12,10 @@ namespace Ninefold.API.DemoClient
     {
         static void Main(string[] args)
         {
-            var secret = new byte[] {0x0, 0x1};
-            var vm = VirtualMachine.Start("ef2422ab22c11", "1", "http://tempuri.org", secret);
+            var computeClient = new ComputeClient("12345", Convert.ToBase64String(new byte[] { 0x1, 0x2 }));
 
-            var storedObject = StorageObject.Create("http://tempuri.org",
-                                                    new byte[] { 0x0, 0x1 },
-                                                    new byte[] { 0x0, 0x1 },
-                                                    new[] {new KeyValuePair<string, string>("steve", "FULL_CONTROL")},
-                                                    new[] {new KeyValuePair<string, string>("", "")},
-                                                    new[] {new KeyValuePair<string, string>("", "")});
-
-            Console.WriteLine("Object stored to path {0}", storedObject.Location);
+            var machineResponse = computeClient.VirtualMachine.Deploy();
+            computeClient.VirtualMachine.Start(machineResponse.Id);
         }
     }
 }

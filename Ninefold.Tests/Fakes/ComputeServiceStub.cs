@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Net;
-using Ninefold.API.Compute.Messages;
+using Ninefold.API.Compute.Commands;
 using Ninefold.API.Core;
 using RestSharp;
 
 namespace Ninefold.API.Tests.Fakes
 {
-    public class ComputeServiceStub : INinefoldService 
+    public class ComputeServiceStub : ICommandExecutor 
     {
         public RestRequest Request { get; set; }
 
@@ -20,12 +20,11 @@ namespace Ninefold.API.Tests.Fakes
             Client = new RestClient("http://tempuri.org/");
         } 
 
-        public TReturnType ExecuteRequest<TReturnType>(RestRequest request)
-            where TReturnType : class, new()
+        public ICommandResponse Execute(ICommand command)
         {
-            Request = request;
-            RequestedUri = Client.BuildUri(request);
-            return default(TReturnType);
+            //Request = request;
+            //RequestedUri = Client.BuildUri(request);
+            return default(ICommandResponse);
         }
     }
 

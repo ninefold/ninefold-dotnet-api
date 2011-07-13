@@ -1,8 +1,9 @@
 ﻿using System;
+using Ninefold.API.Core;
 
 namespace Ninefold.API.Compute.Messages
 {
-    public class MachineResponse 
+    public class MachineResponse  : ICommandResponse
     {
         public string Id { get; set; }
         public string Account { get; set; }

@@ -1,48 +1,40 @@
-﻿using System.Collections.Generic;
+﻿using System;
 using Ninefold.API.Compute.Commands;
 using Ninefold.API.Compute.Messages;
 using Ninefold.API.Core;
 
 namespace Ninefold.API.Compute
 {
-    public class VirtualMachine
+    public class VirtualMachine : IVirtualMachine
     {
         readonly string _apiKey;
-        readonly string _machineId;
-        readonly INinefoldService _computeService;
-
-        public VirtualMachine(string apiKey,  string computeServiceBaseUrl)
+        readonly string _base64Secret;
+        readonly string _serviceUrlRoot;
+        readonly IRequestBuilder _requestBuilder;
+        readonly IRequestSigningService _requestSigner;
+        
+        public VirtualMachine(string apiKey, string base64Secret, string serviceUrlRoot)
         {
             _apiKey = apiKey;
-            _computeService = new ComputeService(computeServiceBaseUrl);
+            _serviceUrlRoot = serviceUrlRoot;
+            _base64Secret = base64Secret;
         }
 
-        public static VirtualMachine Deploy(string apiKey, string computeServiceRootUrl, byte[] secret, string serviceOfferingId, string templateId, string zoneId, IDictionary<string, string> additionalValues = null)
+        public MachineResponse Deploy()
         {
-            var virtualMachine = new VirtualMachine(apiKey, computeServiceRootUrl);
-            virtualMachine.Deploy(secret);
-            return virtualMachine;
+            var command = new DeployVirtualMachine(_apiKey, _base64Secret,  _serviceUrlRoot,_requestSigner, _requestBuilder);
+            return (MachineResponse) command.Execute();
         }
 
-        public static VirtualMachine Start(string apiKey, string machineId, string computeServiceRootUrl, byte[] secret)
+        public MachineResponse Start(string machineId)
         {
-            var virtualMachine = new VirtualMachine(apiKey, computeServiceRootUrl);
-            virtualMachine.Start(secret, machineId);            
-            return virtualMachine;
+            var command = new StartVirtualMachine(_apiKey, _base64Secret, machineId, _serviceUrlRoot, _requestSigner, _requestBuilder);
+            return (MachineResponse) command.Execute();
         }
 
-        public MachineResponse Deploy(byte[] secret)
+        public MachineResponse Stop()
         {
-            var deployCommand = new DeployVirtualMachine(_apiKey, secret, _computeService);
-            return deployCommand.Execute();
+            throw new NotImplementedException();
         }
-
-        public MachineResponse Start(byte[] secret, string machineId)
-        {
-            var startCommand = new StartVirtualMachine(_computeService, secret, _apiKey, machineId);
-            return startCommand.Execute();
-        }
-
-        
     }
 }

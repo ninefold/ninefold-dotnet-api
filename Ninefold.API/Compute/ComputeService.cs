@@ -1,9 +1,11 @@
-﻿using Ninefold.API.Core;
+﻿using System;
+using Ninefold.API.Compute.Commands;
+using Ninefold.API.Core;
 using RestSharp;
 
 namespace Ninefold.API.Compute
 {
-    public class ComputeService : INinefoldService
+    public class ComputeService : ICommandExecutor
     {
         public RestClient Client { get; private set; }
 
@@ -18,6 +20,11 @@ namespace Ninefold.API.Compute
             var response = Client.Execute<TReturnType>(request);
             if (response.ErrorException != null) throw new NinefoldApiException(response.ErrorException);
             return response.Data;
+        }
+
+        public ICommandResponse Execute(ICommand command)
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -44,17 +44,24 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Compute\Commands\DeployVirtualMachine.cs" />
+    <Compile Include="Compute\ComputeRequestBuilder.cs" />
     <Compile Include="Compute\ComputeService.cs" />
-    <Compile Include="Core\INinefoldService.cs" />
+    <Compile Include="Compute\IComputeClient.cs" />
+    <Compile Include="Core\ICommand.cs" />
+    <Compile Include="Core\IRequestBuilder.cs" />
+    <Compile Include="Compute\IVirtualMachine.cs" />
+    <Compile Include="Core\ICommandExecutor.cs" />
     <Compile Include="Compute\Commands\StartVirtualMachine.cs" />
     <Compile Include="Compute\Messages\MachineResponse.cs" />
     <Compile Include="Compute\VirtualMachine.cs" />
+    <Compile Include="Core\ICommandResponse.cs" />
+    <Compile Include="Core\IRequestSigningService.cs" />
     <Compile Include="Core\NinefoldApiException.cs" />
-    <Compile Include="Core\Command.cs" />
+    <Compile Include="ComputeClient.cs" />
+    <Compile Include="Core\RequestSigningService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Storage\Commands\CreateObject.cs" />
     <Compile Include="Storage\Messages\CreateObjectResponse.cs" />
-    <Compile Include="Storage\StorageObject.cs" />
     <Compile Include="Storage\StorageService.cs" />
   </ItemGroup>
   <ItemGroup />
