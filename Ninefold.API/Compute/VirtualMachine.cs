@@ -37,7 +37,7 @@ namespace Ninefold.API.Compute
 
         public MachineResponse Start(string machineId)
         {
-            var command = new StartVirtualMachine(_apiKey, _base64Secret, machineId, _serviceUrlRoot, _requestSigner, _requestBuilder);
+            var command = new StartVirtualMachine(_apiKey, _base64Secret, _serviceUrlRoot, _requestSigner, _requestBuilder);
             return (MachineResponse) command.Execute();
         }
 
