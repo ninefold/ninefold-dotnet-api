@@ -2,6 +2,7 @@
 using Ninefold.API.Compute.Commands;
 using Ninefold.API.Compute.Messages;
 using Ninefold.API.Core;
+using RestSharp;
 
 namespace Ninefold.API.Compute
 {
@@ -12,17 +13,25 @@ namespace Ninefold.API.Compute
         readonly string _serviceUrlRoot;
         readonly IRequestBuilder _requestBuilder;
         readonly IRequestSigningService _requestSigner;
+        readonly IRestClient _client;
+
+        public IRequestBuilder RequestBuilder { get { return _requestBuilder; } }
+        public IRequestSigningService SigningService { get { return _requestSigner; } }
+        public IRestClient RestClient { get { return _client; } }
         
         public VirtualMachine(string apiKey, string base64Secret, string serviceUrlRoot)
         {
             _apiKey = apiKey;
             _serviceUrlRoot = serviceUrlRoot;
             _base64Secret = base64Secret;
+            _client = new RestClient(serviceUrlRoot);
+            _requestBuilder = new ComputeRequestBuilder();
+            _requestSigner = new RequestSigningService();
         }
 
         public MachineResponse Deploy()
         {
-            var command = new DeployVirtualMachine(_apiKey, _base64Secret,  _serviceUrlRoot,_requestSigner, _requestBuilder);
+            var command = new DeployVirtualMachine(_apiKey, _base64Secret,_requestSigner, _requestBuilder, _client);
             return (MachineResponse) command.Execute();
         }
 

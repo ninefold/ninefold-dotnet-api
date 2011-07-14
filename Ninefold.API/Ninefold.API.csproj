@@ -35,6 +35,7 @@
       <HintPath>..\packages\RestSharp.101.3\lib\net4\RestSharp.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -44,9 +45,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Compute\Commands\DeployVirtualMachine.cs" />
+    <Compile Include="Compute\Commands\DestroyVirtualMachine.cs" />
     <Compile Include="Compute\ComputeRequestBuilder.cs" />
     <Compile Include="Compute\ComputeService.cs" />
+    <Compile Include="Core\FieldNameAttribute.cs" />
+    <Compile Include="Core\ICommandRequest.cs" />
     <Compile Include="Compute\IComputeClient.cs" />
+    <Compile Include="Compute\Messages\DeployVirtualMachineRequest.cs" />
     <Compile Include="Core\ICommand.cs" />
     <Compile Include="Core\IRequestBuilder.cs" />
     <Compile Include="Compute\IVirtualMachine.cs" />

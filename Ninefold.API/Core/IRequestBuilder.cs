@@ -5,6 +5,6 @@ namespace Ninefold.API.Core
 {
     public interface IRequestBuilder
     {
-        IRestRequest GenerateRequest(Dictionary<string, string> parameters);
+        IRestRequest GenerateRequest(ICommandRequest request, string apiKey);
     }
 }
