@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Reflection;
@@ -33,8 +34,9 @@ namespace Ninefold.API.Compute
                 queryString.Append(string.Format("{0}={1}&", property.Key, property.Value));
             }
             queryString.Remove(queryString.Length - 1, 1);
+            var escapedQueryString = Uri.EscapeUriString(queryString.ToString());
 
-            return new RestRequest("?" + queryString, Method.POST);
+            return new RestRequest("?" + escapedQueryString, Method.POST);
         }
     }
 }

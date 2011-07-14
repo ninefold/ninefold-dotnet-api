@@ -24,6 +24,7 @@ namespace Ninefold.API.Tests.CommandTests
                                                              }, "apikey value");
             var client = new RestClient("http://tempuri.org");
             var uri = client.BuildUri((RestRequest)request);
+
             
             Assert.AreEqual(string.Empty, uri.ToString());
         }

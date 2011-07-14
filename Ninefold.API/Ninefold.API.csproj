@@ -47,7 +47,6 @@
     <Compile Include="Compute\Commands\DeployVirtualMachine.cs" />
     <Compile Include="Compute\Commands\DestroyVirtualMachine.cs" />
     <Compile Include="Compute\ComputeRequestBuilder.cs" />
-    <Compile Include="Compute\ComputeService.cs" />
     <Compile Include="Core\FieldNameAttribute.cs" />
     <Compile Include="Core\ICommandRequest.cs" />
     <Compile Include="Compute\IComputeClient.cs" />
