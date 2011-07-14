@@ -31,11 +31,10 @@ namespace Ninefold.API.Compute.Commands
 
         public ICommandResponse Execute()
         {
-            
             var request = _requestService.GenerateRequest(Parameters, _apiKey);
             var signature = _signingService.GenerateRequestSignature(((RestClient)_client).BuildUri((RestRequest)request), _base64Secret);
             request.AddUrlSegment("signature", signature);
-
+            
             return _client.Execute<MachineResponse>((RestRequest)request).Data;
         }
 

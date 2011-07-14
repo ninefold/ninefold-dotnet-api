@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Ninefold.API.Compute.Messages;
+﻿using Ninefold.API.Compute.Messages;
 using Ninefold.API.Core;
 using RestSharp;
 
@@ -31,18 +29,11 @@ namespace Ninefold.API.Compute.Commands
 
         public ICommandResponse Execute()
         {
-            
-
             var request = _requestService.GenerateRequest(null, _apiKey);
             var signature = _signingService.GenerateRequestSignature(((RestClient)_client).BuildUri((RestRequest)request), _base64Secret);
             request.AddUrlSegment("signature", signature);
 
             return _client.Execute<MachineResponse>((RestRequest)request).Data;
-        }
-
-        private void ValidateRequest()
-        {
-            if (string.IsNullOrWhiteSpace(MachineId)) { throw new ArgumentNullException("MachineId");}
         }
     }
 }
