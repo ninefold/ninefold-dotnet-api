@@ -8,7 +8,7 @@ namespace Ninefold.API.Compute.Commands
     {
         readonly IRequestSigningService _signingService;
         readonly IRestClient _client;
-        readonly IRequestBuilder _requestService;
+        readonly IComputeRequestBuilder _computeRequestService;
         readonly string _apiKey;
         readonly string _base64Secret;
 
@@ -18,9 +18,9 @@ namespace Ninefold.API.Compute.Commands
                                                     string base64Secret, 
                                                     string serviceUrlRoot, 
                                                     IRequestSigningService signingService, 
-                                                    IRequestBuilder requestService)
+                                                    IComputeRequestBuilder computeRequestService)
         {
-            _requestService = requestService;
+            _computeRequestService = computeRequestService;
             _signingService = signingService;
             _apiKey = apiKey;
             _base64Secret = base64Secret;
@@ -29,7 +29,7 @@ namespace Ninefold.API.Compute.Commands
 
         public ICommandResponse Execute()
         {
-            var request = _requestService.GenerateRequest(Parameters, _apiKey);
+            var request = _computeRequestService.GenerateRequest(Parameters, _apiKey);
             var signature = _signingService.GenerateRequestSignature(((RestClient)_client).BuildUri((RestRequest)request), _base64Secret);
             request.AddUrlSegment("signature", signature);
 

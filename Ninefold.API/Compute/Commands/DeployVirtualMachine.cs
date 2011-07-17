@@ -10,7 +10,7 @@ namespace Ninefold.API.Compute.Commands
     {
         readonly IRequestSigningService _signingService;
         readonly IRestClient _client;
-        readonly IRequestBuilder _requestService;
+        readonly IComputeRequestBuilder _computeRequestService;
         readonly string _apiKey;
         readonly string _base64Secret;
 
@@ -19,12 +19,12 @@ namespace Ninefold.API.Compute.Commands
         public DeployVirtualMachine(string apiKey, 
                                                         string base64Secret,
                                                         IRequestSigningService signingService, 
-                                                        IRequestBuilder requestService, 
+                                                        IComputeRequestBuilder computeRequestService, 
                                                         IRestClient client)
         {
             _signingService = signingService;
             _client = client;
-            _requestService = requestService;
+            _computeRequestService = computeRequestService;
             _apiKey = apiKey;
             _base64Secret = base64Secret;
         }
@@ -33,7 +33,7 @@ namespace Ninefold.API.Compute.Commands
         {
             ValidateRequest();
 
-            var request = _requestService.GenerateRequest(Parameters, _apiKey);
+            var request = _computeRequestService.GenerateRequest(Parameters, _apiKey);
             var uri = Uri.UnescapeDataString(((RestClient) _client).BuildUri((RestRequest) request).ToString());
             var signature = _signingService.GenerateRequestSignature(new Uri(uri), _base64Secret);
             request.AddUrlSegment("signature", signature);

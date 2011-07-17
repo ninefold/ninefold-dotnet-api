@@ -12,10 +12,11 @@ namespace Ninefold.API.DemoClient
     {
         static void Main(string[] args)
         {
-            var computeClient = new ComputeClient("12345", Convert.ToBase64String(new byte[] { 0x1, 0x2 }));
-
+            var computeClient = new ComputeClient("5cd104e23fc947668a6c74fe63fd77e7/godbold_1310683369246", "FGJeXUzxCz5poHoSzRzmMTceuek=");
             var machineResponse = computeClient.VirtualMachine.Deploy();
             computeClient.VirtualMachine.Start(machineResponse.Id);
+
+            
         }
     }
 }

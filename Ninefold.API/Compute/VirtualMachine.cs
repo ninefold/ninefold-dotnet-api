@@ -11,11 +11,11 @@ namespace Ninefold.API.Compute
         readonly string _apiKey;
         readonly string _base64Secret;
         readonly string _serviceUrlRoot;
-        readonly IRequestBuilder _requestBuilder;
+        readonly IComputeRequestBuilder _computeRequestBuilder;
         readonly IRequestSigningService _requestSigner;
         readonly IRestClient _client;
 
-        public IRequestBuilder RequestBuilder { get { return _requestBuilder; } }
+        public IComputeRequestBuilder ComputeRequestBuilder { get { return _computeRequestBuilder; } }
         public IRequestSigningService SigningService { get { return _requestSigner; } }
         public IRestClient RestClient { get { return _client; } }
         
@@ -25,19 +25,19 @@ namespace Ninefold.API.Compute
             _serviceUrlRoot = serviceUrlRoot;
             _base64Secret = base64Secret;
             _client = new RestClient(serviceUrlRoot);
-            _requestBuilder = new ComputeRequestBuilder();
+            _computeRequestBuilder = new ComputeRequestBuilder();
             _requestSigner = new RequestSigningService();
         }
 
         public MachineResponse Deploy()
         {
-            var command = new DeployVirtualMachine(_apiKey, _base64Secret,_requestSigner, _requestBuilder, _client);
+            var command = new DeployVirtualMachine(_apiKey, _base64Secret,_requestSigner, _computeRequestBuilder, _client);
             return (MachineResponse) command.Execute();
         }
 
         public MachineResponse Start(string machineId)
         {
-            var command = new StartVirtualMachine(_apiKey, _base64Secret, _serviceUrlRoot, _requestSigner, _requestBuilder);
+            var command = new StartVirtualMachine(_apiKey, _base64Secret, _serviceUrlRoot, _requestSigner, _computeRequestBuilder);
             return (MachineResponse) command.Execute();
         }
 

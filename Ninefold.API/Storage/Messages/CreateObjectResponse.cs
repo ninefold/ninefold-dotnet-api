@@ -1,8 +1,9 @@
 ﻿using System.Net;
+using Ninefold.API.Core;
 
 namespace Ninefold.API.Storage.Messages
 {
-    public class CreateObjectResponse
+    public class CreateObjectResponse : ICommandResponse
     {
         public HttpStatusCode StatusCode { get; set; }
         public string StatusMessage { get; set; }

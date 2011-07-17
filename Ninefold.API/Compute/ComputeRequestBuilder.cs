@@ -6,10 +6,11 @@ using System.Reflection;
 using System.Text;
 using Ninefold.API.Core;
 using RestSharp;
+using RestSharp.Contrib;
 
 namespace Ninefold.API.Compute
 {
-    public class ComputeRequestBuilder : IRequestBuilder
+    public class ComputeRequestBuilder : IComputeRequestBuilder
     {
         private const BindingFlags PropertyFilters = BindingFlags.Public | BindingFlags.Instance;
 
@@ -34,7 +35,7 @@ namespace Ninefold.API.Compute
                 queryString.Append(string.Format("{0}={1}&", property.Key, property.Value));
             }
             queryString.Remove(queryString.Length - 1, 1);
-            var escapedQueryString = Uri.EscapeUriString(queryString.ToString());
+            var escapedQueryString = HttpUtility.UrlEncode(queryString.ToString());
 
             return new RestRequest("?" + escapedQueryString, Method.POST);
         }

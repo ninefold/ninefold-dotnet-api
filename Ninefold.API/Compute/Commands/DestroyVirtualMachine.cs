@@ -8,7 +8,7 @@ namespace Ninefold.API.Compute.Commands
     {
         readonly IRequestSigningService _signingService;
         readonly IRestClient _client;
-        readonly IRequestBuilder _requestService;
+        readonly IComputeRequestBuilder _computeRequestService;
         readonly string _apiKey;
         readonly string _base64Secret;
 
@@ -17,19 +17,19 @@ namespace Ninefold.API.Compute.Commands
         public DestroyVirtualMachine(string apiKey, 
                                                         string base64Secret,
                                                         IRequestSigningService signingService, 
-                                                        IRequestBuilder requestService, 
+                                                        IComputeRequestBuilder computeRequestService, 
                                                         IRestClient client)
         {
             _signingService = signingService;
             _client = client;
-            _requestService = requestService;
+            _computeRequestService = computeRequestService;
             _apiKey = apiKey;
             _base64Secret = base64Secret;
         }
 
         public ICommandResponse Execute()
         {
-            var request = _requestService.GenerateRequest(null, _apiKey);
+            var request = _computeRequestService.GenerateRequest(null, _apiKey);
             var signature = _signingService.GenerateRequestSignature(((RestClient)_client).BuildUri((RestRequest)request), _base64Secret);
             request.AddUrlSegment("signature", signature);
 
