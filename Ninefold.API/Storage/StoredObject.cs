@@ -14,6 +14,7 @@ namespace Ninefold.API.Storage
         readonly IStorageRequestBuilder _storageRequestBuilder;
         readonly IRequestSigningService _requestSigner;
         readonly IRestClient _client;
+        readonly string _baseUrl;
 
         public IStorageRequestBuilder StorageRequestBuilder { get { return _storageRequestBuilder; } }
         public IRequestSigningService SigningService { get { return _requestSigner; } }
@@ -24,15 +25,17 @@ namespace Ninefold.API.Storage
                                         string storageServiceRootUrl)
         {
             _userId = userId;
-            _requestSigner = new RequestSigningService();
-            _storageRequestBuilder = new StorageRequestBuilder();
+            _requestSigner = new StorageRequestSigningService();
+            _storageRequestBuilder = new StorageHttpRequestBuilder();
             _secret = base64Secret;
             _client = new RestClient(storageServiceRootUrl);
+            _baseUrl = storageServiceRootUrl;
         }
 
         public CreateObjectResponse CreateObject(CreateObjectRequest request)
         {
-            var command = new CreateObject(_userId, _secret, _storageRequestBuilder, _requestSigner, _client);
+            var command = new CreateObject(_userId, _secret, _storageRequestBuilder, _requestSigner, _client, _baseUrl);
+            command.Parameters = request;
             return (CreateObjectResponse) command.Execute();
         }
     }

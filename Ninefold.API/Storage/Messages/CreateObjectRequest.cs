@@ -9,10 +9,10 @@ namespace Ninefold.API.Storage.Messages
 
         public string Base64Content { get; set; }
 
-        [Header("content-type")]
+        [Header("content-type", false)]
         public string ContentType { get; set; }
 
-        [Header("content-length")]
+        [Header("content-length", false)]
         public long ContentLength { get; set; }
 
         [Header("x-emc-groupacl")]
@@ -26,8 +26,7 @@ namespace Ninefold.API.Storage.Messages
 
         [Header("x-emc-meta")]
         public string Metadata { get; set; }
-
-
+        
         public IEnumerable<KeyValuePair<string, string>> OptionalHeaders { get; set; }
     }
 }

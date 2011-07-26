@@ -1,12 +1,13 @@
-﻿using Ninefold.API.Compute.Messages;
+﻿using Ninefold.API.Compute.Commands;
+using Ninefold.API.Compute.Messages;
 
 namespace Ninefold.API.Compute
 {
     public interface IVirtualMachine
     {
-        MachineResponse Deploy();
+        MachineResponse Deploy(DeployVirtualMachineRequest parameters);
 
-        MachineResponse Start(string machineId);
+        MachineResponse Start(StartVirtualMachineRequest parameters);
 
         MachineResponse Stop();
     }

@@ -1,4 +1,5 @@
-﻿using Ninefold.API.Compute.Messages;
+﻿using System.Net;
+using Ninefold.API.Compute.Messages;
 using Ninefold.API.Core;
 using RestSharp;
 
@@ -30,14 +31,10 @@ namespace Ninefold.API.Compute.Commands
         public ICommandResponse Execute()
         {
             var request = _computeRequestService.GenerateRequest(Parameters, _apiKey);
-            var signature = _signingService.GenerateRequestSignature(((RestClient)_client).BuildUri((RestRequest)request), _base64Secret);
+            var signature = _signingService.GenerateRequestSignature(WebRequest.Create(""), _base64Secret);//((RestClient)_client).BuildUri((RestRequest)request), _base64Secret);
             request.AddUrlSegment("signature", signature);
 
             return _client.Execute<MachineResponse>((RestRequest)request).Data;
         }
-    }
-
-    public class StartVirtualMachineRequest : ICommandRequest
-    {
     }
 }

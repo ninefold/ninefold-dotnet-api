@@ -13,13 +13,13 @@ namespace Ninefold.API
 
         public StoredObject StoredObject { get; set; }
 
-        public StorageClient(string apiKey, string base64Secret)
-            : this (apiKey, base64Secret, DefaultStorageRootUrl)
+        public StorageClient(string userId, string base64Secret)
+            : this (userId, base64Secret, DefaultStorageRootUrl)
         { }
 
-        public StorageClient(string apiKey, string base64Secret, string storageServiceRootUrl)
+        public StorageClient(string userId, string base64Secret, string storageServiceRootUrl)
         {
-            StoredObject = new StoredObject(apiKey, base64Secret, storageServiceRootUrl);
+            StoredObject = new StoredObject(userId, base64Secret, storageServiceRootUrl);
         }
 
         public ICommandResponse Execute(ICommand command)

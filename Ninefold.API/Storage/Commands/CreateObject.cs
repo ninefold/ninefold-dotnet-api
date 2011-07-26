@@ -9,23 +9,23 @@ namespace Ninefold.API.Storage.Commands
     {
         readonly IStorageRequestBuilder _requestBuilder;
         readonly IRequestSigningService _signingService;
-        readonly IRestClient _client;
         readonly string _secret;
         readonly string _userId;
+        readonly string _baseUrl;
 
         public CreateObjectRequest Parameters { get; set; }
 
         public CreateObject(string userId,
                                         string base64Secret, 
                                         IStorageRequestBuilder requestBuilder, 
-                                        IRequestSigningService signingService, 
-                                        IRestClient restClient)
+                                        IRequestSigningService signingService,
+                                        string baseUrl)
         {
-            _client = restClient;
             _userId = userId;
             _signingService = signingService;
             _requestBuilder = requestBuilder;
             _secret = base64Secret;
+            _baseUrl = baseUrl;
         }
 
         public ICommandResponse Execute()
@@ -35,12 +35,16 @@ namespace Ninefold.API.Storage.Commands
             {
                 throw new ArgumentOutOfRangeException("If resource path is specified as an object content length must be non-zero");
             }
-            
-            var request = _requestBuilder.GenerateRequest(Parameters, Parameters.ResourcePath, _userId, Method.POST);
-            var signature = _signingService.GenerateRequestSignature(((RestClient)_client).BuildUri((RestRequest)request), _secret);
-            request.AddHeader("x-emc-signature", signature);
 
-            return _client.Execute<CreateObjectResponse>((RestRequest)request).Data;
+            var request = _requestBuilder.GenerateRequest(Parameters, new Uri(new Uri(_baseUrl), Parameters.ResourcePath), _userId, Method.POST);
+            var signature = _signingService.GenerateRequestSignature(request, _secret);
+            request.Headers.Add("x-emc-signature", signature);
+
+            var response = request.GetResponse();
+            //if (response.ErrorException != null) throw new NinefoldApiException(response.ErrorException);
+
+            //return response.Data;
+            return new CreateObjectResponse();
         }
     }
 }

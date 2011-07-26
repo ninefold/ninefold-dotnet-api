@@ -46,6 +46,7 @@
   <ItemGroup>
     <Compile Include="Compute\Commands\DeployVirtualMachine.cs" />
     <Compile Include="Compute\Commands\DestroyVirtualMachine.cs" />
+    <Compile Include="Compute\Messages\StartVirtualMachineRequest.cs" />
     <Compile Include="Compute\ComputeRequestBuilder.cs" />
     <Compile Include="Core\FieldNameAttribute.cs" />
     <Compile Include="Core\ICommandRequest.cs" />
@@ -62,7 +63,7 @@
     <Compile Include="Core\IRequestSigningService.cs" />
     <Compile Include="Core\NinefoldApiException.cs" />
     <Compile Include="ComputeClient.cs" />
-    <Compile Include="Core\RequestSigningService.cs" />
+    <Compile Include="Compute\ComputeRequestSigningService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StorageClient.cs" />
     <Compile Include="Storage\Commands\CreateObject.cs" />
@@ -70,7 +71,9 @@
     <Compile Include="Storage\IStorageRequestBuilder.cs" />
     <Compile Include="Storage\Messages\CreateObjectRequest.cs" />
     <Compile Include="Storage\Messages\CreateObjectResponse.cs" />
-    <Compile Include="Storage\StorageRequestBuilder.cs" />
+    <Compile Include="Storage\StorageRequestSigningService.cs" />
+    <Compile Include="Storage\StorageHttpRequestBuilder.cs" />
+    <Compile Include="Storage\StorageAuthenticator.cs" />
     <Compile Include="Storage\StorageService.cs" />
     <Compile Include="Storage\StoredObject.cs" />
   </ItemGroup>

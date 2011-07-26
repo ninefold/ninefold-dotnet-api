@@ -11,5 +11,7 @@ namespace Ninefold.API.Storage.Messages
         public string Location { get; set; }
         public string Delta { get; set; }
         public string Policy { get; set; }
+
+        public string ErrorMessage { get; set; }
     }
 }

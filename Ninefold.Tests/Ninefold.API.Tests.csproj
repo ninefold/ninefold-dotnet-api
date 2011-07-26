@@ -49,6 +49,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssertHelpers.cs" />
+    <Compile Include="AuthenticationTests\StorageAuthenticatorTests.cs" />
     <Compile Include="CommandTests\CreateObjectTests.cs" />
     <Compile Include="CommandTests\StartVirtualMachineTests.cs" />
     <Compile Include="Fakes\ResponseStub.cs" />

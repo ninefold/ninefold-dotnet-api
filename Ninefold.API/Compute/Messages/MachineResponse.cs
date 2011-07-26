@@ -43,7 +43,9 @@ namespace Ninefold.API.Compute.Messages
         public string TemplateName { get; set; }
         public string ZoneId { get; set; }
         public string ZoneName { get; set; }
-        public NIC[] NIC { get; set; }        
+        public NIC[] NIC { get; set; }
+
+        public string ErrorMessage { get; set; }
     }
 
     public class NIC    

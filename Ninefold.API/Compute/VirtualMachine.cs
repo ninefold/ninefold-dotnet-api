@@ -26,18 +26,20 @@ namespace Ninefold.API.Compute
             _base64Secret = base64Secret;
             _client = new RestClient(serviceUrlRoot);
             _computeRequestBuilder = new ComputeRequestBuilder();
-            _requestSigner = new RequestSigningService();
+            _requestSigner = new ComputeRequestSigningService();
         }
 
-        public MachineResponse Deploy()
+        public MachineResponse Deploy(DeployVirtualMachineRequest parameters)
         {
             var command = new DeployVirtualMachine(_apiKey, _base64Secret,_requestSigner, _computeRequestBuilder, _client);
+            command.Parameters = parameters;
             return (MachineResponse) command.Execute();
         }
 
-        public MachineResponse Start(string machineId)
+        public MachineResponse Start(StartVirtualMachineRequest parameters)
         {
             var command = new StartVirtualMachine(_apiKey, _base64Secret, _serviceUrlRoot, _requestSigner, _computeRequestBuilder);
+            command.Parameters = parameters;
             return (MachineResponse) command.Execute();
         }
 
