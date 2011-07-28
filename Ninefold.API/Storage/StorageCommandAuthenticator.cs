@@ -6,7 +6,7 @@ using Ninefold.API.Core;
 
 namespace Ninefold.API.Storage
 {
-    public class StorageRequestAuthenticator : ICommandAuthenticator
+    public class StorageCommandAuthenticator : ICommandAuthenticator
     {
         public void AuthenticateRequest(WebRequest request, string base64Secret)
         {

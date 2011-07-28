@@ -26,7 +26,7 @@ namespace Ninefold.API.Tests.AuthenticationTests
             request.Headers.Add("x-emc-uid", "6039ac182f194e15b9261d73ce044939/user1");
             request.Headers.Add("x-emc-useracl", "john=FULL_CONTROL,mary=WRITE");
 
-            var signatureService = new StorageRequestAuthenticator();
+            var signatureService = new StorageCommandAuthenticator();
             signatureService.AuthenticateRequest(request, secret);
 
             Assert.AreEqual(expectedSig, "");
@@ -46,7 +46,7 @@ namespace Ninefold.API.Tests.AuthenticationTests
                 ListableMetadata = "part4/part7/part8=quick"
             };
 
-            var requestBuilder = new StorageRequestBuilder();
+            var requestBuilder = new StorageCommandBuilder();
             requestBuilder.GenerateRequest(createRequest, "", Method.POST);
 
             

@@ -8,7 +8,7 @@ using RestSharp;
 
 namespace Ninefold.API.Storage
 {
-    public class StorageRequestBuilder : IStorageRequestBuilder
+    public class StorageCommandBuilder : IStorageCommandBuilder
     {
         private const BindingFlags PropertyFilters = BindingFlags.Public | BindingFlags.Instance;
 

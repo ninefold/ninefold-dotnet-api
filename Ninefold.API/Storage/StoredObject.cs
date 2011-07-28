@@ -10,11 +10,11 @@ namespace Ninefold.API.Storage
         readonly string _userId;
         readonly string _secret;
         readonly string _baseUrl;
-        readonly IStorageRequestBuilder _builder;        
+        readonly IStorageCommandBuilder _builder;        
         readonly ICommandAuthenticator _commandAuthenticator;
         readonly ICommandExecutor _commandExecutor;
         
-        public IStorageRequestBuilder Builder { get { return _builder; } }
+        public IStorageCommandBuilder Builder { get { return _builder; } }
         public ICommandAuthenticator Authenticator { get { return _commandAuthenticator; } }
         public ICommandExecutor Executor {get { return _commandExecutor; }}
         
@@ -22,8 +22,8 @@ namespace Ninefold.API.Storage
                                         string base64Secret, 
                                         string storageServiceRootUrl)
         {
-            _commandAuthenticator = new StorageRequestAuthenticator();
-            _builder = new StorageRequestBuilder();
+            _commandAuthenticator = new StorageCommandAuthenticator();
+            _builder = new StorageCommandBuilder();
             _commandExecutor = new StorageCommandExecutor();
             _secret = base64Secret;
             _baseUrl = storageServiceRootUrl;

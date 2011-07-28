@@ -9,7 +9,7 @@ namespace Ninefold.API.Storage.Commands
     public class CreateObject : ICommand
     {
 
-        readonly IStorageRequestBuilder _requestBuilder;
+        readonly IStorageCommandBuilder _commandBuilder;
         readonly ICommandAuthenticator _authenticator;
         readonly string _secret;
         readonly string _userId;
@@ -21,13 +21,13 @@ namespace Ninefold.API.Storage.Commands
 
         public CreateObject(string userId,
                                         string base64Secret, 
-                                        IStorageRequestBuilder requestBuilder, 
+                                        IStorageCommandBuilder commandBuilder, 
                                         ICommandAuthenticator authenticator,
                                         string baseUrl)
         {
             _userId = userId;
             _authenticator = authenticator;
-            _requestBuilder = requestBuilder;
+            _commandBuilder = commandBuilder;
             _secret = base64Secret;
             _baseUrl = baseUrl;
         }
@@ -42,7 +42,7 @@ namespace Ninefold.API.Storage.Commands
                 throw new ArgumentOutOfRangeException("If resource path is specified as an object content length must be non-zero");
             }
 
-            Request = _requestBuilder.GenerateRequest(Parameters, _userId, Method.POST);
+            Request = _commandBuilder.GenerateRequest(Parameters, _userId, Method.POST);
             _authenticator.AuthenticateRequest(Request, _secret);
             
             var contentStream = Request.GetRequestStream();

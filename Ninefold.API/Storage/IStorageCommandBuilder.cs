@@ -5,7 +5,7 @@ using RestSharp;
 
 namespace Ninefold.API.Storage
 {
-    public interface IStorageRequestBuilder
+    public interface IStorageCommandBuilder
     {
         WebRequest GenerateRequest(ICommandRequest request, string userId, Method requestMethod);
     }

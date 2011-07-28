@@ -66,13 +66,13 @@
     <Compile Include="StorageClient.cs" />
     <Compile Include="Storage\Commands\CreateObject.cs" />
     <Compile Include="Storage\HeaderAttribute.cs" />
-    <Compile Include="Storage\IStorageRequestBuilder.cs" />
+    <Compile Include="Storage\IStorageCommandBuilder.cs" />
     <Compile Include="Storage\IStoredObject.cs" />
     <Compile Include="Storage\Messages\CreateObjectRequest.cs" />
     <Compile Include="Storage\Messages\CreateObjectResponse.cs" />
     <Compile Include="Storage\StorageCommandExecutor.cs" />
-    <Compile Include="Storage\StorageRequestAuthenticator.cs" />
-    <Compile Include="Storage\StorageRequestBuilder.cs" />
+    <Compile Include="Storage\StorageCommandAuthenticator.cs" />
+    <Compile Include="Storage\StorageCommandBuilder.cs" />
     <Compile Include="Storage\StoredObject.cs" />
   </ItemGroup>
   <ItemGroup />

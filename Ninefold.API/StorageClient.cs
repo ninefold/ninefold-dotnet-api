@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Ninefold.API.Core;
+﻿using Ninefold.API.Core;
 using Ninefold.API.Storage;
 
 namespace Ninefold.API
@@ -24,6 +20,7 @@ namespace Ninefold.API
 
         ICommandResponse ICommandExecutor.Execute(ICommand command)
         {
+            command.Prepare();
             return command.Execute();
         }
     }
