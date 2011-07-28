@@ -7,7 +7,7 @@ namespace Ninefold.API
     {
         const string DefaultStorageRootUrl = "http://onlinestorage.ninefold.com";
 
-        public IStoredObject StoredObject { get; set; }
+        public IStoredObject StoredObject { get; private set; }
 
         public StorageClient(string userId, string base64Secret)
             : this (userId, base64Secret, DefaultStorageRootUrl)
