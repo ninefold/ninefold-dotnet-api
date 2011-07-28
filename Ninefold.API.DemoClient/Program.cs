@@ -31,7 +31,6 @@ namespace Ninefold.API.DemoClient
                                                                                        ListableMetadata = "part4/part7/part8=quick"
                                                                                    });
             Console.WriteLine("Object stored at {0}", storedObjectResponse.Location);
-
             Console.ReadKey();
         }
     }
