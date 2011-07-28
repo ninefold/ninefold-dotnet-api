@@ -34,7 +34,7 @@ namespace Ninefold.API.Storage
 
         public CreateObjectResponse CreateObject(CreateObjectRequest request)
         {
-            var command = new CreateObject(_userId, _secret, _storageRequestBuilder, _requestSigner, _client, _baseUrl);
+            var command = new CreateObject(_userId, _secret, _storageRequestBuilder, _requestSigner, _baseUrl);
             command.Parameters = request;
             return (CreateObjectResponse) command.Execute();
         }

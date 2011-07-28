@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Net;
-using System.Text;
+﻿using System.Net;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Ninefold.API.Storage;
-using RestSharp;
 
 namespace Ninefold.API.Tests.AuthenticationTests
 {
