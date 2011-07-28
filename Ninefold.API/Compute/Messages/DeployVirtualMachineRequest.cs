@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using Ninefold.API.Core;
 
@@ -6,6 +7,8 @@ namespace Ninefold.API.Compute.Messages
 {
     public class DeployVirtualMachineRequest : ICommandRequest
     {
+        public Uri Resource { get; set; }
+
         [Required]
         public string ServiceOfferingId { get; set; }
         [Required]
@@ -26,6 +29,7 @@ namespace Ninefold.API.Compute.Messages
         public string Size { get; set; }
         [StringLength(2048)]
         public string Base64UserData { get; set; }
- 
+
+        
     }
 }

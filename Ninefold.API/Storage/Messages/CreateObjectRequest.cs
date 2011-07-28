@@ -1,19 +1,20 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using Ninefold.API.Core;
 
 namespace Ninefold.API.Storage.Messages
 {
     public class CreateObjectRequest : ICommandRequest
     {
-        public string ResourcePath { get; set; }
+        [Required]
+        public Uri Resource { get; set; }
 
+        [Required]
         public byte[] Content { get; set; }
 
         [Header("content-type", false)]
         public string ContentType { get; set; }
-
-        [Header("content-length", false)]
-        public long ContentLength { get; set; }
 
         [Header("x-emc-groupacl")]
         public string GroupACL { get; set; }

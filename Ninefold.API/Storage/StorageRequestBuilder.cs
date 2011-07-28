@@ -1,24 +1,22 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Net;
 using System.Reflection;
-using System.Text;
 using Ninefold.API.Core;
 using RestSharp;
 
 namespace Ninefold.API.Storage
 {
-    public class StorageHttpRequestBuilder : IStorageRequestBuilder
+    public class StorageRequestBuilder : IStorageRequestBuilder
     {
         private const BindingFlags PropertyFilters = BindingFlags.Public | BindingFlags.Instance;
 
-        public WebRequest GenerateRequest(ICommandRequest request, Uri resource, string userId, Method requestMethod)
+        public WebRequest GenerateRequest(ICommandRequest request, string userId, Method requestMethod)
         {
             Validator.ValidateObject(request, new ValidationContext(request, null, null), true);
             
-            var webRequest = WebRequest.Create(resource);
+            var webRequest = WebRequest.Create(request.Resource);
             webRequest.Method = requestMethod.ToString();
             webRequest.ContentType = "application/octet-stream";
 

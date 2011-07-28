@@ -9,7 +9,7 @@ namespace Ninefold.API.Compute.Commands
 {
     public class DeployVirtualMachine : ICommand
     {
-        readonly IRequestSigningService _signingService;
+        readonly ICommandAuthenticator _authenticator;
         readonly IRestClient _client;
         readonly IComputeRequestBuilder _computeRequestService;
         readonly string _apiKey;
@@ -19,11 +19,11 @@ namespace Ninefold.API.Compute.Commands
 
         public DeployVirtualMachine(string apiKey, 
                                                         string base64Secret,
-                                                        IRequestSigningService signingService, 
+                                                        ICommandAuthenticator authenticator, 
                                                         IComputeRequestBuilder computeRequestService, 
                                                         IRestClient client)
         {
-            _signingService = signingService;
+            _authenticator = authenticator;
             _client = client;
             _computeRequestService = computeRequestService;
             _apiKey = apiKey;
@@ -36,7 +36,7 @@ namespace Ninefold.API.Compute.Commands
 
             var request = _computeRequestService.GenerateRequest(Parameters, _apiKey);
             var uri = Uri.UnescapeDataString(((RestClient) _client).BuildUri((RestRequest) request).ToString());
-            var signature = _signingService.GenerateRequestSignature(WebRequest.Create(""), _base64Secret);//new Uri(uri), _base64Secret);
+            var signature = _authenticator.GenerateRequestSignature(WebRequest.Create(""), _base64Secret);//new Uri(uri), _base64Secret);
             request.AddUrlSegment("signature", signature);
 
             var response = _client.Execute<MachineResponse>((RestRequest) request);
@@ -47,10 +47,23 @@ namespace Ninefold.API.Compute.Commands
             return responseMessage;
         }
 
+        public void Prepare()
+        {
+            throw new NotImplementedException();
+        }
+
         private void ValidateRequest()
         {
             if (!string.IsNullOrWhiteSpace(Parameters.Account) && string.IsNullOrWhiteSpace(Parameters.DomainId)) { throw new ArgumentNullException("DomainId", "DomainId must be provided when an Account is provided");}
             if (!string.IsNullOrWhiteSpace(Parameters.DiskOfferingId) && (string.IsNullOrWhiteSpace(Parameters.Size))) { throw new ArgumentOutOfRangeException("Either the DiskOfferingId or the Size parameter can be provided");}            
+        }
+    }
+
+    public class NinefoldApiException : Exception
+    {
+        public NinefoldApiException(Exception errorException)
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -8,5 +8,6 @@ namespace Ninefold.API.Core
     public interface ICommand
     {
         ICommandResponse Execute();
+        void Prepare();
     }
 }

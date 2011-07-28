@@ -6,7 +6,7 @@ using Ninefold.API.Core;
 
 namespace Ninefold.API.Storage
 {
-    public class StorageRequestSigningService : IRequestSigningService
+    public class StorageRequestAuthenticator : ICommandAuthenticator
     {
         public string GenerateRequestSignature(WebRequest request, string base64Secret)
         {

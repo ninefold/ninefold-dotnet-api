@@ -5,7 +5,7 @@ using Ninefold.API.Core;
 
 namespace Ninefold.API.Compute
 {
-    public class ComputeRequestSigningService : IRequestSigningService
+    public class ComputeRequestAuthenticator : ICommandAuthenticator
     {
         public string GenerateRequestSignature(WebRequest request, string base64Secret)
         {

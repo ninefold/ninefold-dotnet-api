@@ -1,6 +1,9 @@
-﻿using System.Net;
+﻿using System;
+using System.Net;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Ninefold.API.Storage;
+using Ninefold.API.Storage.Messages;
+using RestSharp;
 
 namespace Ninefold.API.Tests.AuthenticationTests
 {
@@ -12,10 +15,10 @@ namespace Ninefold.API.Tests.AuthenticationTests
         {
             const string secret = "LJLuryj6zs8ste6Y3jTGQp71xq0=";
             const string expectedSig = "WHJo1MFevMnK4jCthJ974L3YHoo=";
-            
+
             var request = WebRequest.Create("http://onlinestorage.ninefold.com/rest/objects");
             request.Method = "POST";
-            request.ContentType = "application/octet-stream";            
+            request.ContentType = "application/octet-stream";
             request.Headers.Add("x-emc-groupacl", "other=NONE");
             request.Headers.Add("x-emc-date", "Thu, 05 Jun 2008 16:38:19 GMT");
             request.Headers.Add("x-emc-listable-meta", "part4/part7/part8=quick");
@@ -23,11 +26,32 @@ namespace Ninefold.API.Tests.AuthenticationTests
             request.Headers.Add("x-emc-uid", "6039ac182f194e15b9261d73ce044939/user1");
             request.Headers.Add("x-emc-useracl", "john=FULL_CONTROL,mary=WRITE");
 
-            var signatureService = new StorageRequestSigningService();
+            var signatureService = new StorageRequestAuthenticator();
             var signature = signatureService.GenerateRequestSignature(request, secret);
 
             Assert.AreEqual(expectedSig, signature);
         }
 
+        [TestMethod]
+        public void SignatureTest()
+        {
+            //Arrange
+            var createRequest = new CreateObjectRequest
+            {
+                Content = new byte[] { 0x0, 0x1, 0x2},
+                Resource = new Uri("/rest/object"),
+                GroupACL = "other=NONE",
+                ACL = "godbold=FULL_CONTROL",
+                Metadata = "part1=buy",
+                ListableMetadata = "part4/part7/part8=quick"
+            };
+
+            var requestBuilder = new StorageRequestBuilder();
+            requestBuilder.GenerateRequest(createRequest, "", Method.POST);
+
+            
+
+
+        }
     }
 }

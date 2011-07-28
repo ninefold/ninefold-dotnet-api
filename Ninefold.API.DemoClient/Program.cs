@@ -25,7 +25,7 @@ namespace Ninefold.API.DemoClient
             var storedObjectResponse = storageClient.StoredObject.CreateObject(new CreateObjectRequest
                                                                                    {
                                                                                        Content = demoContent,
-                                                                                       ResourcePath ="/rest/object",
+                                                                                       Resource =new Uri("/rest/objects", UriKind.Relative),
                                                                                        GroupACL = "other=NONE",
                                                                                        ACL = "godbold=FULL_CONTROL",
                                                                                        Metadata = "part1=buy",
