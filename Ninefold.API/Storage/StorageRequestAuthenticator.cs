@@ -8,7 +8,7 @@ namespace Ninefold.API.Storage
 {
     public class StorageRequestAuthenticator : ICommandAuthenticator
     {
-        public string GenerateRequestSignature(WebRequest request, string base64Secret)
+        public void AuthenticateRequest(WebRequest request, string base64Secret)
         {
             var secret = Convert.FromBase64String(base64Secret);
             var hashingAlg = new System.Security.Cryptography.HMACSHA1(secret);
@@ -32,7 +32,8 @@ namespace Ninefold.API.Storage
                              requestRelativeUri + "\n" +
                              canonHeaders;
 
-            return Convert.ToBase64String(hashingAlg.ComputeHash(Encoding.Default.GetBytes(hashString)));
+            var signature = Convert.ToBase64String(hashingAlg.ComputeHash(Encoding.Default.GetBytes(hashString)));
+            request.Headers.Add("x-emc-signature", signature);
         }
     }
 }

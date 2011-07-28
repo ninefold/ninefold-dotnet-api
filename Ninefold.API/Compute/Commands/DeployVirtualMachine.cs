@@ -36,9 +36,8 @@ namespace Ninefold.API.Compute.Commands
 
             var request = _computeRequestService.GenerateRequest(Parameters, _apiKey);
             var uri = Uri.UnescapeDataString(((RestClient) _client).BuildUri((RestRequest) request).ToString());
-            var signature = _authenticator.GenerateRequestSignature(WebRequest.Create(""), _base64Secret);//new Uri(uri), _base64Secret);
-            request.AddUrlSegment("signature", signature);
-
+            _authenticator.AuthenticateRequest(WebRequest.Create(""), _base64Secret);//new Uri(uri), _base64Secret);
+            
             var response = _client.Execute<MachineResponse>((RestRequest) request);
             if (response.ErrorException != null) throw new NinefoldApiException(response.ErrorException);
             var responseMessage = response.Data ?? new MachineResponse();

@@ -27,9 +27,9 @@ namespace Ninefold.API.Tests.AuthenticationTests
             request.Headers.Add("x-emc-useracl", "john=FULL_CONTROL,mary=WRITE");
 
             var signatureService = new StorageRequestAuthenticator();
-            var signature = signatureService.GenerateRequestSignature(request, secret);
+            signatureService.AuthenticateRequest(request, secret);
 
-            Assert.AreEqual(expectedSig, signature);
+            Assert.AreEqual(expectedSig, "");
         }
 
         [TestMethod]

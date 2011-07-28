@@ -43,8 +43,8 @@ namespace Ninefold.API.Storage.Commands
             }
 
             Request = _requestBuilder.GenerateRequest(Parameters, _userId, Method.POST);
-            var signature = _authenticator.GenerateRequestSignature(Request, _secret);
-            Request.Headers.Add("x-emc-signature", signature);
+            _authenticator.AuthenticateRequest(Request, _secret);
+            
             var contentStream = Request.GetRequestStream();
 
             if (Parameters.Content != null)

@@ -32,9 +32,7 @@ namespace Ninefold.API.Compute.Commands
         public ICommandResponse Execute()
         {
             var request = _computeRequestService.GenerateRequest(Parameters, _apiKey);
-            var signature = _authenticator.GenerateRequestSignature(WebRequest.Create(""), _base64Secret);//((RestClient)_client).BuildUri((RestRequest)request), _base64Secret);
-            request.AddUrlSegment("signature", signature);
-
+            _authenticator.AuthenticateRequest(WebRequest.Create(""), _base64Secret);//((RestClient)_client).BuildUri((RestRequest)request), _base64Secret);
             return _client.Execute<MachineResponse>((RestRequest)request).Data;
         }
 
