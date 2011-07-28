@@ -4,7 +4,6 @@ using System.Linq;
 using System.Net;
 using System.Reflection;
 using Ninefold.API.Core;
-using RestSharp;
 
 namespace Ninefold.API.Storage
 {
@@ -12,7 +11,7 @@ namespace Ninefold.API.Storage
     {
         private const BindingFlags PropertyFilters = BindingFlags.Public | BindingFlags.Instance;
 
-        public WebRequest GenerateRequest(ICommandRequest request, string userId, Method requestMethod)
+        public WebRequest GenerateRequest(ICommandRequest request, string userId, HttpMethod requestMethod)
         {
             Validator.ValidateObject(request, new ValidationContext(request, null, null), true);
             
@@ -43,5 +42,6 @@ namespace Ninefold.API.Storage
             
             return webRequest;
         }
+
     }
 }

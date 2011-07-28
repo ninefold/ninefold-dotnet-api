@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Net;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Ninefold.API.Core;
 using Ninefold.API.Storage;
 using Ninefold.API.Storage.Messages;
-using RestSharp;
 
 namespace Ninefold.API.Tests.AuthenticationTests
 {
@@ -47,11 +47,7 @@ namespace Ninefold.API.Tests.AuthenticationTests
             };
 
             var requestBuilder = new StorageCommandBuilder();
-            requestBuilder.GenerateRequest(createRequest, "", Method.POST);
-
-            
-
-
+            requestBuilder.GenerateRequest(createRequest, "", HttpMethod.POST);
         }
     }
 }

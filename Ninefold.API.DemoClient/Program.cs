@@ -25,7 +25,7 @@ namespace Ninefold.API.DemoClient
             var storedObjectResponse = storageClient.StoredObject.CreateObject(new CreateObjectRequest
                                                                                    {
                                                                                        Content = demoContent,
-                                                                                       Resource =new Uri("/rest/objects", UriKind.Relative),
+                                                                                       Resource = new Uri("/rest/objects", UriKind.Relative),
                                                                                        GroupACL = "other=NONE",
                                                                                        ACL = "godbold=FULL_CONTROL",
                                                                                        Metadata = "part1=buy",
@@ -33,6 +33,15 @@ namespace Ninefold.API.DemoClient
                                                                                    });
 
             Console.WriteLine("Object stored at {0}", storedObjectResponse.Location);
+            Console.ReadKey();
+            Console.WriteLine("Deleting object stored at {0}", storedObjectResponse.Location);
+
+            storageClient.StoredObject.DeleteObject(new DeleteObjectRequest
+                                                                                    {
+                                                                                        Resource = new Uri(storedObjectResponse.Location, UriKind.Relative)
+                                                                                    });
+
+            Console.WriteLine("Object at {0} deleted", storedObjectResponse.Location);
             Console.ReadKey();
         }
     }
