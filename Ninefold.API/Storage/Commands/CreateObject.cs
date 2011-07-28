@@ -30,8 +30,10 @@ namespace Ninefold.API.Storage.Commands
 
         public ICommandResponse Execute()
         {
-            if ((string.IsNullOrWhiteSpace(Parameters.Base64Content) && 
-                (!Parameters.ResourcePath[Parameters.ResourcePath.Length].Equals('/'))))
+            if (Parameters == null) throw new ArgumentException("Parameters");
+
+            if ((Parameters.Content == null || Parameters.Content.Length == 0) && 
+                (!Parameters.ResourcePath[Parameters.ResourcePath.Length].Equals('/')))
             {
                 throw new ArgumentOutOfRangeException("If resource path is specified as an object content length must be non-zero");
             }
@@ -39,12 +41,17 @@ namespace Ninefold.API.Storage.Commands
             var request = _requestBuilder.GenerateRequest(Parameters, new Uri(new Uri(_baseUrl), Parameters.ResourcePath), _userId, Method.POST);
             var signature = _signingService.GenerateRequestSignature(request, _secret);
             request.Headers.Add("x-emc-signature", signature);
-
+            var contentStream = request.GetRequestStream();
+            contentStream.Write(Parameters.Content, 0, Parameters.Content.Length);
+           
             var response = request.GetResponse();
-            //if (response.ErrorException != null) throw new NinefoldApiException(response.ErrorException);
 
-            //return response.Data;
-            return new CreateObjectResponse();
+            return new CreateObjectResponse
+                       {
+                           Delta = response.Headers["x-emc-delta"],
+                           Location = response.Headers["location"],
+                           Policy = response.Headers["x-emc-policy"]
+                       };
         }
     }
 }

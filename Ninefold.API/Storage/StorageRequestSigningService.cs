@@ -14,8 +14,7 @@ namespace Ninefold.API.Storage
             var hashingAlg = new System.Security.Cryptography.HMACSHA1(secret);
 
             var canonHeaders = request.Headers.AllKeys
-                .Where(h => h.StartsWith("x-emc", StringComparison.InvariantCultureIgnoreCase) &&
-                                        (!h.Equals("x-emc-date", StringComparison.InvariantCultureIgnoreCase)))                
+                .Where(h => h.StartsWith("x-emc", StringComparison.InvariantCultureIgnoreCase))             
                 .OrderBy(h => h.ToLowerInvariant())
                 .Select(h => h + ":" + request.Headers[h].Trim())
                 .Aggregate(string.Empty, (current, header) => current + header + "\n")
@@ -23,7 +22,7 @@ namespace Ninefold.API.Storage
 
             var contentType = request.ContentType ?? string.Empty;
             var range = request.Headers["range"] ?? string.Empty;
-            var date = request.Headers["x-emc-date"] ?? request.Headers["date"];
+            var date = request.Headers["date"] ?? string.Empty;
             var requestRelativeUri = request.RequestUri.Segments.Aggregate(string.Empty, (current, segment) => current + segment);
 
             var hashString = request.Method + "\n" +

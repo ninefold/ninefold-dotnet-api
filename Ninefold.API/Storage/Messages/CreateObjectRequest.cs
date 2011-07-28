@@ -7,7 +7,7 @@ namespace Ninefold.API.Storage.Messages
     {
         public string ResourcePath { get; set; }
 
-        public string Base64Content { get; set; }
+        public byte[] Content { get; set; }
 
         [Header("content-type", false)]
         public string ContentType { get; set; }
@@ -26,7 +26,5 @@ namespace Ninefold.API.Storage.Messages
 
         [Header("x-emc-meta")]
         public string Metadata { get; set; }
-        
-        public IEnumerable<KeyValuePair<string, string>> OptionalHeaders { get; set; }
     }
 }
