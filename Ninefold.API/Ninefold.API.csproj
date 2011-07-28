@@ -67,6 +67,7 @@
     <Compile Include="Storage\Commands\CreateObject.cs" />
     <Compile Include="Storage\HeaderAttribute.cs" />
     <Compile Include="Storage\IStorageRequestBuilder.cs" />
+    <Compile Include="Storage\IStoredObject.cs" />
     <Compile Include="Storage\Messages\CreateObjectRequest.cs" />
     <Compile Include="Storage\Messages\CreateObjectResponse.cs" />
     <Compile Include="Storage\StorageCommandExecutor.cs" />

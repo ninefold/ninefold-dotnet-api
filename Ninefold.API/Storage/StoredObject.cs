@@ -5,7 +5,7 @@ using Ninefold.API.Storage.Messages;
 
 namespace Ninefold.API.Storage
 {
-    public class StoredObject
+    public class StoredObject : IStoredObject
     {
         readonly string _userId;
         readonly string _secret;
