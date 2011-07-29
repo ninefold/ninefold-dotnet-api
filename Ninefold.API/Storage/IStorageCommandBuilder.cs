@@ -7,6 +7,6 @@ namespace Ninefold.API.Storage
 {
     public interface IStorageCommandBuilder
     {
-        WebRequest GenerateRequest(ICommandRequest request, string userId, HttpMethod requestMethod);
+        HttpWebRequest GenerateRequest(ICommandRequest request, string userId, HttpMethod requestMethod);
     }
 }

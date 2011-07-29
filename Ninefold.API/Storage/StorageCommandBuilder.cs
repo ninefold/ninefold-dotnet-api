@@ -11,11 +11,11 @@ namespace Ninefold.API.Storage
     {
         private const BindingFlags PropertyFilters = BindingFlags.Public | BindingFlags.Instance;
 
-        public WebRequest GenerateRequest(ICommandRequest request, string userId, HttpMethod requestMethod)
+        public HttpWebRequest GenerateRequest(ICommandRequest request, string userId, HttpMethod requestMethod)
         {
             Validator.ValidateObject(request, new ValidationContext(request, null, null), true);
             
-            var webRequest = WebRequest.Create(request.Resource);
+            var webRequest = (HttpWebRequest) WebRequest.Create(request.Resource);
             webRequest.Method = requestMethod.ToString();
             webRequest.ContentType = "application/octet-stream";
 
@@ -34,7 +34,7 @@ namespace Ninefold.API.Storage
 
             properties.Add(new { Name = "x-emc-date", Value = DateTime.UtcNow.ToString("r") });
             properties.Add(new { Name = "x-emc-uid", Value = userId });
-
+            
             foreach (var property in properties)
             {
                 webRequest.Headers.Add(property.Name, property.Value);

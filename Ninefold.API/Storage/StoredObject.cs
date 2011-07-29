@@ -32,32 +32,30 @@ namespace Ninefold.API.Storage
 
         public CreateObjectResponse CreateObject(CreateObjectRequest request)
         {
-            var command = new CreateObject(_userId, _secret, _builder, _authenticator);
-
-            if (!request.Resource.IsAbsoluteUri)
-            {
-                var relativeResourcePath = request.Resource;
-                request.Resource = new Uri(new Uri(_baseUrl), relativeResourcePath);
-            }
-
-            command.Parameters = request;
-
+            EnsureAbsoluteUri(request);
+            var command = new CreateObject(_userId, _secret, _builder, _authenticator) { Parameters = request };
             return (CreateObjectResponse) _commandExecutor.Execute(command);
         }
 
         public DeleteObjectResponse DeleteObject(DeleteObjectRequest request)
         {
-            var command = new DeleteObject(_userId, _secret, _builder, _authenticator);
-
-            if (!request.Resource.IsAbsoluteUri)
-            {
-                var relativeResourcePath = request.Resource;
-                request.Resource = new Uri(new Uri(_baseUrl), relativeResourcePath);
-            }
-
-            command.Parameters = request;
-
+            EnsureAbsoluteUri(request);
+            var command = new DeleteObject(_userId, _secret, _builder, _authenticator) { Parameters = request } ;
             return (DeleteObjectResponse)_commandExecutor.Execute(command);
+        }
+
+        public GetObjectResponse GetObject(GetObjectRequest request)
+        {
+            EnsureAbsoluteUri(request);
+            var command = new GetObject(_userId, _secret, _builder, _authenticator) { Parameters = request };                        
+            return (GetObjectResponse)_commandExecutor.Execute(command);
+        }
+
+        private void EnsureAbsoluteUri(ICommandRequest request)
+        {
+            if (request.Resource.IsAbsoluteUri) return;
+            var relativeResourcePath = request.Resource;
+            request.Resource = new Uri(new Uri(_baseUrl), relativeResourcePath);
         }
     }
 }

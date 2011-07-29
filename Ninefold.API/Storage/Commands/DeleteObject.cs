@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Text;
+﻿using System.Net;
 using Ninefold.API.Core;
 using Ninefold.API.Storage.Messages;
 
@@ -38,6 +35,7 @@ namespace Ninefold.API.Storage.Commands
         public ICommandResponse Execute()
         {
             var response = Request.GetResponse();
+            if (response == null)  { return new DeleteObjectResponse {ErrorMessage = "No response returned"}; }
 
             return new DeleteObjectResponse
                        {

@@ -8,7 +8,6 @@ namespace Ninefold.API.Storage.Commands
 {
     public class CreateObject : ICommand
     {
-
         readonly IStorageCommandBuilder _commandBuilder;
         readonly ICommandAuthenticator _authenticator;
         readonly string _secret;
