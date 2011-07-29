@@ -24,8 +24,14 @@ namespace Ninefold.API.Storage.Messages
 
         [Header("x-emc-listable-meta")]
         public string ListableMetadata { get; set; }
-
+        
         [Header("x-emc-meta")]
         public string Metadata { get; set; }
+
+        [Header("x-emc-listable-tags")]
+        public string ListableTags { get; set; }
+
+        [Header("x-emc-user-tags")]
+        public string UserTags { get; set; }
     }
 }
