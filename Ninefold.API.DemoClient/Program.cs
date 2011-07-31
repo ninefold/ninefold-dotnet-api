@@ -28,8 +28,7 @@ namespace Ninefold.API.DemoClient
                                                                                    {
                                                                                        Content = demoContent,
                                                                                        Resource =
-                                                                                           new Uri("/rest/objects",
-                                                                                                   UriKind.Relative),
+                                                                                           new Uri("objects", UriKind.Relative),
                                                                                        GroupACL = "other=NONE",
                                                                                        ACL = "godbold=FULL_CONTROL",
                                                                                        Metadata = "part1=buy",
@@ -39,6 +38,44 @@ namespace Ninefold.API.DemoClient
 
             Console.WriteLine("Object stored at {0}", storedObjectResponse.Location);
             Console.ReadKey();
+
+            var namespaceCreateResponse = storageClient.StoredObject.CreateObject(new CreateObjectRequest
+            {
+                Resource =
+                    new Uri("namespace/test/profiles of stuff/", UriKind.Relative),
+                GroupACL = "other=NONE",
+                ACL = "godbold=FULL_CONTROL",
+                Metadata = "part1=buy",
+                ListableMetadata =
+                    "part4/part7/part8=quick"
+            });
+
+            Console.WriteLine("Namespace created at {0}", namespaceCreateResponse.Location);
+            Console.ReadKey();
+
+            var getNamespaceResponse =
+                storageClient.StoredObject.GetObject(new GetObjectRequest
+                {
+                    Resource = new Uri(namespaceCreateResponse.Location, UriKind.Relative),
+                });
+
+            var namespaceContent = Encoding.ASCII.GetChars(getNamespaceResponse.Content, 0, getNamespaceResponse.Content.Length);
+            var namespaceContentString = new string(namespaceContent);
+
+            Console.WriteLine("Namespace {0} retrieved", namespaceCreateResponse.Location);
+            Console.WriteLine("Content: {0}", namespaceContentString);
+            Console.ReadKey(); 
+
+            Console.WriteLine("Deleting namespace at {0}", namespaceCreateResponse.Location);
+
+            storageClient.StoredObject.DeleteObject(new DeleteObjectRequest
+            {
+                Resource = new Uri(namespaceCreateResponse.Location, UriKind.Relative)
+            });
+
+            Console.WriteLine("Namespace at {0} deleted", namespaceCreateResponse.Location);
+            Console.ReadKey();
+
 
             var getFullObjectResponse =
                 storageClient.StoredObject.GetObject(new GetObjectRequest

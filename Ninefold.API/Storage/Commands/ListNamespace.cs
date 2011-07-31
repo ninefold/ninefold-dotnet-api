@@ -1,10 +1,12 @@
-﻿using System.Net;
+﻿using System;
+using System.IO;
+using System.Net;
 using Ninefold.API.Core;
 using Ninefold.API.Storage.Messages;
 
 namespace Ninefold.API.Storage.Commands
 {
-    public class DeleteObject : ICommand
+    public class ListNamespace : ICommand
     {
         readonly IStorageCommandBuilder _commandBuilder;
         readonly ICommandAuthenticator _authenticator;
@@ -13,9 +15,9 @@ namespace Ninefold.API.Storage.Commands
 
         public HttpWebRequest Request { get; private set; }
 
-        public DeleteObjectRequest Parameters { get; set; }
+        public ListNamespaceRequest Parameters { get; set; }
 
-        public DeleteObject(string userId,
+        public ListNamespace(string userId,
                                         string base64Secret, 
                                         IStorageCommandBuilder commandBuilder, 
                                         ICommandAuthenticator authenticator)
@@ -28,20 +30,29 @@ namespace Ninefold.API.Storage.Commands
 
         public void Prepare()
         {
-            Request = _commandBuilder.GenerateRequest(Parameters, _userId, HttpMethod.DELETE);
+            Request = _commandBuilder.GenerateRequest(Parameters, _userId, HttpMethod.GET);
             _authenticator.AuthenticateRequest(Request, _secret);
         }
 
         public ICommandResponse Execute()
         {
             var response = Request.GetResponse();
-            if (response == null)  { return new DeleteObjectResponse {ErrorMessage = "No response returned"}; }
+            var listResponse = new ListNamespaceResponse
+            {
+                GroupAcl = response.Headers["x-emc-groupacl"],
+                UserAcl = response.Headers["x-emc-useracl"],
+                Policy = response.Headers["x-emc-policy"],
+                Meta = response.Headers["x-emc-meta"],
+            };
 
-            return new DeleteObjectResponse
-                       {
-                           Delta = long.Parse(response.Headers["x-emc-delta"]),
-                           Policy = response.Headers["x-emc-policy"]
-                       };
+            var responseStream = response.GetResponseStream();
+            if ((responseStream != null) && (responseStream.CanRead))
+            {
+                var reader = new StreamReader(responseStream);
+                listResponse.Content = reader.CurrentEncoding.GetBytes(reader.ReadToEnd());
+            }
+
+            return listResponse;
         }
     }
 }

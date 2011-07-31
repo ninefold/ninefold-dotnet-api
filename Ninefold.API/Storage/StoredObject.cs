@@ -34,6 +34,7 @@ namespace Ninefold.API.Storage
         {
             EnsureAbsoluteUri(request);
             var command = new CreateObject(_userId, _secret, _builder, _authenticator) { Parameters = request };
+            
             return (CreateObjectResponse) _commandExecutor.Execute(command);
         }
 
@@ -56,6 +57,13 @@ namespace Ninefold.API.Storage
             EnsureAbsoluteUri(request);
             var command = new UpdateObject(_userId, _secret, _builder, _authenticator) { Parameters = request };
             return (UpdateObjectResponse)_commandExecutor.Execute(command);
+        }
+
+        public ListNamespaceResponse ListNamespace(ListNamespaceRequest request)
+        {
+            EnsureAbsoluteUri(request);
+            var command = new ListNamespace(_userId, _secret, _builder, _authenticator) { Parameters = request };
+            return (ListNamespaceResponse)_commandExecutor.Execute(command);
         }
 
         private void EnsureAbsoluteUri(ICommandRequest request)

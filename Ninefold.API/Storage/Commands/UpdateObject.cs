@@ -45,7 +45,7 @@ namespace Ninefold.API.Storage.Commands
 
             return new UpdateObjectResponse
             {
-                Delta = response.Headers["x-emc-delta"],
+                Delta = long.Parse(response.Headers["x-emc-delta"]),
                 Location = response.Headers["location"],
                 Policy = response.Headers["x-emc-policy"]
             };

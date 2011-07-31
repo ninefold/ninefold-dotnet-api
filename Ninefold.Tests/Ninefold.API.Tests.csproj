@@ -52,12 +52,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssertHelpers.cs" />
-    <Compile Include="AuthenticationTests\StorageAuthenticatorTests.cs" />
-    <Compile Include="CommandTests\CreateObjectTests.cs" />
-    <Compile Include="CommandTests\StartVirtualMachineTests.cs" />
     <Compile Include="Fakes\ResponseStub.cs" />
     <Compile Include="Fakes\ComputeServiceStub.cs" />
     <Compile Include="Fakes\StorageServiceStub.cs" />
+    <Compile Include="FunctionalTests\StorageTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -66,7 +64,6 @@
       <Name>Ninefold.API</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

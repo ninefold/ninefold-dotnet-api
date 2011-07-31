@@ -23,8 +23,8 @@ namespace Ninefold.API.Storage
             var contentType = request.ContentType ?? string.Empty;
             var range = request.Headers["range"] ?? string.Empty;
             var date = request.Headers["date"] ?? string.Empty;
-            var requestRelativeUri = request.RequestUri.Segments.Aggregate(string.Empty, (current, segment) => current + segment);
-
+            var requestRelativeUri = Uri.UnescapeDataString(request.RequestUri.Segments.Aggregate(string.Empty, (current, segment) => current + segment));
+            
             var hashString = request.Method + "\n" +
                              contentType + "\n" +
                              range + "\n" +

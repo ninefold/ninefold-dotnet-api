@@ -8,5 +8,6 @@ namespace Ninefold.API.Storage
         DeleteObjectResponse DeleteObject(DeleteObjectRequest request);
         GetObjectResponse GetObject(GetObjectRequest request);
         UpdateObjectResponse UpdateObject(UpdateObjectRequest request);
+        ListNamespaceResponse ListNamespace(ListNamespaceRequest request);
     }
 }
