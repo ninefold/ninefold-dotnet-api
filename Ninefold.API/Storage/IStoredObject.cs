@@ -9,5 +9,6 @@ namespace Ninefold.API.Storage
         GetObjectResponse GetObject(GetObjectRequest request);
         UpdateObjectResponse UpdateObject(UpdateObjectRequest request);
         ListNamespaceResponse ListNamespace(ListNamespaceRequest request);
+        SetObjectACLResponse SetObjectACL(SetObjectACLRequest request);
     }
 }

@@ -1,7 +1,5 @@
-﻿using System;
-using System.Net;
+﻿using System.Net;
 using Ninefold.API.Core;
-using RestSharp;
 
 namespace Ninefold.API.Storage
 {

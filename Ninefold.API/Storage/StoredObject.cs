@@ -66,6 +66,13 @@ namespace Ninefold.API.Storage
             return (ListNamespaceResponse)_commandExecutor.Execute(command);
         }
 
+        public SetObjectACLResponse SetObjectACL(SetObjectACLRequest request)
+        {
+            EnsureAbsoluteUri(request);
+            var command = new SetObjectACL(_userId, _secret, _builder, _authenticator) { Parameters = request };
+            return (SetObjectACLResponse)_commandExecutor.Execute(command);
+        }
+
         private void EnsureAbsoluteUri(ICommandRequest request)
         {
             if (request.Resource.IsAbsoluteUri) return;

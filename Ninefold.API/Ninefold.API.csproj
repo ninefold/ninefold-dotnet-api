@@ -31,7 +31,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="RestSharp">
+    <Reference Include="RestSharp, Version=101.3.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\RestSharp.101.3\lib\net4\RestSharp.dll</HintPath>
     </Reference>
     <Reference Include="System" />
@@ -69,6 +69,9 @@
     <Compile Include="Storage\Commands\DeleteObject.cs" />
     <Compile Include="Storage\Commands\GetObject.cs" />
     <Compile Include="Storage\Commands\ListNamespace.cs" />
+    <Compile Include="Storage\Commands\SetObjectACL.cs" />
+    <Compile Include="Storage\Messages\SetObjectACLRequest.cs" />
+    <Compile Include="Storage\Messages\SetObjectACLResponse.cs" />
     <Compile Include="Storage\Commands\UpdateObject.cs" />
     <Compile Include="Storage\Messages\ListNamespaceRequest.cs" />
     <Compile Include="Storage\Messages\ListNamespaceResponse.cs" />

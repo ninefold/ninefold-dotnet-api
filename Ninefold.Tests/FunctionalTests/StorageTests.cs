@@ -11,7 +11,7 @@ namespace Ninefold.API.Tests.FunctionalTests
         byte[] _demoContent;
         StorageClient _storageClient;
         string _objectId;
-        
+
         [TestInitialize]
         public void TestSetup()
         {
@@ -148,8 +148,8 @@ namespace Ninefold.API.Tests.FunctionalTests
                     LowerRange = 10
                 });
 
-           var actualContent = Encoding.ASCII.GetString(response.Content);
-            
+            var actualContent = Encoding.ASCII.GetString(response.Content);
+
             Assert.AreEqual(expectedContent, actualContent);
         }
 
@@ -227,6 +227,7 @@ namespace Ninefold.API.Tests.FunctionalTests
             Assert.IsTrue(response.Delta != 0);
         }
 
+        [TestMethod]
         public void DeleteObject_ShouldDeleteObject_ForValidRequest()
         {
             CreateObject();
@@ -238,6 +239,18 @@ namespace Ninefold.API.Tests.FunctionalTests
                                                                         });
             _objectId = string.Empty;
             Assert.IsTrue(response.Delta != 0);
+        }
+
+        [TestMethod]
+        public void SetACL_ShouldSetACLOnExistingObject_ForValidRequest()
+        {
+            CreateObject();
+
+            _storageClient.StoredObject.SetObjectACL(new SetObjectACLRequest
+                {
+                    Resource = new Uri(_objectId, UriKind.Relative),
+                    UserACL = "godbold=FULL_CONTROL, somone=READ"
+                });
         }
     }
 }
