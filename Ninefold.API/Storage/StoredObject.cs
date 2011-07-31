@@ -51,6 +51,13 @@ namespace Ninefold.API.Storage
             return (GetObjectResponse)_commandExecutor.Execute(command);
         }
 
+        public UpdateObjectResponse UpdateObject(UpdateObjectRequest request)
+        {
+            EnsureAbsoluteUri(request);
+            var command = new UpdateObject(_userId, _secret, _builder, _authenticator) { Parameters = request };
+            return (UpdateObjectResponse)_commandExecutor.Execute(command);
+        }
+
         private void EnsureAbsoluteUri(ICommandRequest request)
         {
             if (request.Resource.IsAbsoluteUri) return;

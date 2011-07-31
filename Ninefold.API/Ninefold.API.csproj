@@ -68,6 +68,9 @@
     <Compile Include="Storage\Commands\CreateObject.cs" />
     <Compile Include="Storage\Commands\DeleteObject.cs" />
     <Compile Include="Storage\Commands\GetObject.cs" />
+    <Compile Include="Storage\Commands\UpdateObject.cs" />
+    <Compile Include="Storage\Messages\UpdateObjectResponse.cs" />
+    <Compile Include="Storage\Messages\UpdateObjectRequest.cs" />
     <Compile Include="Storage\Messages\GetObjectResponse.cs" />
     <Compile Include="Storage\Messages\GetObjectRequest.cs" />
     <Compile Include="Storage\Messages\DeleteObjectResponse.cs" />

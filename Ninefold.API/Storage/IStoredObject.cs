@@ -1,5 +1,4 @@
-﻿using Ninefold.API.Storage.Commands;
-using Ninefold.API.Storage.Messages;
+﻿using Ninefold.API.Storage.Messages;
 
 namespace Ninefold.API.Storage
 {
@@ -8,5 +7,6 @@ namespace Ninefold.API.Storage
         CreateObjectResponse CreateObject(CreateObjectRequest request);
         DeleteObjectResponse DeleteObject(DeleteObjectRequest request);
         GetObjectResponse GetObject(GetObjectRequest request);
+        UpdateObjectResponse UpdateObject(UpdateObjectRequest request);
     }
 }

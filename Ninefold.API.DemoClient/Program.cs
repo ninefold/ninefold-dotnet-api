@@ -65,8 +65,19 @@ namespace Ninefold.API.DemoClient
 
             Console.WriteLine("Object {0} retrieved", storedObjectResponse.Location);
             Console.WriteLine("Content: {0}", contentString);
-            Console.ReadKey(); 
-            
+            Console.ReadKey();
+
+            Console.WriteLine("Updating object stored at {0}", storedObjectResponse.Location);
+
+            storageClient.StoredObject.UpdateObject(new UpdateObjectRequest
+            {
+                Resource = new Uri(storedObjectResponse.Location, UriKind.Relative),
+                Content = demoContent
+            });
+
+            Console.WriteLine("Object at {0} was updated", storedObjectResponse.Location);
+            Console.ReadKey();
+
             Console.WriteLine("Deleting object stored at {0}", storedObjectResponse.Location);
 
             storageClient.StoredObject.DeleteObject(new DeleteObjectRequest
