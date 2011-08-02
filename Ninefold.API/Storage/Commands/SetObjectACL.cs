@@ -33,6 +33,12 @@ namespace Ninefold.API.Storage.Commands
             {
                 Parameters.Resource = new Uri(Parameters.Resource, "?acl");    
             }
+
+            if (string.IsNullOrWhiteSpace(Parameters.GroupACL) && (string.IsNullOrWhiteSpace(Parameters.UserACL)))
+            {
+                throw new ArgumentOutOfRangeException("Either a group acl or a user acl must be supplied to the SetObjectACL command");
+            }
+
             Request = _commandBuilder.GenerateRequest(Parameters, _userId, HttpMethod.POST);
             _authenticator.AuthenticateRequest(Request, _secret);
         }

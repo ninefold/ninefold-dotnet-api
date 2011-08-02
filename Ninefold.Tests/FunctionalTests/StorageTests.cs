@@ -242,7 +242,7 @@ namespace Ninefold.API.Tests.FunctionalTests
         }
 
         [TestMethod]
-        public void SetACL_ShouldSetACLOnExistingObject_ForValidRequest()
+        public void SetACL_ShouldSetUserACLOnExistingObject_ForValidRequest()
         {
             CreateObject();
 
@@ -251,6 +251,39 @@ namespace Ninefold.API.Tests.FunctionalTests
                     Resource = new Uri(_objectId, UriKind.Relative),
                     UserACL = "godbold=FULL_CONTROL, somone=READ"
                 });
+        }
+
+        [TestMethod]
+        public void SetACL_ShouldSetGroupACLOnExistingObject_ForValidRequest()
+        {
+            CreateObject();
+
+            _storageClient.StoredObject.SetObjectACL(new SetObjectACLRequest
+            {
+                Resource = new Uri(_objectId, UriKind.Relative),
+                GroupACL = "other=FULL_CONTROL"
+            });
+        }
+
+        [TestMethod]
+        public void SetACL_ShouldFail_ForNoACLEntriesProvided()
+        {
+            var exceptionCaught = false;
+            CreateObject();
+
+            try
+            {
+                _storageClient.StoredObject.SetObjectACL(new SetObjectACLRequest
+                                                             {
+                                                                 Resource = new Uri(_objectId, UriKind.Relative),
+                                                             });
+            }
+            catch (ArgumentOutOfRangeException ex)
+            {
+                exceptionCaught = true;
+            }
+
+            Assert.IsTrue(exceptionCaught);
         }
     }
 }
