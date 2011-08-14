@@ -29,16 +29,16 @@ namespace Ninefold.API.Compute.Commands
             _client = new RestClient(serviceUrlRoot);
         }
 
-        public ICommandResponse Execute()
+        public ICommandResponse ParseResponse(WebResponse response)
         {
             var request = _computeRequestService.GenerateRequest(Parameters, _apiKey);
             _authenticator.AuthenticateRequest(WebRequest.Create(""), _base64Secret);//((RestClient)_client).BuildUri((RestRequest)request), _base64Secret);
             return _client.Execute<MachineResponse>((RestRequest)request).Data;
         }
 
-        public void Prepare()
+        public HttpWebRequest Prepare()
         {
-            
+            return null;
         }
     }
 }

@@ -12,8 +12,6 @@ namespace Ninefold.API.Storage.Commands
         readonly string _secret;
         readonly string _userId;
 
-        public HttpWebRequest Request { get; private set; }
-
         public CreateObjectRequest Parameters { get; set; }
 
         public CreateObject(string userId,
@@ -27,7 +25,7 @@ namespace Ninefold.API.Storage.Commands
             _secret = base64Secret;
         }
 
-        public void Prepare()
+        public HttpWebRequest Prepare()
         {
             if (Parameters == null) throw new ArgumentException("Parameters");
 
@@ -37,21 +35,21 @@ namespace Ninefold.API.Storage.Commands
                 throw new ArgumentOutOfRangeException("If resource path is specified as an object content length must be non-zero");
             }
 
-            Request = _commandBuilder.GenerateRequest(Parameters, _userId, HttpMethod.POST);
-            _authenticator.AuthenticateRequest(Request, _secret);
+            var request = _commandBuilder.GenerateRequest(Parameters, _userId, HttpMethod.POST);
+            _authenticator.AuthenticateRequest(request, _secret);
 
-            var contentStream = Request.GetRequestStream();
+            var contentStream = request.GetRequestStream();
 
             if (Parameters.Content != null)
             {
                 contentStream.Write(Parameters.Content, 0, Parameters.Content.Length);
             }
+
+            return request;
         }
 
-        public ICommandResponse Execute()
+        public ICommandResponse ParseResponse(WebResponse response)
         {
-            var response = Request.GetResponse();
-
             return new CreateObjectResponse
                        {
                            Delta = response.Headers["x-emc-delta"],

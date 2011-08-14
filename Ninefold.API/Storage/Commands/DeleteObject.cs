@@ -10,9 +10,7 @@ namespace Ninefold.API.Storage.Commands
         readonly ICommandAuthenticator _authenticator;
         readonly string _secret;
         readonly string _userId;
-
-        public HttpWebRequest Request { get; private set; }
-
+        
         public DeleteObjectRequest Parameters { get; set; }
 
         public DeleteObject(string userId,
@@ -26,16 +24,16 @@ namespace Ninefold.API.Storage.Commands
             _secret = base64Secret;
         }
 
-        public void Prepare()
+        public HttpWebRequest Prepare()
         {
-            Request = _commandBuilder.GenerateRequest(Parameters, _userId, HttpMethod.DELETE);
-            _authenticator.AuthenticateRequest(Request, _secret);
+            var request = _commandBuilder.GenerateRequest(Parameters, _userId, HttpMethod.DELETE);
+            _authenticator.AuthenticateRequest(request, _secret);
+            
+            return request;
         }
 
-        public ICommandResponse Execute()
+        public ICommandResponse ParseResponse(WebResponse response)
         {
-            var response = Request.GetResponse();
-
             return new DeleteObjectResponse
                        {
                            Delta = long.Parse(response.Headers["x-emc-delta"]),

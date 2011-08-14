@@ -30,23 +30,24 @@ namespace Ninefold.API.Compute.Commands
             _base64Secret = base64Secret;
         }
 
-        public ICommandResponse Execute()
+        public ICommandResponse ParseResponse(WebResponse response)
         {
             ValidateRequest();
 
             var request = _computeRequestService.GenerateRequest(Parameters, _apiKey);
             var uri = Uri.UnescapeDataString(((RestClient) _client).BuildUri((RestRequest) request).ToString());
             _authenticator.AuthenticateRequest(WebRequest.Create(""), _base64Secret);//new Uri(uri), _base64Secret);
-            
-            var response = _client.Execute<MachineResponse>((RestRequest) request);
-            if (response.ErrorException != null) throw new NinefoldApiException(response.ErrorException);
-            var responseMessage = response.Data ?? new MachineResponse();
-            responseMessage.ErrorMessage = response.ErrorMessage;
-            
-            return responseMessage;
+
+            //if (response.ErrorException != null) throw new NinefoldApiException(response.ErrorException);
+            //var responseMessage = response.Data ?? new MachineResponse();
+            //responseMessage.ErrorMessage = response.ErrorMessage;
+
+            //return responseMessage;
+
+            throw new NotImplementedException("Not yet implemented");
         }
 
-        public void Prepare()
+        public HttpWebRequest Prepare()
         {
             throw new NotImplementedException();
         }

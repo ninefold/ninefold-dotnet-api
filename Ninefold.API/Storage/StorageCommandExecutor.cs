@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Net;
 using Ninefold.API.Core;
 
 namespace Ninefold.API.Storage
@@ -10,8 +7,17 @@ namespace Ninefold.API.Storage
     {
         public ICommandResponse Execute(ICommand command)
         {
-            command.Prepare();
-            return command.Execute();
+            var request = command.Prepare();
+
+            try
+            {
+                var webResponse = (HttpWebResponse)request.GetResponse();
+                return command.ParseResponse(webResponse);
+            }
+            catch (WebException ex)
+            {
+                throw new NinefoldApiException(ex) { NinefoldErrorMessage = ex.Message };
+            }
         }
     }
 }

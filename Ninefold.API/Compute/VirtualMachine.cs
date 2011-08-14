@@ -33,14 +33,18 @@ namespace Ninefold.API.Compute
         {
             var command = new DeployVirtualMachine(_apiKey, _base64Secret,_requestSigner, _computeRequestBuilder, _client);
             command.Parameters = parameters;
-            return (MachineResponse) command.Execute();
+            //return (MachineResponse) command.Execute();
+
+            throw new NotImplementedException("Not yet implemented");
         }
 
         public MachineResponse Start(StartVirtualMachineRequest parameters)
         {
             var command = new StartVirtualMachine(_apiKey, _base64Secret, _serviceUrlRoot, _requestSigner, _computeRequestBuilder);
             command.Parameters = parameters;
-            return (MachineResponse) command.Execute();
+            //return (MachineResponse) command.Execute();
+
+            throw new NotImplementedException("Not yet implemented");
         }
 
         public MachineResponse Stop()

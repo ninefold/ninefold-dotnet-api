@@ -1,4 +1,5 @@
-﻿using Ninefold.API.Compute;
+﻿using System;
+using Ninefold.API.Compute;
 using Ninefold.API.Core;
 
 namespace Ninefold.API
@@ -18,7 +19,8 @@ namespace Ninefold.API
 
         ICommandResponse ICommandExecutor.Execute(ICommand command)            
         {
-            return command.Execute();
+            throw new NotImplementedException("");
+            //return command.ParseResponse();
         }
     }
 }

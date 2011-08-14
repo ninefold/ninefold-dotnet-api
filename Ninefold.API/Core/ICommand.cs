@@ -1,8 +1,10 @@
-﻿namespace Ninefold.API.Core
+﻿using System.Net;
+
+namespace Ninefold.API.Core
 {
     public interface ICommand
     {
-        void Prepare();
-        ICommandResponse Execute();        
+        HttpWebRequest Prepare();
+        ICommandResponse ParseResponse(WebResponse webResponse);
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System;
+using System.Net;
 using Ninefold.API.Core;
 using Ninefold.API.Storage.Messages;
 
@@ -10,8 +11,6 @@ namespace Ninefold.API.Storage.Commands
         readonly ICommandAuthenticator _authenticator;
         readonly string _secret;
         readonly string _userId;
-
-        public HttpWebRequest Request { get; private set; }
 
         public UpdateObjectRequest Parameters { get; set; }
 
@@ -26,23 +25,27 @@ namespace Ninefold.API.Storage.Commands
             _secret = base64Secret;
         }
 
-        public void Prepare()
+        public HttpWebRequest Prepare()
         {
-            Request = _commandBuilder.GenerateRequest(Parameters, _userId, HttpMethod.PUT);
-            _authenticator.AuthenticateRequest(Request, _secret);
+            var request = _commandBuilder.GenerateRequest(Parameters, _userId, HttpMethod.PUT);
+            _authenticator.AuthenticateRequest(request, _secret);
 
-            var contentStream = Request.GetRequestStream();
+            var contentStream = request.GetRequestStream();
 
             if (Parameters.Content != null)
             {
                 contentStream.Write(Parameters.Content, 0, Parameters.Content.Length);
             }
+
+            return request;
         }
 
-        public ICommandResponse Execute()
+        public ICommandResponse ParseResponse(WebResponse response)
         {
-            var response = Request.GetResponse();
-
+            if (response == null)
+            {
+                throw new ArgumentNullException("response");
+            }
             return new UpdateObjectResponse
             {
                 Delta = long.Parse(response.Headers["x-emc-delta"]),

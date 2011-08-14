@@ -12,9 +12,7 @@ namespace Ninefold.API.Storage.Commands
         readonly ICommandAuthenticator _authenticator;
         readonly string _secret;
         readonly string _userId;
-
-        public HttpWebRequest Request { get; private set; }
-
+        
         public ListNamespaceRequest Parameters { get; set; }
 
         public ListNamespace(string userId,
@@ -28,15 +26,16 @@ namespace Ninefold.API.Storage.Commands
             _secret = base64Secret;
         }
 
-        public void Prepare()
+        public HttpWebRequest Prepare()
         {
-            Request = _commandBuilder.GenerateRequest(Parameters, _userId, HttpMethod.GET);
-            _authenticator.AuthenticateRequest(Request, _secret);
+            var request = _commandBuilder.GenerateRequest(Parameters, _userId, HttpMethod.GET);
+            _authenticator.AuthenticateRequest(request, _secret);
+
+            return request;
         }
 
-        public ICommandResponse Execute()
+        public ICommandResponse ParseResponse(WebResponse response)
         {
-            var response = Request.GetResponse();
             var listResponse = new ListNamespaceResponse
             {
                 GroupAcl = response.Headers["x-emc-groupacl"],

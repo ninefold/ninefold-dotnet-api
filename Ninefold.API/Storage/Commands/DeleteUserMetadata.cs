@@ -12,8 +12,6 @@ namespace Ninefold.API.Storage.Commands
         readonly string _secret;
         readonly string _userId;
 
-        public HttpWebRequest Request { get; private set; }
-
         public DeleteUserMetadataRequest Parameters { get; set; }
 
         public DeleteUserMetadata(string userId,
@@ -27,41 +25,26 @@ namespace Ninefold.API.Storage.Commands
             _secret = base64Secret;
         }
 
-        public void Prepare()
+        public HttpWebRequest Prepare()
         {
             if (!Parameters.Resource.PathAndQuery.Contains("metadata/user"))
             {
                 Parameters.Resource = new Uri(Parameters.Resource, "?metadata/user");
             }
 
-            Request = _commandBuilder.GenerateRequest(Parameters, _userId, HttpMethod.DELETE);
-            _authenticator.AuthenticateRequest(Request, _secret);
+            var request = _commandBuilder.GenerateRequest(Parameters, _userId, HttpMethod.DELETE);
+            _authenticator.AuthenticateRequest(request, _secret);
+
+            return request;
         }
 
-        public ICommandResponse Execute()
+        public ICommandResponse ParseResponse(WebResponse response)
         {
-            HttpWebResponse response = null;
- 
-            try
+            return new DeleteUserMetadataResponse
             {
-                response = (HttpWebResponse) Request.GetResponse();
-                return new DeleteUserMetadataResponse
-                {
-                    Delta = response.Headers["x-emc-delta"],
-                    Policy = response.Headers["x-emc-policy"]
-                };
-            }
-            catch (WebException ex)
-            {
-                if (!string.IsNullOrEmpty(ex.Message))
-                {
-                    return new DeleteUserMetadataResponse()
-                               {
-                                   ErrorMessage = ex.Message
-                               };
-                }
-                throw;
-            }
+                Delta = response.Headers["x-emc-delta"],
+                Policy = response.Headers["x-emc-policy"]
+            };
         }
     }
 }

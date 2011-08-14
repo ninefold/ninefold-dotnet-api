@@ -16,8 +16,6 @@ namespace Ninefold.API.Storage.Commands
         readonly string _secret;
         readonly string _userId;
 
-        public HttpWebRequest Request { get; private set; }
-
         public GetObjectRequest Parameters { get; set; }
 
         public GetObject(string userId,
@@ -31,25 +29,26 @@ namespace Ninefold.API.Storage.Commands
             _secret = base64Secret;
         }
 
-        public void Prepare()
+        public HttpWebRequest Prepare()
         {
-            Request = _commandBuilder.GenerateRequest(Parameters, _userId, HttpMethod.GET);
+            var request = _commandBuilder.GenerateRequest(Parameters, _userId, HttpMethod.GET);
 
             if (Parameters.LowerRange > Parameters.UpperRange)
             {
-                Request.AddRange(Parameters.LowerRange);
+                request.AddRange(Parameters.LowerRange);
             }
 
             if (Parameters.UpperRange > 0)
             {
-                Request.AddRange(Parameters.LowerRange, Parameters.UpperRange);
+                request.AddRange(Parameters.LowerRange, Parameters.UpperRange);
             }
-            _authenticator.AuthenticateRequest(Request, _secret);
+            _authenticator.AuthenticateRequest(request, _secret);
+
+            return request;
         }
 
-        public ICommandResponse Execute()
+        public ICommandResponse ParseResponse(WebResponse response)
         {
-            var response = Request.GetResponse();
             var getResponse = new GetObjectResponse
                                   {
                                       GroupAcl = response.Headers["x-emc-groupacl"],

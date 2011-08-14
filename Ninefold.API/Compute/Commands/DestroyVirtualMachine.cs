@@ -29,7 +29,7 @@ namespace Ninefold.API.Compute.Commands
             _base64Secret = base64Secret;
         }
 
-        public ICommandResponse Execute()
+        public ICommandResponse ParseResponse(WebResponse response)
         {
             var request = _computeRequestService.GenerateRequest(null, _apiKey);
             _authenticator.AuthenticateRequest(WebRequest.Create(""), _base64Secret);//((RestClient)_client).BuildUri((RestRequest)request), _base64Secret);
@@ -37,9 +37,9 @@ namespace Ninefold.API.Compute.Commands
             return _client.Execute<MachineResponse>((RestRequest)request).Data;
         }
 
-        public void Prepare()
+        public HttpWebRequest Prepare()
         {
-            
+            return null;
         }
     }
 }

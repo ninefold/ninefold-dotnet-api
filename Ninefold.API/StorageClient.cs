@@ -1,4 +1,5 @@
-﻿using Ninefold.API.Core;
+﻿using System.Net;
+using Ninefold.API.Core;
 using Ninefold.API.Storage;
 
 namespace Ninefold.API
@@ -20,8 +21,17 @@ namespace Ninefold.API
 
         ICommandResponse ICommandExecutor.Execute(ICommand command)
         {
-            command.Prepare();
-            return command.Execute();
+            var request = command.Prepare();
+
+            try
+            {
+                var webResponse = (HttpWebResponse)request.GetResponse();
+                return command.ParseResponse(webResponse);
+            }
+            catch (WebException ex)
+            {
+                throw new NinefoldApiException(ex) { NinefoldErrorMessage = ex.Message };
+            }
         }
     }
 }
