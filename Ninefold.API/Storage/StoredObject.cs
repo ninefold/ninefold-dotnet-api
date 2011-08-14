@@ -73,6 +73,13 @@ namespace Ninefold.API.Storage
             return (SetObjectACLResponse)_commandExecutor.Execute(command);
         }
 
+        public DeleteUserMetadataResponse DeleteUserMetadata(DeleteUserMetadataRequest request)
+        {
+            EnsureAbsoluteUri(request);
+            var command = new DeleteUserMetadata(_userId, _secret, _builder, _authenticator) { Parameters = request };
+            return (DeleteUserMetadataResponse)_commandExecutor.Execute(command);
+        }
+
         private void EnsureAbsoluteUri(ICommandRequest request)
         {
             if (request.Resource.IsAbsoluteUri) return;

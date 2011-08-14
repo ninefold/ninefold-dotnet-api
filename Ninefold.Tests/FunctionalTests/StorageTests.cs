@@ -39,11 +39,20 @@ namespace Ninefold.API.Tests.FunctionalTests
                 Resource = new Uri("objects", UriKind.Relative),
                 GroupACL = "other=NONE",
                 ACL = "godbold=FULL_CONTROL",
-                Metadata = "part1=buy",
-                ListableMetadata = "part4/part7/part8=quick"
+                Metadata = "part1=buy, part4=someData",
+                ListableMetadata = "part7/part8=quick"
             });
 
             _objectId = response.Location;
+        }
+
+        private GetObjectResponse GetObject()
+        {
+            return _storageClient.StoredObject.GetObject(new GetObjectRequest
+            {
+                IncludeMeta = true,
+                Resource = new Uri(_objectId, UriKind.Relative)
+            });
         }
 
         private void DeleteLastObject()
@@ -278,12 +287,29 @@ namespace Ninefold.API.Tests.FunctionalTests
                                                                  Resource = new Uri(_objectId, UriKind.Relative),
                                                              });
             }
-            catch (ArgumentOutOfRangeException ex)
+            catch (ArgumentOutOfRangeException)
             {
                 exceptionCaught = true;
             }
 
             Assert.IsTrue(exceptionCaught);
+        }
+
+        [TestMethod]
+        public void DeleteUserMetadata_ShouldRemoveMetadata_OnUserObject()
+        {
+            CreateObject();
+            var checkObject = GetObject();
+            
+            _storageClient.StoredObject.DeleteUserMetadata(new DeleteUserMetadataRequest
+                                {
+                                    Resource = new Uri(_objectId, UriKind.Relative),
+                                    Tags = "part4"
+                                });
+
+            var savedObject = GetObject();
+            Assert.IsTrue(checkObject.Metadata.Contains("part4"));
+            Assert.IsFalse(savedObject.Metadata.Contains("part4"));
         }
     }
 }

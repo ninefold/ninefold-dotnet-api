@@ -35,7 +35,6 @@ namespace Ninefold.API.Storage.Commands
         public ICommandResponse Execute()
         {
             var response = Request.GetResponse();
-            if (response == null)  { return new DeleteObjectResponse {ErrorMessage = "No response returned"}; }
 
             return new DeleteObjectResponse
                        {

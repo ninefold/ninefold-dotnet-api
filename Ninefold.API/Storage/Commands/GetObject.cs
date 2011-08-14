@@ -55,7 +55,7 @@ namespace Ninefold.API.Storage.Commands
                                       GroupAcl = response.Headers["x-emc-groupacl"],
                                       UserAcl = response.Headers["x-emc-useracl"],
                                       Policy = response.Headers["x-emc-policy"],
-                                      Meta = response.Headers["x-emc-meta"],
+                                      Metadata = response.Headers["x-emc-meta"],
                                   };
             
             var  responseStream = response.GetResponseStream();
