@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System;
+using System.Net;
 using Ninefold.API.Core;
 using Ninefold.API.Storage.Messages;
 
@@ -26,6 +27,11 @@ namespace Ninefold.API.Storage.Commands
 
         public HttpWebRequest Prepare()
         {
+            if (!Parameters.Resource.PathAndQuery.Contains("acl"))
+            {
+                Parameters.Resource = new Uri(Parameters.Resource, "?acl");
+            }
+
             var request = _commandBuilder.GenerateRequest(Parameters, _userId, HttpMethod.GET);
             _authenticator.AuthenticateRequest(request, _secret);
             

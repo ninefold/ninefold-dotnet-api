@@ -347,9 +347,11 @@ namespace Ninefold.API.Tests.FunctionalTests
                                                                         {
                                                                             Resource = new Uri(_objectId, UriKind.Relative)
                                                                         });
-
+            
             Assert.AreEqual(createdObject.UserAcl, response.UserAcl);
             Assert.AreEqual(createdObject.GroupAcl, response.GroupAcl);
         }
+
+        
     }
 }
