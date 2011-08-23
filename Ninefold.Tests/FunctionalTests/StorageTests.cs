@@ -336,5 +336,20 @@ namespace Ninefold.API.Tests.FunctionalTests
 
             Assert.IsNotNull(apiException, "No api exception was caught");
         }
+
+        [TestMethod]
+        public void GetObjectAcl_ShouldReturnValidAcls_ForValidRequest()
+        {
+            CreateObject();
+            var createdObject = GetObject();
+
+            var response = _storageClient.StoredObject.GetObjectACL(new GetObjectAclRequest
+                                                                        {
+                                                                            Resource = new Uri(_objectId, UriKind.Relative)
+                                                                        });
+
+            Assert.AreEqual(createdObject.UserAcl, response.UserAcl);
+            Assert.AreEqual(createdObject.GroupAcl, response.GroupAcl);
+        }
     }
 }

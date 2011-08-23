@@ -69,6 +69,9 @@
     <Compile Include="Storage\Commands\CreateObject.cs" />
     <Compile Include="Storage\Commands\DeleteObject.cs" />
     <Compile Include="Storage\Commands\DeleteUserMetadata.cs" />
+    <Compile Include="Storage\Commands\GetObjectACL.cs" />
+    <Compile Include="Storage\Messages\GetObjectAclRequest.cs" />
+    <Compile Include="Storage\Messages\GetObjectAclResponse.cs" />
     <Compile Include="Storage\Messages\DeleteUserMetadataRequest.cs" />
     <Compile Include="Storage\Messages\DeleteUserMetadataResponse.cs" />
     <Compile Include="Storage\Commands\GetObject.cs" />

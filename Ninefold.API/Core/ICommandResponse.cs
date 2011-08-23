@@ -2,6 +2,6 @@
 {
     public interface ICommandResponse
     {
-        string ErrorMessage { get; set; }
+        
     }
 }
