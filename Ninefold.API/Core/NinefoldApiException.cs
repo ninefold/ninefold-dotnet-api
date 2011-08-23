@@ -9,6 +9,8 @@ namespace Ninefold.API.Core
             base("An exception has occured while processing a command.", webException)
         {}
 
-        public string NinefoldErrorMessage { get; set; }
+        public string ErrorMessage { get; set; }
+
+        public string Code { get; set; }
     }
 }

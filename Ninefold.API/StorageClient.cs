@@ -30,7 +30,7 @@ namespace Ninefold.API
             }
             catch (WebException ex)
             {
-                throw new NinefoldApiException(ex) { NinefoldErrorMessage = ex.Message };
+                throw new NinefoldApiException(ex) { ErrorMessage = ex.Message };
             }
         }
     }

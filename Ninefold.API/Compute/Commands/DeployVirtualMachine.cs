@@ -58,12 +58,4 @@ namespace Ninefold.API.Compute.Commands
             if (!string.IsNullOrWhiteSpace(Parameters.DiskOfferingId) && (string.IsNullOrWhiteSpace(Parameters.Size))) { throw new ArgumentOutOfRangeException("Either the DiskOfferingId or the Size parameter can be provided");}            
         }
     }
-
-    public class NinefoldApiException : Exception
-    {
-        public NinefoldApiException(Exception errorException)
-        {
-            throw new NotImplementedException();
-        }
-    }
 }

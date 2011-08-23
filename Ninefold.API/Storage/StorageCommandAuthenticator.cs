@@ -14,7 +14,7 @@ namespace Ninefold.API.Storage
             var hashingAlg = new System.Security.Cryptography.HMACSHA1(secret);
 
             var canonHeaders = request.Headers.AllKeys
-                .Where(h => h.StartsWith("x-emc", StringComparison.InvariantCultureIgnoreCase))             
+                .Where(h => h.StartsWith("x-emc", StringComparison.InvariantCultureIgnoreCase))
                 .OrderBy(h => h.ToLowerInvariant())
                 .Select(h => h + ":" + request.Headers[h].Trim())
                 .Aggregate(string.Empty, (current, header) => current + header + "\n")

@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Text;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Ninefold.API.Compute.Commands;
+using Ninefold.API.Core;
 using Ninefold.API.Storage.Messages;
 
 namespace Ninefold.API.Tests.FunctionalTests
@@ -310,6 +312,29 @@ namespace Ninefold.API.Tests.FunctionalTests
             var savedObject = GetObject();
             Assert.IsTrue(checkObject.Metadata.Contains("part4"));
             Assert.IsFalse(savedObject.Metadata.Contains("part4"));
+        }
+
+        [TestMethod]
+        public void DeleteUserMetadata_ShouldReturnNinefoldExceptionWithMessage_OnBrokenRequest()
+        {
+            NinefoldApiException apiException = null;
+
+            try
+            {
+                _storageClient.StoredObject.DeleteUserMetadata(new DeleteUserMetadataRequest
+                {
+                    Resource = new Uri("someId", UriKind.Relative),
+                    Tags = "22"
+                });
+            }
+            catch (NinefoldApiException ex)
+            {
+                apiException = ex;
+                Assert.IsFalse(string.IsNullOrWhiteSpace(ex.Message), "No custom exception message was returned");
+                Assert.IsFalse(string.IsNullOrWhiteSpace(ex.Code), "No custom exception code was returned");                
+            }
+
+            Assert.IsNotNull(apiException, "No api exception was caught");
         }
     }
 }
