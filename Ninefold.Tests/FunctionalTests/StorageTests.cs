@@ -395,14 +395,13 @@ namespace Ninefold.API.Tests.FunctionalTests
 
             var response = _storageClient.StoredObject.GetSystemMetadata(new GetSystemMetadataRequest
             {
-                Resource =
-                    new Uri(_objectId, UriKind.Relative),
+                Resource = new Uri(_objectId, UriKind.Relative),
                 Tags = "atime"
             });
 
-            Assert.IsFalse(string.IsNullOrWhiteSpace(response.Metadata));
-            Assert.IsTrue(response.Metadata.Contains("atime"));
+            Assert.IsFalse(string.IsNullOrWhiteSpace(response.Metadata));            
             Assert.AreEqual(1, response.Metadata.ToCharArray().Count(c => c == '='), "More than one key value pair was found in a filtered request");
+            Assert.IsTrue(response.Metadata.Contains("atime"), "The requested key pair was not present in the metadata returned");
         }
 
         //TODO: Work out how to specify more tags than can be returned, and get the results across 2 requests
