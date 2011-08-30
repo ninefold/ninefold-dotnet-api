@@ -87,6 +87,13 @@ namespace Ninefold.API.Storage
             return (GetObjectAclResponse)_commandExecutor.Execute(command);
         }
 
+        public GetListableTagsResponse GetListableTags(GetListableTagsRequest request)
+        {
+            EnsureAbsoluteUri(request);
+            var command = new GetListableTags(_userId, _secret, _builder, _authenticator) { Parameters = request };
+            return (GetListableTagsResponse)_commandExecutor.Execute(command);
+        }
+
         private void EnsureAbsoluteUri(ICommandRequest request)
         {
             if (request.Resource.IsAbsoluteUri) return;

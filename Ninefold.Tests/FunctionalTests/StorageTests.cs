@@ -352,6 +352,20 @@ namespace Ninefold.API.Tests.FunctionalTests
             Assert.AreEqual(createdObject.GroupAcl, response.GroupAcl);
         }
 
-        
+        [TestMethod]
+        public void GetListableTags_ShouldReturnAllListableTags_ForValidRequest()
+        {
+            var response = _storageClient.StoredObject.GetListableTags(new GetListableTagsRequest
+                                                                           {
+                                                                               Resource = new Uri("objects", UriKind.Relative)
+                                                                           });
+
+            Assert.IsFalse(string.IsNullOrWhiteSpace(response.Tags));
+        }
+
+        public GetListableTags_ShouldReturnMoreTags_ForSecondRequestWithToken()
+        {
+            
+        }
     }
 }

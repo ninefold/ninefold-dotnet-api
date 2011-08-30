@@ -12,5 +12,6 @@ namespace Ninefold.API.Storage
         SetObjectACLResponse SetObjectACL(SetObjectACLRequest request);
         DeleteUserMetadataResponse DeleteUserMetadata(DeleteUserMetadataRequest request);
         GetObjectAclResponse GetObjectACL(GetObjectAclRequest request);
+        GetListableTagsResponse GetListableTags(GetListableTagsRequest request);
     }
 }
