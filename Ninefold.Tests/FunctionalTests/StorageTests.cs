@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Text;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Ninefold.API.Compute.Commands;
 using Ninefold.API.Core;
 using Ninefold.API.Storage.Messages;
 
@@ -33,7 +32,7 @@ namespace Ninefold.API.Tests.FunctionalTests
             _objectId = string.Empty;
         }
 
-        private void CreateObject()
+        private void CreateObject(string tags="part7/part8=quick")
         {
             var response = _storageClient.StoredObject.CreateObject(new CreateObjectRequest
             {
@@ -42,7 +41,7 @@ namespace Ninefold.API.Tests.FunctionalTests
                 GroupACL = "other=NONE",
                 ACL = "godbold=FULL_CONTROL",
                 Metadata = "part1=buy, part4=someData",
-                ListableMetadata = "part7/part8=quick"
+                ListableMetadata = tags
             });
 
             _objectId = response.Location;
@@ -353,7 +352,7 @@ namespace Ninefold.API.Tests.FunctionalTests
         }
 
         [TestMethod]
-        public void GetListableTags_ShouldReturnAllListableTags_ForValidRequest()
+        public void GetListableTags_ShouldReturnAllListableTags_ForValidObjectRequest()
         {
             var response = _storageClient.StoredObject.GetListableTags(new GetListableTagsRequest
                                                                            {
@@ -363,9 +362,44 @@ namespace Ninefold.API.Tests.FunctionalTests
             Assert.IsFalse(string.IsNullOrWhiteSpace(response.Tags));
         }
 
-        public GetListableTags_ShouldReturnMoreTags_ForSecondRequestWithToken()
+        [TestMethod]
+        public void GetListableTags_ShouldReturnAllListableTags_ForValidNamespaceRequest()
         {
-            
+            var response = _storageClient.StoredObject.GetListableTags(new GetListableTagsRequest
+            {
+                Resource = new Uri("namespace", UriKind.Relative)
+            });
+
+            Assert.IsFalse(string.IsNullOrWhiteSpace(response.Tags));
         }
+
+
+        //TODO: Work out how to specify more tags than can be returned, and get the results across 2 requests
+        //[TestMethod]
+        //public void GetListableTags_ShouldReturnMoreTags_ForSecondRequestWithToken()
+        //{
+        //    var tags = string.Empty;
+
+        //    for (var i = 0; i < 100; i++)
+        //    {
+        //        tags += "tag" + i + "=stuff,";
+        //    }
+        //    tags.Remove(tags.Length - 1);
+        //    CreateObject(tags);
+
+        //    var response = _storageClient.StoredObject.GetListableTags(new GetListableTagsRequest
+        //                                                                   {
+        //                                                                       Resource = new Uri("objects", UriKind.Relative)
+        //                                                                   });
+
+        //    var secondResponse = _storageClient.StoredObject.GetListableTags(new GetListableTagsRequest
+        //                                                                         {
+        //                                                                             Resource = new Uri("objects", UriKind.Relative),
+        //                                                                             Token = response.Token
+        //                                                                         });
+
+        //    Assert.IsFalse(string.IsNullOrWhiteSpace(secondResponse.Tags));
+        //    Assert.AreNotEqual(response.Tags, secondResponse.Tags);
+        //}
     }
 }

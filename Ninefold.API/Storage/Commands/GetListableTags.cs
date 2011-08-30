@@ -40,7 +40,8 @@ namespace Ninefold.API.Storage.Commands
             return new GetListableTagsResponse
                        {
                            Policy = webResponse.Headers["x-emc-policy"],
-                           Tags = webResponse.Headers["x-emc-listable-tags"]
+                           Tags = webResponse.Headers["x-emc-listable-tags"],
+                           Token = webResponse.Headers["x-emc-token"] ?? string.Empty
                        };
         }
     }
