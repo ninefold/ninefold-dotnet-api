@@ -70,6 +70,8 @@
     <Compile Include="Storage\Commands\DeleteObject.cs" />
     <Compile Include="Storage\Commands\DeleteUserMetadata.cs" />
     <Compile Include="Storage\Commands\GetListableTags.cs" />
+    <Compile Include="Storage\Commands\GetSystemMetadata.cs" />
+    <Compile Include="Storage\Messages\GetSystemMetadataResponse.cs" />
     <Compile Include="Storage\Messages\GetListableTagsRequest.cs" />
     <Compile Include="Storage\Messages\GetListableTagsResponse.cs" />
     <Compile Include="Storage\Commands\GetObjectACL.cs" />
@@ -80,6 +82,7 @@
     <Compile Include="Storage\Commands\GetObject.cs" />
     <Compile Include="Storage\Commands\ListNamespace.cs" />
     <Compile Include="Storage\Commands\SetObjectACL.cs" />
+    <Compile Include="Storage\Messages\GetSystemMetadataRequest.cs" />
     <Compile Include="Storage\Messages\SetObjectACLRequest.cs" />
     <Compile Include="Storage\Messages\SetObjectACLResponse.cs" />
     <Compile Include="Storage\Commands\UpdateObject.cs" />

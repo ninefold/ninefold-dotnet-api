@@ -94,6 +94,13 @@ namespace Ninefold.API.Storage
             return (GetListableTagsResponse)_commandExecutor.Execute(command);
         }
 
+        public GetSystemMetadataResponse GetSystemMetadata(GetSystemMetadataRequest request)
+        {
+            EnsureAbsoluteUri(request);
+            var command = new GetSystemMetadata(_userId, _secret, _builder, _authenticator) { Parameters = request };
+            return (GetSystemMetadataResponse)_commandExecutor.Execute(command);
+        }
+
         private void EnsureAbsoluteUri(ICommandRequest request)
         {
             if (request.Resource.IsAbsoluteUri) return;

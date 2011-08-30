@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Text;
+using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Ninefold.API.Core;
 using Ninefold.API.Storage.Messages;
@@ -373,6 +374,36 @@ namespace Ninefold.API.Tests.FunctionalTests
             Assert.IsFalse(string.IsNullOrWhiteSpace(response.Tags));
         }
 
+        [TestMethod]
+        public void GetSystemMetadata_ShouldReturnSystemMetadata_ForObject()
+        {
+            CreateObject();
+
+            var response = _storageClient.StoredObject.GetSystemMetadata(new GetSystemMetadataRequest
+                                                                             {
+                                                                                 Resource =
+                                                                                     new Uri(_objectId, UriKind.Relative)
+                                                                             });
+
+            Assert.IsFalse(string.IsNullOrWhiteSpace(response.Metadata));    
+        }
+
+        [TestMethod]
+        public void GetSystemMetadata_ShouldReturnOnlyRequestedSystemMetadata_ForFilteredObjectRequest()
+        {
+            CreateObject();
+
+            var response = _storageClient.StoredObject.GetSystemMetadata(new GetSystemMetadataRequest
+            {
+                Resource =
+                    new Uri(_objectId, UriKind.Relative),
+                Tags = "atime"
+            });
+
+            Assert.IsFalse(string.IsNullOrWhiteSpace(response.Metadata));
+            Assert.IsTrue(response.Metadata.Contains("atime"));
+            Assert.AreEqual(1, response.Metadata.ToCharArray().Count(c => c == '='), "More than one key value pair was found in a filtered request");
+        }
 
         //TODO: Work out how to specify more tags than can be returned, and get the results across 2 requests
         //[TestMethod]
