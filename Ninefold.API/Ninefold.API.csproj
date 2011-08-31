@@ -31,9 +31,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="RestSharp, Version=101.3.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\RestSharp.101.3\lib\net4\RestSharp.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
@@ -44,21 +41,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Compute\Commands\DeployVirtualMachine.cs" />
-    <Compile Include="Compute\Commands\DestroyVirtualMachine.cs" />
-    <Compile Include="Compute\Messages\StartVirtualMachineRequest.cs" />
     <Compile Include="Compute\ComputeRequestBuilder.cs" />
     <Compile Include="Core\HttpMethod.cs" />
     <Compile Include="Core\ICommandAuthenticator.cs" />
     <Compile Include="Core\ICommandRequest.cs" />
     <Compile Include="Compute\IComputeClient.cs" />
-    <Compile Include="Compute\Messages\DeployVirtualMachineRequest.cs" />
     <Compile Include="Core\ICommand.cs" />
     <Compile Include="Compute\IComputeRequestBuilder.cs" />
     <Compile Include="Compute\IVirtualMachine.cs" />
     <Compile Include="Core\ICommandExecutor.cs" />
-    <Compile Include="Compute\Commands\StartVirtualMachine.cs" />
-    <Compile Include="Compute\Messages\MachineResponse.cs" />
     <Compile Include="Compute\VirtualMachine.cs" />
     <Compile Include="Core\ICommandResponse.cs" />
     <Compile Include="ComputeClient.cs" />
@@ -114,7 +105,10 @@
     <Compile Include="Storage\StorageCommandBuilder.cs" />
     <Compile Include="Storage\StoredObject.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Compute\Commands\" />
+    <Folder Include="Compute\Messages\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

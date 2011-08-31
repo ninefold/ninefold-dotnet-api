@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Reflection;
 using System.Text;
 using Ninefold.API.Core;
-using RestSharp;
-using RestSharp.Contrib;
 
 namespace Ninefold.API.Compute
 {
@@ -14,7 +11,7 @@ namespace Ninefold.API.Compute
     {
         private const BindingFlags PropertyFilters = BindingFlags.Public | BindingFlags.Instance;
 
-        public IRestRequest GenerateRequest(ICommandRequest request, string apiKey)
+        public void GenerateRequest(ICommandRequest request, string apiKey)
         {
             Validator.ValidateObject(request, new ValidationContext(request, null, null), true);
 
@@ -35,9 +32,9 @@ namespace Ninefold.API.Compute
                 queryString.Append(string.Format("{0}={1}&", property.Key, property.Value));
             }
             queryString.Remove(queryString.Length - 1, 1);
-            var escapedQueryString = HttpUtility.UrlEncode(queryString.ToString());
+            //var escapedQueryString = HttpUtility.UrlEncode(queryString.ToString());
 
-            return new RestRequest("?" + escapedQueryString, Method.POST);
+            //return new RestRequest("?" + escapedQueryString, Method.POST);
         }
     }
 }

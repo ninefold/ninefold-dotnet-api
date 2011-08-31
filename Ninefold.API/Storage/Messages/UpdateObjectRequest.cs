@@ -9,8 +9,9 @@ namespace Ninefold.API.Storage.Messages
         [Required]
         public Uri Resource { get; set; }
 
-        [Required]
         public byte[] Content { get; set; }
+
+        public string RangeSpecification { get; set; }
 
         [Header("content-type", false)]
         public string ContentType { get; set; }

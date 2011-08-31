@@ -28,6 +28,11 @@ namespace Ninefold.API.Storage.Commands
         public HttpWebRequest Prepare()
         {
             var request = _commandBuilder.GenerateRequest(Parameters, _userId, HttpMethod.PUT);
+            if (!string.IsNullOrWhiteSpace(Parameters.RangeSpecification))
+            {
+                request.Headers.Add("range", Parameters.RangeSpecification);
+            }
+            
             _authenticator.AuthenticateRequest(request, _secret);
 
             var contentStream = request.GetRequestStream();

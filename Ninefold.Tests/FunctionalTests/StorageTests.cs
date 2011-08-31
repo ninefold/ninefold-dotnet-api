@@ -228,16 +228,21 @@ namespace Ninefold.API.Tests.FunctionalTests
         [TestMethod]
         public void UpdateObject_ShouldUpdateExistingObject_ToNewContent()
         {
+            const string updateText = "Updated text for a file";
+
             CreateObject();
 
-            var updateContent = Encoding.ASCII.GetBytes("Updated text for a file");
+            var updateContent = Encoding.ASCII.GetBytes(updateText);
             var response = _storageClient.StoredObject.UpdateObject(new UpdateObjectRequest
             {
                 Resource = new Uri(_objectId, UriKind.Relative),
                 Content = updateContent
             });
 
+            var updatedObject = GetObject();
+            
             Assert.IsTrue(response.Delta != 0);
+            Assert.AreEqual(updateText, Encoding.ASCII.GetString(updatedObject.Content));
         }
 
         [TestMethod]
@@ -491,11 +496,11 @@ namespace Ninefold.API.Tests.FunctionalTests
             CreateObject(string.Empty);
 
             const string tags = "tag22=one, tag44=two";
-            var response = _storageClient.StoredObject.SetUserMetadata(new SetUserMetadataRequest
-                                                                           {
-                                                                               Resource = new Uri(_objectId, UriKind.Relative),
-                                                                               ListableTags = tags
-                                                                           });
+            _storageClient.StoredObject.SetUserMetadata(new SetUserMetadataRequest
+                                                            {
+                                                                Resource = new Uri(_objectId, UriKind.Relative),
+                                                                ListableTags = tags
+                                                            });
 
             var referenceObject = GetObject();
 
@@ -508,11 +513,11 @@ namespace Ninefold.API.Tests.FunctionalTests
             CreateObject();
 
             const string tags = "tag22=one, tag44=two";
-            var response = _storageClient.StoredObject.SetUserMetadata(new SetUserMetadataRequest
-            {
-                Resource = new Uri(_objectId, UriKind.Relative),
-                Tags = tags
-            });
+            _storageClient.StoredObject.SetUserMetadata(new SetUserMetadataRequest
+                                                            {
+                                                                Resource = new Uri(_objectId, UriKind.Relative),
+                                                                Tags = tags
+                                                            });
 
             var referenceObject = GetObject();
 
@@ -539,6 +544,24 @@ namespace Ninefold.API.Tests.FunctionalTests
 
             Assert.IsNotNull(ex);
             Assert.IsTrue(ex.Message.Contains("Either tags or listable tags must be supplied to the SetUserMetadata command"));
+        }
+
+        [TestMethod]
+        public void UpdateObject_ShouldSetObjectContentToEmpty_ForZeroRangeAndEmptyBody()
+        {
+           CreateObject();
+
+           var response = _storageClient.StoredObject.UpdateObject(new UpdateObjectRequest
+           {
+               Resource = new Uri(_objectId, UriKind.Relative),
+               RangeSpecification = string.Empty,
+               Content = new byte[] { }
+           });
+
+            var updatedObject = GetObject();
+
+            Assert.IsTrue(response.Delta != 0);
+            Assert.AreEqual(0, updatedObject.Content.Length);
         }
     }
 }
