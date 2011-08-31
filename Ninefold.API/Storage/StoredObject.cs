@@ -101,6 +101,13 @@ namespace Ninefold.API.Storage
             return (GetSystemMetadataResponse)_commandExecutor.Execute(command);
         }
 
+        public ListObjectsResponse ListObjects(ListObjectsRequest request)
+        {
+            EnsureAbsoluteUri(request);
+            var command = new ListObjects(_userId, _secret, _builder, _authenticator) { Parameters = request };
+            return (ListObjectsResponse)_commandExecutor.Execute(command);
+        }
+
         private void EnsureAbsoluteUri(ICommandRequest request)
         {
             if (request.Resource.IsAbsoluteUri) return;

@@ -14,5 +14,6 @@ namespace Ninefold.API.Storage
         GetObjectAclResponse GetObjectACL(GetObjectAclRequest request);
         GetListableTagsResponse GetListableTags(GetListableTagsRequest request);
         GetSystemMetadataResponse GetSystemMetadata(GetSystemMetadataRequest request);
+        ListObjectsResponse ListObjects(ListObjectsRequest request);
     }
 }

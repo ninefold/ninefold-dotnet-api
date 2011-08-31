@@ -191,9 +191,10 @@ namespace Ninefold.API.Tests.FunctionalTests
                 {
                     Resource = new Uri(_objectId, UriKind.Relative),
                 });
-            var actualContent = Encoding.ASCII.GetString(response.Content);
 
-            Assert.IsFalse(string.IsNullOrWhiteSpace(actualContent));
+            Assert.IsNotNull(response.Content);
+            Assert.IsTrue(response.Content.Root != null);
+            Assert.IsTrue(response.Content.Root.DescendantNodes().Count() > 0, "No  nodes returned");
         }
 
         [TestMethod]
@@ -205,9 +206,10 @@ namespace Ninefold.API.Tests.FunctionalTests
                 {
                     Resource = new Uri(_objectId, UriKind.Relative),
                 });
-            var actualContent = Encoding.ASCII.GetString(response.Content);
 
-            Assert.IsFalse(string.IsNullOrWhiteSpace(actualContent));
+            Assert.IsNotNull(response.Content);
+            Assert.IsTrue(response.Content.Root != null);
+            Assert.IsTrue(response.Content.Root.DescendantNodes().Count() > 0, "No nodes returned");
         }
 
         [TestMethod]
@@ -402,6 +404,21 @@ namespace Ninefold.API.Tests.FunctionalTests
             Assert.IsFalse(string.IsNullOrWhiteSpace(response.Metadata));            
             Assert.AreEqual(1, response.Metadata.ToCharArray().Count(c => c == '='), "More than one key value pair was found in a filtered request");
             Assert.IsTrue(response.Metadata.Contains("atime"), "The requested key pair was not present in the metadata returned");
+        }
+
+        [TestMethod]
+        public void ListObjects_ShouldReturnContent_ForValidRequest()
+        {
+            var response = _storageClient.StoredObject.ListObjects(new ListObjectsRequest
+                                                                       {
+                                                                           IncludeMetadata = 1,
+                                                                           Tags = "part4/part7/part8",
+                                                                           Resource = new Uri("objects", UriKind.Relative)
+                                                                       });
+
+            Assert.IsNotNull(response.Content);
+            Assert.IsTrue(response.Content.Root != null);
+            Assert.IsTrue(response.Content.Root.DescendantNodes().Count() > 0, "No object nodes returned");
         }
 
         //TODO: Work out how to specify more tags than can be returned, and get the results across 2 requests

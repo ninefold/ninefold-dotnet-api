@@ -7,16 +7,16 @@ using Ninefold.API.Storage.Messages;
 
 namespace Ninefold.API.Storage.Commands
 {
-    public class ListNamespace : ICommand
+    public class ListObjects : ICommand
     {
         readonly IStorageCommandBuilder _commandBuilder;
         readonly ICommandAuthenticator _authenticator;
         readonly string _secret;
         readonly string _userId;
         
-        public ListNamespaceRequest Parameters { get; set; }
+        public ListObjectsRequest Parameters { get; set; }
 
-        public ListNamespace(string userId,
+        public ListObjects(string userId,
                                         string base64Secret, 
                                         IStorageCommandBuilder commandBuilder, 
                                         ICommandAuthenticator authenticator)
@@ -35,21 +35,19 @@ namespace Ninefold.API.Storage.Commands
             return request;
         }
 
-        public ICommandResponse ParseResponse(WebResponse response)
+        public ICommandResponse ParseResponse(WebResponse webResponse)
         {
-            var listResponse = new ListNamespaceResponse
+            var listResponse = new ListObjectsResponse
             {
-                GroupAcl = response.Headers["x-emc-groupacl"],
-                UserAcl = response.Headers["x-emc-useracl"],
-                Policy = response.Headers["x-emc-policy"],
-                Meta = response.Headers["x-emc-meta"],
+                Policy = webResponse.Headers["x-emc-policy"],
+                Token = webResponse.Headers["x-emc-token"] ?? string.Empty
             };
 
-            var responseStream = response.GetResponseStream();
+            var responseStream = webResponse.GetResponseStream();
             if ((responseStream != null) && (responseStream.CanRead))
             {
                 var reader = new StreamReader(responseStream);
-                listResponse.Content = XDocument.Load(reader);
+                listResponse.Content =  XDocument.Load(reader);
             }
 
             return listResponse;
