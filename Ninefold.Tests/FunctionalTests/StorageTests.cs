@@ -484,5 +484,61 @@ namespace Ninefold.API.Tests.FunctionalTests
                 Assert.IsTrue(listableTags.Any(tag => tag.Equals(currentTag)), string.Format("Tag {0} not found", currentTag));
             }
         }
+
+        [TestMethod]
+        public void SetUserMetadata_ShouldUpdateObjectListableTags_ForValidRequest()
+        {
+            CreateObject(string.Empty);
+
+            const string tags = "tag22=one, tag44=two";
+            var response = _storageClient.StoredObject.SetUserMetadata(new SetUserMetadataRequest
+                                                                           {
+                                                                               Resource = new Uri(_objectId, UriKind.Relative),
+                                                                               ListableTags = tags
+                                                                           });
+
+            var referenceObject = GetObject();
+
+            Assert.AreEqual(tags, referenceObject.ListableTags);
+        }
+
+        [TestMethod]
+        public void SetUserMetadata_ShouldUpdateObjectTags_ForValidRequest()
+        {
+            CreateObject();
+
+            const string tags = "tag22=one, tag44=two";
+            var response = _storageClient.StoredObject.SetUserMetadata(new SetUserMetadataRequest
+            {
+                Resource = new Uri(_objectId, UriKind.Relative),
+                Tags = tags
+            });
+
+            var referenceObject = GetObject();
+
+            Assert.IsTrue(referenceObject.Metadata.Contains(tags));
+        }
+
+        [TestMethod]
+        public void SetUserMetadata_ShouldThrowArgumentException_ForNoTagsProvided()
+        {
+            ArgumentOutOfRangeException ex = null;
+            CreateObject(string.Empty);
+
+            try
+            {
+                _storageClient.StoredObject.SetUserMetadata(new SetUserMetadataRequest
+                                                                {
+                                                                    Resource = new Uri(_objectId, UriKind.Relative),
+                                                                });
+            }
+            catch (ArgumentOutOfRangeException exception)
+            {
+                ex = exception;
+            }
+
+            Assert.IsNotNull(ex);
+            Assert.IsTrue(ex.Message.Contains("Either tags or listable tags must be supplied to the SetUserMetadata command"));
+        }
     }
 }

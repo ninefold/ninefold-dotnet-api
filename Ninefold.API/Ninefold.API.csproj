@@ -72,6 +72,9 @@
     <Compile Include="Storage\Commands\GetListableTags.cs" />
     <Compile Include="Storage\Commands\GetSystemMetadata.cs" />
     <Compile Include="Storage\Commands\GetUserMetadata.cs" />
+    <Compile Include="Storage\Commands\SetUserMetadata.cs" />
+    <Compile Include="Storage\Messages\SetUserMetadataRequest.cs" />
+    <Compile Include="Storage\Messages\SetUserMetadataResponse.cs" />
     <Compile Include="Storage\Messages\GetUserMetadataRequest.cs" />
     <Compile Include="Storage\Messages\GetUserMetadataResponse.cs" />
     <Compile Include="Storage\Commands\ListObjects.cs" />

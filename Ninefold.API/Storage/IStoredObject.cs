@@ -16,5 +16,6 @@ namespace Ninefold.API.Storage
         GetSystemMetadataResponse GetSystemMetadata(GetSystemMetadataRequest request);
         GetUserMetadataResponse GetUserMetadata(GetUserMetadataRequest request);
         ListObjectsResponse ListObjects(ListObjectsRequest request);
+        SetUserMetadataResponse SetUserMetadata(SetUserMetadataRequest request);
     }
 }

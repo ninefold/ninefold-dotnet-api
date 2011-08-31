@@ -115,6 +115,13 @@ namespace Ninefold.API.Storage
             return (GetUserMetadataResponse)_commandExecutor.Execute(command);
         }
 
+        public SetUserMetadataResponse SetUserMetadata(SetUserMetadataRequest request)
+        {
+            EnsureAbsoluteUri(request);
+            var command = new SetUserMetadata(_userId, _secret, _builder, _authenticator) { Parameters = request };
+            return (SetUserMetadataResponse)_commandExecutor.Execute(command);
+        }
+
         private void EnsureAbsoluteUri(ICommandRequest request)
         {
             if (request.Resource.IsAbsoluteUri) return;
