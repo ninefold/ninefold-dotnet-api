@@ -459,37 +459,30 @@ namespace Ninefold.API.Tests.FunctionalTests
 
             Assert.IsNotNull(response.Content);
             Assert.IsTrue(response.Content.Root != null);
+            Assert.IsTrue(firstResponse.Content.Root != null);
             Assert.AreNotEqual(firstResponse.Content.Root.Elements().First(), response.Content.Root.Elements().First());
             Assert.AreEqual(1, response.Content.Root.Elements().Count());
             Assert.IsFalse(string.IsNullOrWhiteSpace(response.Token));
         }
 
-        //TODO: Work out how to specify more tags than can be returned, and get the results across 2 requests
-        //[TestMethod]
-        //public void GetListableTags_ShouldReturnMoreTags_ForSecondRequestWithToken()
-        //{
-        //    var tags = string.Empty;
+        [TestMethod]
+        public void GetUserMetadata_ShouldReturnCorrectMetadata_ForValidRequest()
+        {
+            CreateObject();
+            var referenceObject = GetObject();
+            var response = _storageClient.StoredObject.GetUserMetadata(new GetUserMetadataRequest
+                                                                           {
+                                                                               Resource = new Uri(_objectId, UriKind.Relative)
+                                                                           });
 
-        //    for (var i = 0; i < 100; i++)
-        //    {
-        //        tags += "tag" + i + "=stuff,";
-        //    }
-        //    tags.Remove(tags.Length - 1);
-        //    CreateObject(tags);
+            var tagKeyValuePairs = referenceObject.ListableTags.Split(',');
+            var listableTags = response.ListableTags.Split(',');
 
-        //    var response = _storageClient.StoredObject.GetListableTags(new GetListableTagsRequest
-        //                                                                   {
-        //                                                                       Resource = new Uri("objects", UriKind.Relative)
-        //                                                                   });
-
-        //    var secondResponse = _storageClient.StoredObject.GetListableTags(new GetListableTagsRequest
-        //                                                                         {
-        //                                                                             Resource = new Uri("objects", UriKind.Relative),
-        //                                                                             Token = response.Token
-        //                                                                         });
-
-        //    Assert.IsFalse(string.IsNullOrWhiteSpace(secondResponse.Tags));
-        //    Assert.AreNotEqual(response.Tags, secondResponse.Tags);
-        //}
+            foreach (var tagKeyValuePair in tagKeyValuePairs)
+            {
+                var currentTag = tagKeyValuePair.Substring(0, tagKeyValuePair.IndexOf('='));
+                Assert.IsTrue(listableTags.Any(tag => tag.Equals(currentTag)), string.Format("Tag {0} not found", currentTag));
+            }
+        }
     }
 }
