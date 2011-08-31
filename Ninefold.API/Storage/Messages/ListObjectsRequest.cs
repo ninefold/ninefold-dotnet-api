@@ -16,7 +16,7 @@ namespace Ninefold.API.Storage.Messages
         public string Tags { get; set; }
 
         [Header("x-emc-limit")]
-        public string MaxReturnCount { get; set; }
+        public int MaxReturnCount { get; set; }
 
         [Header("x-emc-token")]
         public string Token { get; set; }

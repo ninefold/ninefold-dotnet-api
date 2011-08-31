@@ -418,7 +418,50 @@ namespace Ninefold.API.Tests.FunctionalTests
 
             Assert.IsNotNull(response.Content);
             Assert.IsTrue(response.Content.Root != null);
-            Assert.IsTrue(response.Content.Root.DescendantNodes().Count() > 0, "No object nodes returned");
+            Assert.IsTrue(response.Content.Root.Elements().Count() > 0, "No object nodes returned");
+        }
+
+        [TestMethod]
+        public void ListObjects_ShouldReturnOneObjectAndAToken_ForRequestWithLimitSpecifiedAsOne()
+        {
+            var response = _storageClient.StoredObject.ListObjects(new ListObjectsRequest
+            {
+                IncludeMetadata = 1,
+                Tags = "part4/part7/part8",
+                MaxReturnCount = 1,
+                Resource = new Uri("objects", UriKind.Relative)
+            });
+
+            Assert.IsNotNull(response.Content);
+            Assert.IsTrue(response.Content.Root != null);
+            Assert.AreEqual(1, response.Content.Root.Elements().Count());
+            Assert.IsFalse(string.IsNullOrWhiteSpace(response.Token));
+        }
+
+        [TestMethod]
+        public void ListObjects_ShouldReturnTheNextObjectAndAToken_ForRequestsWithAToken()
+        {
+            var firstResponse = _storageClient.StoredObject.ListObjects(new ListObjectsRequest
+            {
+                IncludeMetadata = 1,
+                Tags = "part4/part7/part8",
+                MaxReturnCount = 1,
+                Resource = new Uri("objects", UriKind.Relative)
+            });
+
+            var response = _storageClient.StoredObject.ListObjects(new ListObjectsRequest
+            {
+                IncludeMetadata = 1,
+                Tags = "part4/part7/part8",
+                MaxReturnCount = 1,
+                Resource = new Uri("objects", UriKind.Relative)
+            });
+
+            Assert.IsNotNull(response.Content);
+            Assert.IsTrue(response.Content.Root != null);
+            Assert.AreNotEqual(firstResponse.Content.Root.Elements().First(), response.Content.Root.Elements().First());
+            Assert.AreEqual(1, response.Content.Root.Elements().Count());
+            Assert.IsFalse(string.IsNullOrWhiteSpace(response.Token));
         }
 
         //TODO: Work out how to specify more tags than can be returned, and get the results across 2 requests
