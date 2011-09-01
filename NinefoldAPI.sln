@@ -12,6 +12,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ninefold.API", "Ninefold.AP
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ninefold.API.DemoClient", "Ninefold.API.DemoClient\Ninefold.API.DemoClient.csproj", "{38CDD000-976B-4185-A1C5-E3065EA98E02}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ninefold.API.Tests", "Ninefold.Tests\Ninefold.API.Tests.csproj", "{BDF71D13-2CBE-41FF-8D6D-3C2DB42EE10F}"
+EndProject
 Global
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = NinefoldAPI.vsmdi
@@ -45,6 +47,16 @@ Global
 		{38CDD000-976B-4185-A1C5-E3065EA98E02}.Release|Mixed Platforms.Build.0 = Release|x86
 		{38CDD000-976B-4185-A1C5-E3065EA98E02}.Release|x86.ActiveCfg = Release|x86
 		{38CDD000-976B-4185-A1C5-E3065EA98E02}.Release|x86.Build.0 = Release|x86
+		{BDF71D13-2CBE-41FF-8D6D-3C2DB42EE10F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BDF71D13-2CBE-41FF-8D6D-3C2DB42EE10F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BDF71D13-2CBE-41FF-8D6D-3C2DB42EE10F}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{BDF71D13-2CBE-41FF-8D6D-3C2DB42EE10F}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{BDF71D13-2CBE-41FF-8D6D-3C2DB42EE10F}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{BDF71D13-2CBE-41FF-8D6D-3C2DB42EE10F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BDF71D13-2CBE-41FF-8D6D-3C2DB42EE10F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BDF71D13-2CBE-41FF-8D6D-3C2DB42EE10F}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{BDF71D13-2CBE-41FF-8D6D-3C2DB42EE10F}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{BDF71D13-2CBE-41FF-8D6D-3C2DB42EE10F}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
