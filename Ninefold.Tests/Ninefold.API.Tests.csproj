@@ -53,9 +53,6 @@
     </CodeAnalysisDependentAssemblyPaths>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Fakes\ResponseStub.cs" />
-    <Compile Include="Fakes\ComputeServiceStub.cs" />
-    <Compile Include="Fakes\StorageServiceStub.cs" />
     <Compile Include="FunctionalTests\StorageTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
