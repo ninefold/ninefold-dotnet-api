@@ -13,7 +13,7 @@ namespace Ninefold.API.DemoClient
             var demoContent = File.ReadAllBytes(Path.Combine(Environment.CurrentDirectory, "DemoFile.txt"));
             var storageClient = new StorageClient("5cd104e23fc947668a6c74fe63fd77e7/godbold_1310683369246",
                                                   "FGJeXUzxCz5poHoSzRzmMTceuek=");
-            var storedObjectResponse = storageClient.StoredObject.CreateObject(new CreateObjectRequest
+            var storedObjectResponse = storageClient.CreateObject(new CreateObjectRequest
                                                                                    {
                                                                                        Content = demoContent,
                                                                                        Resource =
@@ -28,7 +28,7 @@ namespace Ninefold.API.DemoClient
             Console.WriteLine("Object stored at {0}", storedObjectResponse.Location);
             Console.ReadKey();
 
-            var namespaceCreateResponse = storageClient.StoredObject.CreateObject(new CreateObjectRequest
+            var namespaceCreateResponse = storageClient.CreateObject(new CreateObjectRequest
             {
                 Resource =
                     new Uri("namespace/test/profiles of stuff/", UriKind.Relative),
@@ -43,7 +43,7 @@ namespace Ninefold.API.DemoClient
             Console.ReadKey();
 
             var getNamespaceResponse =
-                storageClient.StoredObject.GetObject(new GetObjectRequest
+                storageClient.GetObject(new GetObjectRequest
                 {
                     Resource = new Uri(namespaceCreateResponse.Location, UriKind.Relative),
                 });
@@ -57,7 +57,7 @@ namespace Ninefold.API.DemoClient
 
             Console.WriteLine("Deleting namespace at {0}", namespaceCreateResponse.Location);
 
-            storageClient.StoredObject.DeleteObject(new DeleteObjectRequest
+            storageClient.DeleteObject(new DeleteObjectRequest
             {
                 Resource = new Uri(namespaceCreateResponse.Location, UriKind.Relative)
             });
@@ -67,7 +67,7 @@ namespace Ninefold.API.DemoClient
 
 
             var getFullObjectResponse =
-                storageClient.StoredObject.GetObject(new GetObjectRequest
+                storageClient.GetObject(new GetObjectRequest
                 {
                     Resource = new Uri(storedObjectResponse.Location, UriKind.Relative),
                 });
@@ -80,7 +80,7 @@ namespace Ninefold.API.DemoClient
             Console.ReadKey(); 
 
             var getObjectResponse =
-                storageClient.StoredObject.GetObject(new GetObjectRequest
+                storageClient.GetObject(new GetObjectRequest
                                                          {
                                                              Resource = new Uri(storedObjectResponse.Location, UriKind.Relative),
                                                              LowerRange = 10
@@ -95,7 +95,7 @@ namespace Ninefold.API.DemoClient
 
             Console.WriteLine("Updating object stored at {0}", storedObjectResponse.Location);
 
-            storageClient.StoredObject.UpdateObject(new UpdateObjectRequest
+            storageClient.UpdateObject(new UpdateObjectRequest
             {
                 Resource = new Uri(storedObjectResponse.Location, UriKind.Relative),
                 Content = demoContent
@@ -106,7 +106,7 @@ namespace Ninefold.API.DemoClient
 
             Console.WriteLine("Deleting object stored at {0}", storedObjectResponse.Location);
 
-            storageClient.StoredObject.DeleteObject(new DeleteObjectRequest
+            storageClient.DeleteObject(new DeleteObjectRequest
                                                                                     {
                                                                                         Resource = new Uri(storedObjectResponse.Location, UriKind.Relative)
                                                                                     });

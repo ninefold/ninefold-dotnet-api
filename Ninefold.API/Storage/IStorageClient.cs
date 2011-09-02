@@ -1,7 +1,10 @@
-﻿namespace Ninefold.Storage
+﻿using Ninefold.Core;
+
+namespace Ninefold.Storage
 {
     public interface IStorageClient
     {
-        IStoredObject StoredObject { get; }
+        IStorageCommandBuilder Builder { get; }
+        ICommandAuthenticator Authenticator { get; }
     }
 }

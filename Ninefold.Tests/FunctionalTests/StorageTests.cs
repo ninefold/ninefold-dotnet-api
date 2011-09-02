@@ -36,7 +36,7 @@ namespace Ninefold.API.Tests.FunctionalTests
 
         private void CreateObject(string tags="part7/part8=quick")
         {
-            var response = _storageClient.StoredObject.CreateObject(new CreateObjectRequest
+            var response = _storageClient.CreateObject(new CreateObjectRequest
             {
                 Content = _demoContent,
                 Resource = new Uri("objects", UriKind.Relative),
@@ -51,7 +51,7 @@ namespace Ninefold.API.Tests.FunctionalTests
 
         private GetObjectResponse GetObject()
         {
-            return _storageClient.StoredObject.GetObject(new GetObjectRequest
+            return _storageClient.GetObject(new GetObjectRequest
             {
                 IncludeMeta = true,
                 Resource = new Uri(_objectId, UriKind.Relative)
@@ -60,7 +60,7 @@ namespace Ninefold.API.Tests.FunctionalTests
 
         private void DeleteLastObject()
         {
-            _storageClient.StoredObject.DeleteObject(new DeleteObjectRequest
+            _storageClient.DeleteObject(new DeleteObjectRequest
             {
                 Resource = new Uri(_objectId, UriKind.Relative)
             });
@@ -68,7 +68,7 @@ namespace Ninefold.API.Tests.FunctionalTests
 
         private void CreateNamespace(string path)
         {
-            var response = _storageClient.StoredObject.CreateObject(new CreateObjectRequest
+            var response = _storageClient.CreateObject(new CreateObjectRequest
             {
                 Resource = new Uri(path, UriKind.Relative),
                 GroupACL = "other=NONE",
@@ -83,7 +83,7 @@ namespace Ninefold.API.Tests.FunctionalTests
         [TestMethod]
         public void CreateObject_ShouldStoreObject_OnValidRequest()
         {
-            var response = _storageClient.StoredObject.CreateObject(new CreateObjectRequest
+            var response = _storageClient.CreateObject(new CreateObjectRequest
              {
                  Content = _demoContent,
                  Resource =
@@ -101,7 +101,7 @@ namespace Ninefold.API.Tests.FunctionalTests
         [TestMethod]
         public void CreateObject_ShouldCreateNamespace_ForNSWithSpaceInName()
         {
-            var response = _storageClient.StoredObject.CreateObject(new CreateObjectRequest
+            var response = _storageClient.CreateObject(new CreateObjectRequest
             {
                 Resource =
                     new Uri("namespace/test/profiles and stuff/", UriKind.Relative),
@@ -118,7 +118,7 @@ namespace Ninefold.API.Tests.FunctionalTests
         [TestMethod]
         public void CreateObject_ShouldCreateNamespace_ForNSWithoutSpaces()
         {
-            var response = _storageClient.StoredObject.CreateObject(new CreateObjectRequest
+            var response = _storageClient.CreateObject(new CreateObjectRequest
             {
                 Resource =
                     new Uri("namespace/tests/", UriKind.Relative),
@@ -138,7 +138,7 @@ namespace Ninefold.API.Tests.FunctionalTests
         {
             CreateObject();
             var expectedContent = Encoding.ASCII.GetString(_demoContent);
-            var response = _storageClient.StoredObject.GetObject(new GetObjectRequest
+            var response = _storageClient.GetObject(new GetObjectRequest
             {
                 Resource = new Uri(_objectId, UriKind.Relative)
             });
@@ -154,7 +154,7 @@ namespace Ninefold.API.Tests.FunctionalTests
 
             var expectedContent = Encoding.ASCII.GetString(_demoContent).Substring(10);
             var response =
-                _storageClient.StoredObject.GetObject(new GetObjectRequest
+                _storageClient.GetObject(new GetObjectRequest
                 {
                     Resource = new Uri(_objectId, UriKind.Relative),
                     LowerRange = 10
@@ -172,7 +172,7 @@ namespace Ninefold.API.Tests.FunctionalTests
 
             var expectedContent = Encoding.ASCII.GetString(new[] { _demoContent[5], _demoContent[6], _demoContent[7], _demoContent[8] });
             var response =
-                _storageClient.StoredObject.GetObject(new GetObjectRequest
+                _storageClient.GetObject(new GetObjectRequest
                 {
                     Resource = new Uri(_objectId, UriKind.Relative),
                     LowerRange = 5,
@@ -188,7 +188,7 @@ namespace Ninefold.API.Tests.FunctionalTests
         {
             CreateNamespace("namespace/testnamespace/");
             var response =
-                _storageClient.StoredObject.ListNamespace(new ListNamespaceRequest
+                _storageClient.ListNamespace(new ListNamespaceRequest
                 {
                     Resource = new Uri(_objectId, UriKind.Relative),
                 });
@@ -203,7 +203,7 @@ namespace Ninefold.API.Tests.FunctionalTests
         {
             CreateNamespace("namespace/test namespace/");
             var response =
-                _storageClient.StoredObject.ListNamespace(new ListNamespaceRequest
+                _storageClient.ListNamespace(new ListNamespaceRequest
                 {
                     Resource = new Uri(_objectId, UriKind.Relative),
                 });
@@ -217,7 +217,7 @@ namespace Ninefold.API.Tests.FunctionalTests
         public void DeleteObject_ShouldDeleteNamespace_ForValidPath()
         {
             CreateNamespace("namespace/left/right/");
-            var response = _storageClient.StoredObject.DeleteObject(new DeleteObjectRequest
+            var response = _storageClient.DeleteObject(new DeleteObjectRequest
             {
                 Resource = new Uri(_objectId, UriKind.Relative)
             });
@@ -234,7 +234,7 @@ namespace Ninefold.API.Tests.FunctionalTests
             CreateObject();
 
             var updateContent = Encoding.ASCII.GetBytes(updateText);
-            var response = _storageClient.StoredObject.UpdateObject(new UpdateObjectRequest
+            var response = _storageClient.UpdateObject(new UpdateObjectRequest
             {
                 Resource = new Uri(_objectId, UriKind.Relative),
                 Content = updateContent
@@ -251,7 +251,7 @@ namespace Ninefold.API.Tests.FunctionalTests
         {
             CreateObject();
 
-            var response = _storageClient.StoredObject.DeleteObject(new DeleteObjectRequest
+            var response = _storageClient.DeleteObject(new DeleteObjectRequest
                                                                         {
                                                                             Resource =
                                                                                 new Uri(_objectId, UriKind.Relative)
@@ -265,7 +265,7 @@ namespace Ninefold.API.Tests.FunctionalTests
         {
             CreateObject();
 
-            _storageClient.StoredObject.SetObjectACL(new SetObjectACLRequest
+            _storageClient.SetObjectACL(new SetObjectACLRequest
                 {
                     Resource = new Uri(_objectId, UriKind.Relative),
                     UserACL = "godbold=FULL_CONTROL, somone=READ"
@@ -277,7 +277,7 @@ namespace Ninefold.API.Tests.FunctionalTests
         {
             CreateObject();
 
-            _storageClient.StoredObject.SetObjectACL(new SetObjectACLRequest
+            _storageClient.SetObjectACL(new SetObjectACLRequest
             {
                 Resource = new Uri(_objectId, UriKind.Relative),
                 GroupACL = "other=FULL_CONTROL"
@@ -292,7 +292,7 @@ namespace Ninefold.API.Tests.FunctionalTests
 
             try
             {
-                _storageClient.StoredObject.SetObjectACL(new SetObjectACLRequest
+                _storageClient.SetObjectACL(new SetObjectACLRequest
                                                              {
                                                                  Resource = new Uri(_objectId, UriKind.Relative),
                                                              });
@@ -311,7 +311,7 @@ namespace Ninefold.API.Tests.FunctionalTests
             CreateObject();
             var checkObject = GetObject();
             
-            _storageClient.StoredObject.DeleteUserMetadata(new DeleteUserMetadataRequest
+            _storageClient.DeleteUserMetadata(new DeleteUserMetadataRequest
                                 {
                                     Resource = new Uri(_objectId, UriKind.Relative),
                                     Tags = "part4"
@@ -329,7 +329,7 @@ namespace Ninefold.API.Tests.FunctionalTests
 
             try
             {
-                _storageClient.StoredObject.DeleteUserMetadata(new DeleteUserMetadataRequest
+                _storageClient.DeleteUserMetadata(new DeleteUserMetadataRequest
                 {
                     Resource = new Uri("someId", UriKind.Relative),
                     Tags = "22"
@@ -351,7 +351,7 @@ namespace Ninefold.API.Tests.FunctionalTests
             CreateObject();
             var createdObject = GetObject();
 
-            var response = _storageClient.StoredObject.GetObjectACL(new GetObjectAclRequest
+            var response = _storageClient.GetObjectACL(new GetObjectAclRequest
                                                                         {
                                                                             Resource = new Uri(_objectId, UriKind.Relative)
                                                                         });
@@ -363,7 +363,7 @@ namespace Ninefold.API.Tests.FunctionalTests
         [TestMethod]
         public void GetListableTags_ShouldReturnAllListableTags_ForValidObjectRequest()
         {
-            var response = _storageClient.StoredObject.GetListableTags(new GetListableTagsRequest
+            var response = _storageClient.GetListableTags(new GetListableTagsRequest
                                                                            {
                                                                                Resource = new Uri("objects", UriKind.Relative)
                                                                            });
@@ -374,7 +374,7 @@ namespace Ninefold.API.Tests.FunctionalTests
         [TestMethod]
         public void GetListableTags_ShouldReturnAllListableTags_ForValidNamespaceRequest()
         {
-            var response = _storageClient.StoredObject.GetListableTags(new GetListableTagsRequest
+            var response = _storageClient.GetListableTags(new GetListableTagsRequest
             {
                 Resource = new Uri("namespace", UriKind.Relative)
             });
@@ -387,7 +387,7 @@ namespace Ninefold.API.Tests.FunctionalTests
         {
             CreateObject();
 
-            var response = _storageClient.StoredObject.GetSystemMetadata(new GetSystemMetadataRequest
+            var response = _storageClient.GetSystemMetadata(new GetSystemMetadataRequest
                                                                              {
                                                                                  Resource =
                                                                                      new Uri(_objectId, UriKind.Relative)
@@ -401,7 +401,7 @@ namespace Ninefold.API.Tests.FunctionalTests
         {
             CreateObject();
 
-            var response = _storageClient.StoredObject.GetSystemMetadata(new GetSystemMetadataRequest
+            var response = _storageClient.GetSystemMetadata(new GetSystemMetadataRequest
             {
                 Resource = new Uri(_objectId, UriKind.Relative),
                 Tags = "atime"
@@ -415,7 +415,7 @@ namespace Ninefold.API.Tests.FunctionalTests
         [TestMethod]
         public void ListObjects_ShouldReturnContent_ForValidRequest()
         {
-            var response = _storageClient.StoredObject.ListObjects(new ListObjectsRequest
+            var response = _storageClient.ListObjects(new ListObjectsRequest
                                                                        {
                                                                            IncludeMetadata = 1,
                                                                            Tags = "part4/part7/part8",
@@ -430,7 +430,7 @@ namespace Ninefold.API.Tests.FunctionalTests
         [TestMethod]
         public void ListObjects_ShouldReturnOneObjectAndAToken_ForRequestWithLimitSpecifiedAsOne()
         {
-            var response = _storageClient.StoredObject.ListObjects(new ListObjectsRequest
+            var response = _storageClient.ListObjects(new ListObjectsRequest
             {
                 IncludeMetadata = 1,
                 Tags = "part4/part7/part8",
@@ -447,7 +447,7 @@ namespace Ninefold.API.Tests.FunctionalTests
         [TestMethod]
         public void ListObjects_ShouldReturnTheNextObjectAndAToken_ForRequestsWithAToken()
         {
-            var firstResponse = _storageClient.StoredObject.ListObjects(new ListObjectsRequest
+            var firstResponse = _storageClient.ListObjects(new ListObjectsRequest
             {
                 IncludeMetadata = 1,
                 Tags = "part4/part7/part8",
@@ -455,7 +455,7 @@ namespace Ninefold.API.Tests.FunctionalTests
                 Resource = new Uri("objects", UriKind.Relative)
             });
 
-            var response = _storageClient.StoredObject.ListObjects(new ListObjectsRequest
+            var response = _storageClient.ListObjects(new ListObjectsRequest
             {
                 IncludeMetadata = 1,
                 Tags = "part4/part7/part8",
@@ -476,7 +476,7 @@ namespace Ninefold.API.Tests.FunctionalTests
         {
             CreateObject();
             var referenceObject = GetObject();
-            var response = _storageClient.StoredObject.GetUserMetadata(new GetUserMetadataRequest
+            var response = _storageClient.GetUserMetadata(new GetUserMetadataRequest
                                                                            {
                                                                                Resource = new Uri(_objectId, UriKind.Relative)
                                                                            });
@@ -497,7 +497,7 @@ namespace Ninefold.API.Tests.FunctionalTests
             CreateObject(string.Empty);
 
             const string tags = "tag22=one, tag44=two";
-            _storageClient.StoredObject.SetUserMetadata(new SetUserMetadataRequest
+            _storageClient.SetUserMetadata(new SetUserMetadataRequest
                                                             {
                                                                 Resource = new Uri(_objectId, UriKind.Relative),
                                                                 ListableTags = tags
@@ -514,7 +514,7 @@ namespace Ninefold.API.Tests.FunctionalTests
             CreateObject();
 
             const string tags = "tag22=one, tag44=two";
-            _storageClient.StoredObject.SetUserMetadata(new SetUserMetadataRequest
+            _storageClient.SetUserMetadata(new SetUserMetadataRequest
                                                             {
                                                                 Resource = new Uri(_objectId, UriKind.Relative),
                                                                 Tags = tags
@@ -533,7 +533,7 @@ namespace Ninefold.API.Tests.FunctionalTests
 
             try
             {
-                _storageClient.StoredObject.SetUserMetadata(new SetUserMetadataRequest
+                _storageClient.SetUserMetadata(new SetUserMetadataRequest
                                                                 {
                                                                     Resource = new Uri(_objectId, UriKind.Relative),
                                                                 });
@@ -552,7 +552,7 @@ namespace Ninefold.API.Tests.FunctionalTests
         {
            CreateObject();
 
-           var response = _storageClient.StoredObject.UpdateObject(new UpdateObjectRequest
+           var response = _storageClient.UpdateObject(new UpdateObjectRequest
            {
                Resource = new Uri(_objectId, UriKind.Relative),
                RangeSpecification = string.Empty,

@@ -2,7 +2,7 @@
 
 namespace Ninefold.Storage
 {
-    public class HeaderAttribute : Attribute
+    internal class HeaderAttribute : Attribute
     {
         public string Name { get; private set; }
 
