@@ -1,11 +1,10 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using System.Net;
 using System.Xml.Linq;
-using Ninefold.API.Core;
-using Ninefold.API.Storage.Messages;
+using Ninefold.Core;
+using Ninefold.Storage.Messages;
 
-namespace Ninefold.API.Storage.Commands
+namespace Ninefold.Storage.Commands
 {
     public class ListNamespace : ICommand
     {
@@ -29,7 +28,7 @@ namespace Ninefold.API.Storage.Commands
 
         public HttpWebRequest Prepare()
         {
-            var request = _commandBuilder.GenerateRequest(Parameters, _userId, HttpMethod.GET);
+            var request = _commandBuilder.GenerateRequest(Parameters, _userId, WebRequestMethods.Http.Get);
             _authenticator.AuthenticateRequest(request, _secret);
 
             return request;

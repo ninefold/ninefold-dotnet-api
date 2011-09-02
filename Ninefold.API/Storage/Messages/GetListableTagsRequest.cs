@@ -1,7 +1,7 @@
 ﻿using System;
-using Ninefold.API.Core;
+using Ninefold.Core;
 
-namespace Ninefold.API.Storage.Messages
+namespace Ninefold.Storage.Messages
 {
     public class GetListableTagsRequest : ICommandRequest
     {

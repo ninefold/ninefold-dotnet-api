@@ -1,9 +1,9 @@
 ﻿using System;
-using Ninefold.API.Core;
-using Ninefold.API.Storage.Commands;
-using Ninefold.API.Storage.Messages;
+using Ninefold.Core;
+using Ninefold.Storage.Commands;
+using Ninefold.Storage.Messages;
 
-namespace Ninefold.API.Storage
+namespace Ninefold.Storage
 {
     public class StoredObject : IStoredObject
     {

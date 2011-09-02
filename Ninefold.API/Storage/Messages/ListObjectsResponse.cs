@@ -1,7 +1,7 @@
 ﻿using System.Xml.Linq;
-using Ninefold.API.Core;
+using Ninefold.Core;
 
-namespace Ninefold.API.Storage.Messages
+namespace Ninefold.Storage.Messages
 {
     public class ListObjectsResponse : ICommandResponse
     {

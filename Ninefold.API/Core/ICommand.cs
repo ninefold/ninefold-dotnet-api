@@ -1,6 +1,6 @@
 ﻿using System.Net;
 
-namespace Ninefold.API.Core
+namespace Ninefold.Core
 {
     public interface ICommand
     {

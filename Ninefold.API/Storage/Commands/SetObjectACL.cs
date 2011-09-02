@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Net;
-using Ninefold.API.Core;
-using Ninefold.API.Storage.Messages;
+using Ninefold.Core;
+using Ninefold.Storage.Messages;
 
-namespace Ninefold.API.Storage.Commands
+namespace Ninefold.Storage.Commands
 {
     public class SetObjectACL : ICommand
     {
@@ -37,7 +37,7 @@ namespace Ninefold.API.Storage.Commands
                 throw new ArgumentOutOfRangeException("Either a group acl or a user acl must be supplied to the SetObjectACL command");
             }
 
-            var request = _commandBuilder.GenerateRequest(Parameters, _userId, HttpMethod.POST);
+            var request = _commandBuilder.GenerateRequest(Parameters, _userId, WebRequestMethods.Http.Post);
             _authenticator.AuthenticateRequest(request, _secret);
 
             return request;

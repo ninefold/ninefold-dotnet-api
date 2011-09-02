@@ -1,6 +1,6 @@
-﻿using Ninefold.API.Storage.Messages;
+﻿using Ninefold.Storage.Messages;
 
-namespace Ninefold.API.Storage
+namespace Ninefold.Storage
 {
     public interface IStoredObject
     {

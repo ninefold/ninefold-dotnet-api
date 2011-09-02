@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Ninefold.API.Core
+namespace Ninefold.Core
 {
     public interface ICommandRequest
     {

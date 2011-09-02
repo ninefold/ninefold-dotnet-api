@@ -1,11 +1,10 @@
 ﻿using System;
-using System.IO;
 using System.Net;
 using System.Linq;
 using System.Xml.Linq;
-using Ninefold.API.Core;
+using Ninefold.Core;
 
-namespace Ninefold.API.Storage
+namespace Ninefold.Storage
 {
     public class StorageCommandExecutor : ICommandExecutor
     {

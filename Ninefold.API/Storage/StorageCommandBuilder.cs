@@ -3,15 +3,15 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Net;
 using System.Reflection;
-using Ninefold.API.Core;
+using Ninefold.Core;
 
-namespace Ninefold.API.Storage
+namespace Ninefold.Storage
 {
     public class StorageCommandBuilder : IStorageCommandBuilder
     {
         private const BindingFlags PropertyFilters = BindingFlags.Public | BindingFlags.Instance;
 
-        public HttpWebRequest GenerateRequest(ICommandRequest request, string userId, HttpMethod requestMethod)
+        public HttpWebRequest GenerateRequest(ICommandRequest request, string userId, string requestMethod)
         {
             Validator.ValidateObject(request, new ValidationContext(request, null, null), true);
             

@@ -1,6 +1,6 @@
-﻿using Ninefold.API.Core;
+﻿using Ninefold.Core;
 
-namespace Ninefold.API.Compute
+namespace Ninefold.Compute
 {
     public class VirtualMachine : IVirtualMachine
     {

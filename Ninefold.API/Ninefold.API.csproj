@@ -8,8 +8,8 @@
     <ProjectGuid>{0303CB70-4BA8-4499-88A1-0442E33C69B0}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Ninefold.API</RootNamespace>
-    <AssemblyName>Ninefold.API</AssemblyName>
+    <RootNamespace>Ninefold</RootNamespace>
+    <AssemblyName>Ninefold</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -42,7 +42,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Compute\ComputeRequestBuilder.cs" />
-    <Compile Include="Core\HttpMethod.cs" />
     <Compile Include="Core\ICommandAuthenticator.cs" />
     <Compile Include="Core\ICommandRequest.cs" />
     <Compile Include="Compute\IComputeClient.cs" />
@@ -52,11 +51,11 @@
     <Compile Include="Core\ICommandExecutor.cs" />
     <Compile Include="Compute\VirtualMachine.cs" />
     <Compile Include="Core\ICommandResponse.cs" />
-    <Compile Include="ComputeClient.cs" />
+    <Compile Include="Compute\ComputeClient.cs" />
     <Compile Include="Compute\ComputeRequestAuthenticator.cs" />
     <Compile Include="Core\NinefoldApiException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="StorageClient.cs" />
+    <Compile Include="Storage\StorageClient.cs" />
     <Compile Include="Storage\Commands\CreateObject.cs" />
     <Compile Include="Storage\Commands\DeleteObject.cs" />
     <Compile Include="Storage\Commands\DeleteUserMetadata.cs" />
@@ -108,6 +107,9 @@
   <ItemGroup>
     <Folder Include="Compute\Commands\" />
     <Folder Include="Compute\Messages\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Ninefold.API.nuspec" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

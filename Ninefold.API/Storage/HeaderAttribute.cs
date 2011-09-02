@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Ninefold.API.Storage
+namespace Ninefold.Storage
 {
     public class HeaderAttribute : Attribute
     {

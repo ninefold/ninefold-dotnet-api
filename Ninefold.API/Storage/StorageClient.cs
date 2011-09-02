@@ -1,8 +1,7 @@
 ﻿using System.Net;
-using Ninefold.API.Core;
-using Ninefold.API.Storage;
+using Ninefold.Core;
 
-namespace Ninefold.API
+namespace Ninefold.Storage
 {
     public class StorageClient : ICommandExecutor
     {

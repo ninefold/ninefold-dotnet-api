@@ -1,4 +1,4 @@
-﻿namespace Ninefold.API.Compute
+﻿namespace Ninefold.Compute
 {
     public interface IVirtualMachine
     {

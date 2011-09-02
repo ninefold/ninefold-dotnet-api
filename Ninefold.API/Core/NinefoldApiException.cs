@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Net;
 
-namespace Ninefold.API.Core
+namespace Ninefold.Core
 {
     public class NinefoldApiException : WebException
     {

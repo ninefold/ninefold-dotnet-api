@@ -1,8 +1,7 @@
 ﻿using System;
-using Ninefold.API.Compute;
-using Ninefold.API.Core;
+using Ninefold.Core;
 
-namespace Ninefold.API
+namespace Ninefold.Compute
 {
     public class ComputeClient : IComputeClient, ICommandExecutor
     {

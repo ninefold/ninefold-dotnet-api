@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
-using System.Text;
-using Ninefold.API.Core;
-using Ninefold.API.Storage.Messages;
+using Ninefold.Core;
+using Ninefold.Storage.Messages;
 
-namespace Ninefold.API.Storage.Commands
+namespace Ninefold.Storage.Commands
 {
     public class SetUserMetadata : ICommand
     {
@@ -40,8 +37,8 @@ namespace Ninefold.API.Storage.Commands
             {
                 Parameters.Resource = new Uri(Parameters.Resource, "?metadata/user");
             }
-            
-            var request = _commandBuilder.GenerateRequest(Parameters, _userId, HttpMethod.POST);
+
+            var request = _commandBuilder.GenerateRequest(Parameters, _userId, WebRequestMethods.Http.Post);
             _authenticator.AuthenticateRequest(request, _secret);
 
             return request;

@@ -1,7 +1,8 @@
 ﻿using System;
 using System.IO;
 using System.Text;
-using Ninefold.API.Storage.Messages;
+using Ninefold.Storage;
+using Ninefold.Storage.Messages;
 
 namespace Ninefold.API.DemoClient
 {

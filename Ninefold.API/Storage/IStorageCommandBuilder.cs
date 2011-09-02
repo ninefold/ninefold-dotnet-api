@@ -1,10 +1,10 @@
 ﻿using System.Net;
-using Ninefold.API.Core;
+using Ninefold.Core;
 
-namespace Ninefold.API.Storage
+namespace Ninefold.Storage
 {
     public interface IStorageCommandBuilder
     {
-        HttpWebRequest GenerateRequest(ICommandRequest request, string userId, HttpMethod requestMethod);
+        HttpWebRequest GenerateRequest(ICommandRequest request, string userId, string requestMethod);
     }
 }

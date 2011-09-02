@@ -1,9 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using Ninefold.API.Core;
+using Ninefold.Core;
 
-namespace Ninefold.API.Storage.Messages
+namespace Ninefold.Storage.Messages
 {
     public class CreateObjectRequest : ICommandRequest
     {

@@ -2,8 +2,9 @@
 using System.Text;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Ninefold.API.Core;
-using Ninefold.API.Storage.Messages;
+using Ninefold.Core;
+using Ninefold.Storage;
+using Ninefold.Storage.Messages;
 
 namespace Ninefold.API.Tests.FunctionalTests
 {

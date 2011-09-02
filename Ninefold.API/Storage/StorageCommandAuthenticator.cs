@@ -2,9 +2,9 @@
 using System.Linq;
 using System.Net;
 using System.Text;
-using Ninefold.API.Core;
+using Ninefold.Core;
 
-namespace Ninefold.API.Storage
+namespace Ninefold.Storage
 {
     public class StorageCommandAuthenticator : ICommandAuthenticator
     {
