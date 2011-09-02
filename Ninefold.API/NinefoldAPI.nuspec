@@ -1,0 +1,13 @@
+﻿<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>$id$</id>
+    <version>$version$</version>
+    <authors>$author$</authors>
+    <owners>$author$</owners>
+    <licenseUrl>https://github.com/ninefold/ninefold-dotnet-api</licenseUrl>
+    <projectUrl>https://github.com/ninefold/ninefold-dotnet-api</projectUrl>
+    <description>A .Net API for the Ninefold compute and storage platforms</description>
+    <tags>Cloud Ninefold Storage Compute</tags>
+  </metadata>
+</package>
