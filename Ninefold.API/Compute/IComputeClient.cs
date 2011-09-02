@@ -1,7 +1,7 @@
 ﻿namespace Ninefold.Compute
 {
-    public interface IComputeClient
+    internal interface IComputeClient
     {
-        IVirtualMachine VirtualMachine { get; }
+        
     }
 }

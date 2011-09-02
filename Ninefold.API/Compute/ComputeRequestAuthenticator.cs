@@ -5,7 +5,7 @@ using Ninefold.Core;
 
 namespace Ninefold.Compute
 {
-    public class ComputeRequestAuthenticator : ICommandAuthenticator
+    internal class ComputeRequestAuthenticator : ICommandAuthenticator
     {
         public void AuthenticateRequest(WebRequest request, string base64Secret)
         {

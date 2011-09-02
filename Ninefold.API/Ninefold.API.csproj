@@ -47,9 +47,7 @@
     <Compile Include="Compute\IComputeClient.cs" />
     <Compile Include="Core\ICommand.cs" />
     <Compile Include="Compute\IComputeRequestBuilder.cs" />
-    <Compile Include="Compute\IVirtualMachine.cs" />
     <Compile Include="Core\ICommandExecutor.cs" />
-    <Compile Include="Compute\VirtualMachine.cs" />
     <Compile Include="Core\ICommandResponse.cs" />
     <Compile Include="Compute\ComputeClient.cs" />
     <Compile Include="Compute\ComputeRequestAuthenticator.cs" />

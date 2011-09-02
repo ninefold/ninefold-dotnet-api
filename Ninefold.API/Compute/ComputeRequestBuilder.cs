@@ -7,7 +7,7 @@ using Ninefold.Core;
 
 namespace Ninefold.Compute
 {
-    public class ComputeRequestBuilder : IComputeRequestBuilder
+    internal class ComputeRequestBuilder : IComputeRequestBuilder
     {
         private const BindingFlags PropertyFilters = BindingFlags.Public | BindingFlags.Instance;
 
