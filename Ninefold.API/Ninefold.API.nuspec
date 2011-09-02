@@ -5,6 +5,7 @@
     <version>$version$</version>
     <authors>Ninefold</authors>
     <owners>Ninefold</owners>
+    <iconurl>https://ninefold.com/portal/images/logo.png</iconurl>
     <licenseUrl>https://github.com/ninefold/ninefold-dotnet-api</licenseUrl>
     <projectUrl>https://github.com/ninefold/ninefold-dotnet-api</projectUrl>
     <description>A .NET API for the Ninefold compute and storage platforms.</description>
