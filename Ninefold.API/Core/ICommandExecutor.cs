@@ -1,4 +1,6 @@
-﻿namespace Ninefold.Core
+﻿using Ninefold.Storage;
+
+namespace Ninefold.Core
 {
     public interface ICommandExecutor
     {

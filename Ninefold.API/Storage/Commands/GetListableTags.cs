@@ -8,11 +8,11 @@ namespace Ninefold.Storage.Commands
     public class GetListableTags : ICommand
     {
         readonly IStorageCommandBuilder _commandBuilder;
-        readonly ICommandAuthenticator _authenticator;
+        readonly IStorageCommandAuthenticator _authenticator;
         readonly string _secret;
         readonly string _userId;
 
-        public GetListableTags(string userId, string secret, IStorageCommandBuilder commandBuilder, ICommandAuthenticator authenticator)
+        public GetListableTags(string userId, string secret, IStorageCommandBuilder commandBuilder, IStorageCommandAuthenticator authenticator)
         {
             _commandBuilder = commandBuilder;
             _userId = userId;

@@ -16,10 +16,10 @@ namespace Ninefold.Storage
         readonly string _secret;
         readonly string _baseUrl;
         readonly IStorageCommandBuilder _builder;
-        readonly ICommandAuthenticator _authenticator;
+        readonly IStorageCommandAuthenticator _authenticator;
 
         public IStorageCommandBuilder Builder { get { return _builder; } }
-        public ICommandAuthenticator Authenticator { get { return _authenticator; } }
+        public IStorageCommandAuthenticator Authenticator { get { return _authenticator; } }
 
         public StorageClient(string userId, string base64Secret)
             : this (userId, base64Secret, DefaultStorageRootUrl)
@@ -160,7 +160,7 @@ namespace Ninefold.Storage
             return (SetUserMetadataResponse)((ICommandExecutor) this).Execute(command);
         }
 
-        private void EnsureAbsoluteUri(ICommandRequest request)
+        private void EnsureAbsoluteUri(IStorageCommandRequest request)
         {
             if (request.Resource.IsAbsoluteUri) return;
             var relativeResourcePath = request.Resource;

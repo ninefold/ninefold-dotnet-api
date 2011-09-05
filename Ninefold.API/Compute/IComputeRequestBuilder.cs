@@ -1,9 +1,14 @@
-﻿using Ninefold.Core;
+﻿using System.Net;
+using Ninefold.Compute.Commands;
 
 namespace Ninefold.Compute
 {
-    internal interface IComputeRequestBuilder
+    public interface IComputeRequestBuilder
     {
-        void GenerateRequest(ICommandRequest request, string apiKey);
+        WebRequest GenerateRequest(IComputeCommandRequest request, 
+                                                            IComputeCommandAuthenticator authenticator, 
+                                                            string baseUri,
+                                                            string apiKey, 
+                                                            string secret);
     }
 }

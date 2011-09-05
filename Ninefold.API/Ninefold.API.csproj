@@ -41,16 +41,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Compute\ComputeRequestBuilder.cs" />
-    <Compile Include="Core\ICommandAuthenticator.cs" />
-    <Compile Include="Core\ICommandRequest.cs" />
+    <Compile Include="Compute\Commands\DeployVirtualMachine.cs" />
+    <Compile Include="Compute\Messages\DeployVirtualMachineRequest.cs" />
+    <Compile Include="Compute\Messages\MachineResponse.cs" />
+    <Compile Include="Compute\ComputeCommandBuilder.cs" />
+    <Compile Include="Compute\IComputeCommandAuthenticator.cs" />
+    <Compile Include="Storage\IStorageCommandAuthenticator.cs" />
+    <Compile Include="Storage\IStorageCommandRequest.cs" />
     <Compile Include="Compute\IComputeClient.cs" />
     <Compile Include="Core\ICommand.cs" />
     <Compile Include="Compute\IComputeRequestBuilder.cs" />
     <Compile Include="Core\ICommandExecutor.cs" />
     <Compile Include="Core\ICommandResponse.cs" />
     <Compile Include="Compute\ComputeClient.cs" />
-    <Compile Include="Compute\ComputeRequestAuthenticator.cs" />
+    <Compile Include="Compute\ComputeCommandAuthenticator.cs" />
     <Compile Include="Core\NinefoldApiException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Storage\StorageClient.cs" />
@@ -99,12 +103,11 @@
     <Compile Include="Storage\StorageCommandAuthenticator.cs" />
     <Compile Include="Storage\StorageCommandBuilder.cs" />
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <Folder Include="Compute\Commands\" />
-    <Folder Include="Compute\Messages\" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Ninefold.API.nuspec" />
+    <None Include="Ninefold.API.nuspec">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

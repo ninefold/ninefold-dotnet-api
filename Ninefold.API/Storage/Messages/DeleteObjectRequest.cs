@@ -4,7 +4,7 @@ using Ninefold.Core;
 
 namespace Ninefold.Storage.Messages
 {
-    public class DeleteObjectRequest : ICommandRequest
+    public class DeleteObjectRequest : IStorageCommandRequest
     {
         [Required]
         public Uri Resource { get; set; }

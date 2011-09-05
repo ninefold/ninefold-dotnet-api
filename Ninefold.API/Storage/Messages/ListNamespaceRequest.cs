@@ -4,7 +4,7 @@ using Ninefold.Core;
 
 namespace Ninefold.Storage.Messages
 {
-    public class ListNamespaceRequest : ICommandRequest
+    public class ListNamespaceRequest : IStorageCommandRequest
     {
         [Required]
         public Uri Resource { get; set; }

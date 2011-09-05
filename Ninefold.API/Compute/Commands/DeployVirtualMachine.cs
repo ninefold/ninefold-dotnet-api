@@ -1,61 +1,43 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Net;
-using Ninefold.API.Compute.Messages;
-using Ninefold.API.Core;
-using RestSharp;
+using Ninefold.Compute.Messages;
+using Ninefold.Core;
+using Ninefold.Storage;
 
-namespace Ninefold.API.Compute.Commands
+namespace Ninefold.Compute.Commands
 {
     public class DeployVirtualMachine : ICommand
     {
-        readonly ICommandAuthenticator _authenticator;
-        readonly IRestClient _client;
-        readonly IComputeRequestBuilder _computeRequestService;
+        readonly IComputeCommandAuthenticator _authenticator;
+        readonly IComputeRequestBuilder _builder;
         readonly string _apiKey;
-        readonly string _base64Secret;
+        readonly string _secret;
+        readonly string _baseUri;
 
-        public DeployVirtualMachineRequest Parameters { get; set; }
-
-        public DeployVirtualMachine(string apiKey, 
-                                                        string base64Secret,
-                                                        ICommandAuthenticator authenticator, 
-                                                        IComputeRequestBuilder computeRequestService, 
-                                                        IRestClient client)
+        public DeployVirtualMachine(string apiKey, string secret, string baseUri, IComputeCommandAuthenticator authenticator, IComputeRequestBuilder builder)
         {
             _authenticator = authenticator;
-            _client = client;
-            _computeRequestService = computeRequestService;
+            _secret = secret;
             _apiKey = apiKey;
-            _base64Secret = base64Secret;
+            _builder = builder;
+            _baseUri = baseUri;
         }
-
-        public ICommandResponse ParseResponse(WebResponse response)
-        {
-            ValidateRequest();
-
-            var request = _computeRequestService.GenerateRequest(Parameters, _apiKey);
-            var uri = Uri.UnescapeDataString(((RestClient) _client).BuildUri((RestRequest) request).ToString());
-            _authenticator.AuthenticateRequest(WebRequest.Create(""), _base64Secret);//new Uri(uri), _base64Secret);
-
-            //if (response.ErrorException != null) throw new NinefoldApiException(response.ErrorException);
-            //var responseMessage = response.Data ?? new MachineResponse();
-            //responseMessage.ErrorMessage = response.ErrorMessage;
-
-            //return responseMessage;
-
-            throw new NotImplementedException("Not yet implemented");
-        }
-
+        
+        public DeployVirtualMachineRequest Parameters { get; set; }
+        
         public HttpWebRequest Prepare()
         {
-            throw new NotImplementedException();
+            return (HttpWebRequest)_builder.GenerateRequest(Parameters, _authenticator, _baseUri, _apiKey, _secret);            
         }
 
-        private void ValidateRequest()
+        public ICommandResponse ParseResponse(WebResponse webResponse)
         {
-            if (!string.IsNullOrWhiteSpace(Parameters.Account) && string.IsNullOrWhiteSpace(Parameters.DomainId)) { throw new ArgumentNullException("DomainId", "DomainId must be provided when an Account is provided");}
-            if (!string.IsNullOrWhiteSpace(Parameters.DiskOfferingId) && (string.IsNullOrWhiteSpace(Parameters.Size))) { throw new ArgumentOutOfRangeException("Either the DiskOfferingId or the Size parameter can be provided");}            
+            return new MachineResponse();
         }
+    }
+
+    public interface IComputeCommandRequest
+    {
+        string Command { get; }
     }
 }

@@ -8,13 +8,13 @@ namespace Ninefold.Storage.Commands
     public class GetSystemMetadata : ICommand
     {
         readonly IStorageCommandBuilder _commandBuilder;
-        readonly ICommandAuthenticator _authenticator;
+        readonly IStorageCommandAuthenticator _authenticator;
         readonly string _secret;
         readonly string _userId;
 
         public GetSystemMetadataRequest Parameters { get; set; }
 
-        public GetSystemMetadata(string userId, string secret, IStorageCommandBuilder commandBuilder, ICommandAuthenticator authenticator)
+        public GetSystemMetadata(string userId, string secret, IStorageCommandBuilder commandBuilder, IStorageCommandAuthenticator authenticator)
         {
             _commandBuilder = commandBuilder;
             _userId = userId;

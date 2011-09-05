@@ -3,7 +3,7 @@ using Ninefold.Core;
 
 namespace Ninefold.Storage.Messages
 {
-    public class GetUserMetadataRequest : ICommandRequest
+    public class GetUserMetadataRequest : IStorageCommandRequest
     {
         public Uri Resource { get; set; }
     }

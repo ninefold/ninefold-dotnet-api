@@ -1,7 +1,10 @@
-﻿namespace Ninefold.Compute
+﻿using Ninefold.Compute.Commands;
+using Ninefold.Compute.Messages;
+
+namespace Ninefold.Compute
 {
-    internal interface IComputeClient
+    public interface IComputeClient
     {
-        
+        MachineResponse DeployVirtualMachine(DeployVirtualMachineRequest request);
     }
 }

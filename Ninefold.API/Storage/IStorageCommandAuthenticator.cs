@@ -1,8 +1,8 @@
 ﻿using System.Net;
 
-namespace Ninefold.Core
+namespace Ninefold.Storage
 {
-    public interface  ICommandAuthenticator
+    public interface  IStorageCommandAuthenticator
     {
         void AuthenticateRequest(WebRequest request, string base64Secret);
     }

@@ -11,7 +11,7 @@ namespace Ninefold.Storage
     {
         private const BindingFlags PropertyFilters = BindingFlags.Public | BindingFlags.Instance;
 
-        public HttpWebRequest GenerateRequest(ICommandRequest request, string userId, string requestMethod)
+        public HttpWebRequest GenerateRequest(IStorageCommandRequest request, string userId, string requestMethod)
         {
             Validator.ValidateObject(request, new ValidationContext(request, null, null), true);
             

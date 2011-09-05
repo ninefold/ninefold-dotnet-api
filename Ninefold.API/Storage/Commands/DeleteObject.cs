@@ -7,7 +7,7 @@ namespace Ninefold.Storage.Commands
     public class DeleteObject : ICommand
     {
         readonly IStorageCommandBuilder _commandBuilder;
-        readonly ICommandAuthenticator _authenticator;
+        readonly IStorageCommandAuthenticator _authenticator;
         readonly string _secret;
         readonly string _userId;
         
@@ -16,7 +16,7 @@ namespace Ninefold.Storage.Commands
         public DeleteObject(string userId,
                                         string base64Secret, 
                                         IStorageCommandBuilder commandBuilder, 
-                                        ICommandAuthenticator authenticator)
+                                        IStorageCommandAuthenticator authenticator)
         {
             _userId = userId;
             _authenticator = authenticator;
