@@ -4,7 +4,6 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Net;
 using System.Reflection;
-using Ninefold.Compute.Commands;
 
 namespace Ninefold.Compute
 {
@@ -18,21 +17,21 @@ namespace Ninefold.Compute
 
             var requestType = request.GetType();
             
-            var properties = requestType.GetProperties(PropertyFilters)
-                .Where(p => (p.GetValue(request, null) != null) && (!string.IsNullOrWhiteSpace(p.GetValue(request, null).ToString())))
+            var queryStringParameters = requestType.GetProperties(PropertyFilters)
+                .Where(p => (p.GetValue(request, null) != null) 
+                                        && (!string.IsNullOrWhiteSpace(p.GetValue(request, null).ToString()))
+                                        && (!p.Name.Equals("command", StringComparison.InvariantCultureIgnoreCase)))
                 .Select(p =>
-                    new KeyValuePair<string, string>(p.Name.ToLowerInvariant(), Uri.EscapeUriString(p.GetValue(request, null).ToString())))
-                .ToList();
-            properties.Add(new KeyValuePair<string, string>("apiKey", apiKey));
+                    new KeyValuePair<string, string>((char.ToLower(p.Name[0]) + p.Name.Remove(0, 1)), p.GetValue(request, null).ToString()))
+                .ToList()
+                .OrderBy(pair => pair.Key)
+                .Aggregate(string.Empty, (query, arg) => string.Format("{0}&{1}={2}", query, arg.Key, arg.Value));
 
-            var queryStringParams = properties.OrderBy(pair => pair.Key)
-                .Aggregate("?", (query, arg) => string.Format("{0}&{1}={2}", query, arg.Key, arg.Value))
-                .Replace("?&", "?")
-                .ToLower();
+            var queryString = string.Format("apiKey={0}&command={1}{2}", apiKey, request.Command, queryStringParameters);
+            var signature = authenticator.AuthenticateRequest(queryString, secret);
+            queryString = string.Format("?{0}&signature={1}", queryString, signature);
 
-            var escapedQueryString = Uri.EscapeUriString(queryStringParams).Replace("+", "%20");
-            var signedQueryString = authenticator.AuthenticateRequest(escapedQueryString, secret);
-            return WebRequest.Create(new Uri(new Uri(baseUri), signedQueryString));
+            return WebRequest.Create(new Uri(new Uri(baseUri), queryString));
         }
     }
 }

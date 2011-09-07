@@ -5,6 +5,6 @@ namespace Ninefold.Compute
 {
     public interface IComputeClient
     {
-        MachineResponse DeployVirtualMachine(DeployVirtualMachineRequest request);
+        ListTemplatesResponse ListTemplates(ListTemplatesRequest request);
     }
 }

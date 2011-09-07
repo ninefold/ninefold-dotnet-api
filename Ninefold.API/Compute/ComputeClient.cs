@@ -29,10 +29,10 @@ namespace Ninefold.Compute
             _baseUri = computeServiceUriRoot;
         }
 
-        public MachineResponse DeployVirtualMachine(DeployVirtualMachineRequest request)
+        public ListTemplatesResponse ListTemplates(ListTemplatesRequest request)
         {
-            var command = new DeployVirtualMachine(_apiKey, _secret, _baseUri,  _authenticator, _builder) {Parameters = request};
-            return (MachineResponse) ((ICommandExecutor)this).Execute(command);
+            var command = new ListTemplates(_apiKey, _secret, _baseUri,  _authenticator, _builder) {Parameters = request};
+            return (ListTemplatesResponse) ((ICommandExecutor)this).Execute(command);
         }
         
         ICommandResponse ICommandExecutor.Execute(ICommand command)

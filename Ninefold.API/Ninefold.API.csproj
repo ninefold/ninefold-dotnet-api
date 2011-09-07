@@ -41,11 +41,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Compute\Commands\DeployVirtualMachine.cs" />
-    <Compile Include="Compute\Messages\DeployVirtualMachineRequest.cs" />
-    <Compile Include="Compute\Messages\MachineResponse.cs" />
+    <Compile Include="Compute\Commands\ListTemplates.cs" />
+    <Compile Include="Compute\IComputeCommandRequest.cs" />
+    <Compile Include="Compute\Messages\ListTemplatesRequest.cs" />
+    <Compile Include="Compute\Messages\ListTemplatesResponse.cs" />
     <Compile Include="Compute\ComputeCommandBuilder.cs" />
     <Compile Include="Compute\IComputeCommandAuthenticator.cs" />
+    <Compile Include="Compute\Messages\Template.cs" />
     <Compile Include="Storage\IStorageCommandAuthenticator.cs" />
     <Compile Include="Storage\IStorageCommandRequest.cs" />
     <Compile Include="Compute\IComputeClient.cs" />

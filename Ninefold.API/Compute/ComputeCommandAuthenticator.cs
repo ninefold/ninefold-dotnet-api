@@ -8,15 +8,14 @@ namespace Ninefold.Compute
     {
         public string AuthenticateRequest(string queryString, string base64Secret)
         {
+            var queryBytes = Encoding.UTF8.GetBytes(queryString.ToLower());
             var secret = Convert.FromBase64String(base64Secret);
             var hashingAlg = new System.Security.Cryptography.HMACSHA1(secret);
-
-            var escapedQueryBytes = Encoding.UTF8.GetBytes(queryString);
-            var hashedQuery = hashingAlg.ComputeHash(escapedQueryBytes);
+            var hashedQuery = hashingAlg.ComputeHash(queryBytes);
             var base64Hash = Convert.ToBase64String(hashedQuery);
-            var signature = Uri.EscapeUriString(base64Hash).Replace("+", "%20");
+            var signature = Uri.EscapeDataString(base64Hash);
 
-            return string.Format("{0}&signature={1}", queryString, signature);
+            return signature;
         }
     }
 }
