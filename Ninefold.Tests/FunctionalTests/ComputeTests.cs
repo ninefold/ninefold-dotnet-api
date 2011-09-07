@@ -11,8 +11,8 @@ namespace Ninefold.API.Tests.FunctionalTests
     [TestClass]
     public class ComputeTests
     {
-        const string Secret = "";
-        const string ApiKey = "";
+        private const string Secret = "";
+        private const string ApiKey = "";
 
         static readonly string Base64Secret = Convert.ToBase64String(Encoding.Default.GetBytes(Secret));
 
