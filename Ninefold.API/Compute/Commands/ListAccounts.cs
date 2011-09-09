@@ -7,7 +7,7 @@ using Ninefold.Core;
 
 namespace Ninefold.Compute.Commands
 {
-    public class ListTemplates : ICommand
+    public class ListAccounts : ICommand
     {
         readonly IComputeCommandAuthenticator _authenticator;
         readonly IComputeRequestBuilder _builder;
@@ -15,33 +15,33 @@ namespace Ninefold.Compute.Commands
         readonly string _secret;
         readonly string _baseUri;
 
-        public ListTemplates(string apiKey, string secret, string baseUri, IComputeCommandAuthenticator authenticator, IComputeRequestBuilder builder)
+        public ListAccountsRequest Parameters { get; set; }
+
+        public ListAccounts(string apiKey, string secret, string baseUri, IComputeCommandAuthenticator authenticator, IComputeRequestBuilder builder)
         {
-            _authenticator = authenticator;
-            _secret = secret;
             _apiKey = apiKey;
-            _builder = builder;
+            _secret = secret;
             _baseUri = baseUri;
+            _authenticator = authenticator;
+            _builder = builder;
         }
-        
-        public ListTemplatesRequest Parameters { get; set; }
-        
+
         public HttpWebRequest Prepare()
         {
-            return (HttpWebRequest)_builder.GenerateRequest(Parameters, _authenticator, _baseUri, _apiKey, _secret);            
+            return (HttpWebRequest) _builder.GenerateRequest(Parameters, _authenticator, _baseUri, _apiKey, _secret);
         }
 
         public ICommandResponse ParseResponse(WebResponse webResponse)
         {
-            var response = new ListTemplatesResponse();
+            var response = new ListAccountsResponse();
             var responseStream = webResponse.GetResponseStream();
             if ((responseStream != null) && (responseStream.CanRead))
             {
                 var responseDocument = XDocument.Load(responseStream);
-                response.Templates =
+                response.Accounts =
                     responseDocument.Root.Elements()
-                        .Where(e => e.Name.LocalName.Equals("template", StringComparison.InvariantCultureIgnoreCase))
-                        .Select(Template.From);
+                        .Where(e => e.Name.LocalName.Equals("account", StringComparison.InvariantCultureIgnoreCase))
+                        .Select(Account.From);
             }
 
             return response;

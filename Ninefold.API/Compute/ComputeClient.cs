@@ -31,10 +31,16 @@ namespace Ninefold.Compute
 
         public ListTemplatesResponse ListTemplates(ListTemplatesRequest request)
         {
-            var command = new ListTemplates(_apiKey, _secret, _baseUri,  _authenticator, _builder) {Parameters = request};
+            var command = new ListTemplates(_apiKey, _secret, _baseUri,  _authenticator, _builder) { Parameters = request };
             return (ListTemplatesResponse) ((ICommandExecutor)this).Execute(command);
         }
-        
+
+        public ListAccountsResponse ListAccounts(ListAccountsRequest request)
+        {
+            var command = new ListAccounts(_apiKey, _secret, _baseUri, _authenticator, _builder) { Parameters = request };
+            return (ListAccountsResponse) ((ICommandExecutor)this).Execute(command);
+        }
+
         ICommandResponse ICommandExecutor.Execute(ICommand command)
         {
             var request = command.Prepare();
@@ -72,6 +78,6 @@ namespace Ninefold.Compute
                 }
                 throw exception;
             }
-        }
+        }       
     }
 }

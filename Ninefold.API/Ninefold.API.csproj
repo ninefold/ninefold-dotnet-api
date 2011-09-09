@@ -41,8 +41,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Compute\Commands\ListAccounts.cs" />
+    <Compile Include="Compute\Messages\Account.cs" />
     <Compile Include="Compute\Commands\ListTemplates.cs" />
     <Compile Include="Compute\IComputeCommandRequest.cs" />
+    <Compile Include="Compute\Messages\ListAccountsRequest.cs" />
+    <Compile Include="Compute\Messages\ListAccountsResponse.cs" />
     <Compile Include="Compute\Messages\ListTemplatesRequest.cs" />
     <Compile Include="Compute\Messages\ListTemplatesResponse.cs" />
     <Compile Include="Compute\ComputeCommandBuilder.cs" />

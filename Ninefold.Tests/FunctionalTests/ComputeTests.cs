@@ -24,9 +24,26 @@ namespace Ninefold.API.Tests.FunctionalTests
                 var compute = new ComputeClient(ApiKey, Base64Secret);
                 var response = compute.ListTemplates(new ListTemplatesRequest { TemplateFilter = "featured" });
 
-                Assert.IsNotNull(response);     
+                Assert.IsNotNull(response);
                 Assert.IsTrue(response.Templates.Count() > 0);
                 Assert.IsFalse(string.IsNullOrWhiteSpace(response.Templates.ElementAt(0).Name));
+            }
+            catch (NinefoldApiException ex)
+            {
+                Assert.Fail("Ninefold Exception thrown: {0}", ex.ErrorMessage);
+            }
+        }
+
+        [TestMethod]
+        public void ListAccounts_ShouldListAccounts_ForNoFilter()
+        {
+            try
+            {
+                var compute = new ComputeClient(ApiKey, Base64Secret);
+                var response = compute.ListAccounts(new ListAccountsRequest());
+
+                Assert.IsNotNull(response);
+                Assert.IsTrue(response.Accounts.Count() > 0);
             }
             catch (NinefoldApiException ex)
             {
