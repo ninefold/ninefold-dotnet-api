@@ -1,6 +1,8 @@
 ﻿using System;
+using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Ninefold.Compute;
 using Ninefold.Compute.Messages;
@@ -11,17 +13,35 @@ namespace Ninefold.API.Tests.FunctionalTests
     [TestClass]
     public class ComputeTests
     {
-        private const string Secret = "";
-        private const string ApiKey = "";
+        string _apiKey;
+        string _secret;
 
-        static readonly string Base64Secret = Convert.ToBase64String(Encoding.Default.GetBytes(Secret));
+        [TestInitialize]
+        public void TestInitialise()
+        {
+            var credentialsFilePath = Path.Combine(Environment.CurrentDirectory, "credentials.csv");
+
+            if (!File.Exists(credentialsFilePath))
+            {
+                throw new FileNotFoundException(
+                    string.Format("Could not locate the credentials file required for the functional tests. Expected at {0}", credentialsFilePath), credentialsFilePath);
+            }
+            
+            var credentialsFileContent = File.ReadAllText(credentialsFilePath);
+            var credentials = credentialsFileContent.Split(',');
+            _apiKey = credentials[0];
+
+            var secret = credentials[1];
+            secret = secret.Replace("\r", string.Empty).Replace("\n", string.Empty);
+            _secret = Convert.ToBase64String(Encoding.Default.GetBytes(secret));
+        }
 
         [TestMethod]
         public void ListTemplates_ShouldListFeaturedTemplates_ForFeatureFilter()
         {
             try
             {
-                var compute = new ComputeClient(ApiKey, Base64Secret);
+                var compute = new ComputeClient(_apiKey, _secret);
                 var response = compute.ListTemplates(new ListTemplatesRequest { TemplateFilter = "featured" });
 
                 Assert.IsNotNull(response);
@@ -39,7 +59,7 @@ namespace Ninefold.API.Tests.FunctionalTests
         {
             try
             {
-                var compute = new ComputeClient(ApiKey, Base64Secret);
+                var compute = new ComputeClient(_apiKey, _secret);
                 var response = compute.ListAccounts(new ListAccountsRequest());
 
                 Assert.IsNotNull(response);
