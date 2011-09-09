@@ -27,12 +27,12 @@ namespace Ninefold.API.Tests.FunctionalTests
                     string.Format("Could not locate the credentials file required for the functional tests. Expected at {0}", credentialsFilePath), credentialsFilePath);
             }
             
-            var credentialsFileContent = File.ReadAllText(credentialsFilePath);
+            var credentialsFileContent = File.ReadAllText(credentialsFilePath).Trim();
             var credentials = credentialsFileContent.Split(',');
-            _apiKey = credentials[0];
+            _apiKey = credentials[0].Trim();
 
             var secret = credentials[1];
-            secret = secret.Replace("\r", string.Empty).Replace("\n", string.Empty);
+            secret = secret.Replace("\r", string.Empty).Replace("\n", string.Empty).Trim();
             _secret = Convert.ToBase64String(Encoding.Default.GetBytes(secret));
         }
 
