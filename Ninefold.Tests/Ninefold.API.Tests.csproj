@@ -56,6 +56,8 @@
     <Compile Include="FunctionalTests\ComputeTests.cs" />
     <Compile Include="FunctionalTests\StorageTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UnitTests\ComputeCommandBuilderTests.cs" />
+    <Compile Include="UnitTests\Stub\StubRequest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Ninefold.API\Ninefold.API.csproj">
@@ -68,6 +70,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

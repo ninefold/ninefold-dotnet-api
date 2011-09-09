@@ -52,6 +52,7 @@
     <Compile Include="Compute\ComputeCommandBuilder.cs" />
     <Compile Include="Compute\IComputeCommandAuthenticator.cs" />
     <Compile Include="Compute\Messages\Template.cs" />
+    <Compile Include="Compute\Messages\User.cs" />
     <Compile Include="Storage\IStorageCommandAuthenticator.cs" />
     <Compile Include="Storage\IStorageCommandRequest.cs" />
     <Compile Include="Compute\IComputeClient.cs" />
