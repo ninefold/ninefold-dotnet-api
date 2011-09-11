@@ -37,7 +37,7 @@ namespace Ninefold.API.Tests.FunctionalTests
         }
 
         [TestMethod]
-        public void ListTemplates_ShouldListFeaturedTemplates_ForFeatureFilter()
+        public void ListTemplates()
         {
             try
             {
@@ -55,7 +55,7 @@ namespace Ninefold.API.Tests.FunctionalTests
         }
 
         [TestMethod]
-        public void ListAccounts_ShouldListAccounts_ForNoFilter()
+        public void ListAccounts()
         {
             try
             {
