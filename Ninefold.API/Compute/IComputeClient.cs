@@ -7,5 +7,6 @@ namespace Ninefold.Compute
     {
         ListTemplatesResponse ListTemplates(ListTemplatesRequest request);
         ListAccountsResponse ListAccounts(ListAccountsRequest request);
+        ListServiceOfferingsResponse ListServiceOfferings(ListServiceOfferingsRequest request);
     }
 }

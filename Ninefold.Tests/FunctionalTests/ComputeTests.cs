@@ -2,7 +2,6 @@
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Threading;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Ninefold.Compute;
 using Ninefold.Compute.Messages;
@@ -13,8 +12,7 @@ namespace Ninefold.API.Tests.FunctionalTests
     [TestClass]
     public class ComputeTests
     {
-        string _apiKey;
-        string _secret;
+        IComputeClient _compute;
 
         [TestInitialize]
         public void TestInitialise()
@@ -29,11 +27,13 @@ namespace Ninefold.API.Tests.FunctionalTests
             
             var credentialsFileContent = File.ReadAllText(credentialsFilePath).Trim();
             var credentials = credentialsFileContent.Split(',');
-            _apiKey = credentials[0].Trim();
+            var apiKey = credentials[0].Trim();
 
             var secret = credentials[1];
             secret = secret.Replace("\r", string.Empty).Replace("\n", string.Empty).Trim();
-            _secret = Convert.ToBase64String(Encoding.Default.GetBytes(secret));
+            secret = Convert.ToBase64String(Encoding.Default.GetBytes(secret));
+
+            _compute = new ComputeClient(apiKey, secret);
         }
 
         [TestMethod]
@@ -41,8 +41,7 @@ namespace Ninefold.API.Tests.FunctionalTests
         {
             try
             {
-                var compute = new ComputeClient(_apiKey, _secret);
-                var response = compute.ListTemplates(new ListTemplatesRequest { TemplateFilter = "featured" });
+                var response = _compute.ListTemplates(new ListTemplatesRequest { TemplateFilter = "featured" });
 
                 Assert.IsNotNull(response);
                 Assert.IsTrue(response.Templates.Count() > 0);
@@ -59,8 +58,7 @@ namespace Ninefold.API.Tests.FunctionalTests
         {
             try
             {
-                var compute = new ComputeClient(_apiKey, _secret);
-                var response = compute.ListAccounts(new ListAccountsRequest());
+                var response = _compute.ListAccounts(new ListAccountsRequest());
 
                 Assert.IsNotNull(response);
                 Assert.IsTrue(response.Accounts.Count() > 0);
@@ -69,6 +67,16 @@ namespace Ninefold.API.Tests.FunctionalTests
             {
                 Assert.Fail("Ninefold Exception thrown: {0}", ex.ErrorMessage);
             }
+        }
+
+        [TestMethod]
+        public void ListServiceOfferings()
+        {
+            var response = _compute.ListServiceOfferings(new ListServiceOfferingsRequest());
+
+            Assert.IsNotNull(response);
+            Assert.IsTrue(response.ServiceOfferings.Count() > 0);
+            Assert.IsFalse(string.IsNullOrWhiteSpace(response.ServiceOfferings.ElementAt(0).Name));
         }
     }
 }

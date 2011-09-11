@@ -41,6 +41,12 @@ namespace Ninefold.Compute
             return (ListAccountsResponse) ((ICommandExecutor)this).Execute(command);
         }
 
+        public ListServiceOfferingsResponse ListServiceOfferings(ListServiceOfferingsRequest request)
+        {
+            var command = new ListServiceOfferings(_apiKey, _secret, _baseUri, _authenticator, _builder) { Parameters = request };
+            return (ListServiceOfferingsResponse)((ICommandExecutor)this).Execute(command);
+        }
+
         ICommandResponse ICommandExecutor.Execute(ICommand command)
         {
             var request = command.Prepare();

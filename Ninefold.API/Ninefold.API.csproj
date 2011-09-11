@@ -42,6 +42,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Compute\Commands\ListAccounts.cs" />
+    <Compile Include="Compute\Commands\ListServiceOfferings.cs" />
+    <Compile Include="Compute\Messages\ListServiceOfferingsRequest.cs" />
+    <Compile Include="Compute\Messages\ListServiceOfferingsResponse.cs" />
+    <Compile Include="Compute\Messages\ServiceOffering.cs" />
     <Compile Include="Compute\Messages\Account.cs" />
     <Compile Include="Compute\Commands\ListTemplates.cs" />
     <Compile Include="Compute\IComputeCommandRequest.cs" />
