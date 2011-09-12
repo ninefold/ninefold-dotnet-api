@@ -53,6 +53,12 @@ namespace Ninefold.Compute
             return (ListVirtualMachinesResponse)((ICommandExecutor)this).Execute(command);
         }
 
+        public ListTemplatePermissionsResponse ListTemplatePermissions(ListTemplatePermissionsRequest request)
+        {
+            var command = new ListTemplatePermissions(_apiKey, _secret, _baseUri, _authenticator, _builder) { Parameters = request };
+            return (ListTemplatePermissionsResponse)((ICommandExecutor)this).Execute(command);
+        }
+
         ICommandResponse ICommandExecutor.Execute(ICommand command)
         {
             var request = command.Prepare();

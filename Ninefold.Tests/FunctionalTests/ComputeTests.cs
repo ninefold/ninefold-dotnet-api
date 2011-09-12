@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Ninefold.Compute;
+using Ninefold.Compute.Commands;
 using Ninefold.Compute.Messages;
 using Ninefold.Core;
 
@@ -97,6 +98,22 @@ namespace Ninefold.API.Tests.FunctionalTests
                 Assert.IsNotNull(response);
                 Assert.IsTrue(response.ServiceOfferings.Count() > 0);
                 Assert.IsFalse(string.IsNullOrWhiteSpace(response.ServiceOfferings.ElementAt(0).Name));
+            }
+            catch (NinefoldApiException ex)
+            {
+                Assert.Fail("Ninefold Exception thrown: {0}", ex.ErrorMessage);
+            }
+        }
+
+        [TestMethod]
+        public void ListTemplatePermissions()
+        {
+            try
+            {
+                var response = _compute.ListTemplatePermissions(new ListTemplatePermissionsRequest { Id = "425", });
+
+                Assert.IsNotNull(response);
+                Assert.AreEqual(425, response.Id);
             }
             catch (NinefoldApiException ex)
             {

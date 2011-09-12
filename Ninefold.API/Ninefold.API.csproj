@@ -43,6 +43,9 @@
   <ItemGroup>
     <Compile Include="Compute\Commands\ListAccounts.cs" />
     <Compile Include="Compute\Commands\ListServiceOfferings.cs" />
+    <Compile Include="Compute\Commands\ListTemplatePermissions.cs" />
+    <Compile Include="Compute\Messages\ListTemplatePermissionsRequest.cs" />
+    <Compile Include="Compute\Messages\ListTemplatePermissionsResponse.cs" />
     <Compile Include="Compute\Commands\ListVirtualMachines.cs" />
     <Compile Include="Compute\Messages\IngressRule.cs" />
     <Compile Include="Compute\Messages\ListVirtualMachinesRequest.cs" />

@@ -9,5 +9,6 @@ namespace Ninefold.Compute
         ListAccountsResponse ListAccounts(ListAccountsRequest request);
         ListServiceOfferingsResponse ListServiceOfferings(ListServiceOfferingsRequest request);
         ListVirtualMachinesResponse ListVirtualMachines(ListVirtualMachinesRequest request);
+        ListTemplatePermissionsResponse ListTemplatePermissions(ListTemplatePermissionsRequest request);
     }
 }
