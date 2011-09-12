@@ -78,5 +78,6 @@ namespace Ninefold.API.Tests.FunctionalTests
             Assert.IsTrue(response.ServiceOfferings.Count() > 0);
             Assert.IsFalse(string.IsNullOrWhiteSpace(response.ServiceOfferings.ElementAt(0).Name));
         }
+
     }
 }

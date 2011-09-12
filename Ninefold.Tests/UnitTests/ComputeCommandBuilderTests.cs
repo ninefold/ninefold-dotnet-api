@@ -9,6 +9,7 @@ namespace Ninefold.API.Tests.UnitTests
     public class ComputeCommandBuilderTests
     {
         [TestMethod]
+        [TestCategory("unit")]
         public void CommandBuilder_GenerateRequest_ShouldReturnGetRequest()
         {
             var commandBuilder = new ComputeCommandBuilder();
@@ -24,6 +25,7 @@ namespace Ninefold.API.Tests.UnitTests
         }
 
         [TestMethod]
+        [TestCategory("unit")]
         public void CommandBuilder_GenerateRequest_ShouldReturnQueryContainingAllProvidedRequestParams()
         {
             var commandBuilder = new ComputeCommandBuilder();
@@ -44,6 +46,7 @@ namespace Ninefold.API.Tests.UnitTests
         }
 
         [TestMethod]
+        [TestCategory("unit")]
         public void CommandBuilder_GenerateRequest_ShouldNotIncludeAnEmptyParameter()
         {
             var commandBuilder = new ComputeCommandBuilder();
@@ -62,6 +65,7 @@ namespace Ninefold.API.Tests.UnitTests
         }
 
         [TestMethod]
+        [TestCategory("unit")]
         public void CommandBuilder_GenerateRequest_CallsAuthenticationForSignature()
         {
             var commandBuilder = new ComputeCommandBuilder();
@@ -73,6 +77,7 @@ namespace Ninefold.API.Tests.UnitTests
         }
 
         [TestMethod]
+        [TestCategory("unit")]
         public void CommandBuilder_GenerateRequest_AppendsSignatureToRequest()
         {
             const string secret = "AAAAAAAAAAAAAAAA";
@@ -96,6 +101,7 @@ namespace Ninefold.API.Tests.UnitTests
         }
 
         [TestMethod]
+        [TestCategory("unit")]
         public void CommandBuilder_GenerateRequest_ParameterNamesAreCamelCased()
         {
             var commandBuilder = new ComputeCommandBuilder();
@@ -115,6 +121,7 @@ namespace Ninefold.API.Tests.UnitTests
         }
 
         [TestMethod]
+        [TestCategory("unit")]
         public void CommandBuilder_GenerateRequest_QueryStartsWithApiKeyAndCommand()
         {
             var commandBuilder = new ComputeCommandBuilder();
