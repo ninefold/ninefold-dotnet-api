@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Xml.Linq;
+using Ninefold.Core;
 
 namespace Ninefold.Compute.Messages
 {
@@ -24,19 +25,19 @@ namespace Ninefold.Compute.Messages
         {
             return new User
                        {
-                           Id = int.Parse(ExtractValue("id", userElement)),
-                           Username = ExtractValue("username", userElement),
-                           FirstName = ExtractValue("firstName", userElement),
-                           LastName = ExtractValue("lastName", userElement),
-                           Email = ExtractValue("email", userElement),
-                           Created = DateTime.Parse(ExtractValue("created", userElement)),
-                           State = ExtractValue("state", userElement),
-                           Account = ExtractValue("account", userElement),
-                           AccountType = int.Parse(ExtractValue("accountType", userElement)),
-                           DomainId = int.Parse(ExtractValue("domainId", userElement)),
-                           Domain = ExtractValue("domain", userElement),
-                           APIKey = ExtractValue("apiKey", userElement),
-                           SecretKey = ExtractValue("secretKey", userElement),
+                           Id = int.Parse(userElement.ExtractValue("id")),
+                           Username = userElement.ExtractValue("username"),
+                           FirstName = userElement.ExtractValue("firstName"),
+                           LastName = userElement.ExtractValue("lastName"),
+                           Email = userElement.ExtractValue("email"),
+                           Created = DateTime.Parse(userElement.ExtractValue("created")),
+                           State = userElement.ExtractValue("state"),
+                           Account = userElement.ExtractValue("account"),
+                           AccountType = int.Parse(userElement.ExtractValue("accountType")),
+                           DomainId = int.Parse(userElement.ExtractValue("domainId")),
+                           Domain = userElement.ExtractValue("domain"),
+                           APIKey = userElement.ExtractValue("apiKey"),
+                           SecretKey = userElement.ExtractValue("secretKey"),
                        };
         }
 
