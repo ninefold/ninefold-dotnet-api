@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Xml.Linq;
+using Ninefold.Core;
 
 namespace Ninefold.Compute.Messages
 {
@@ -33,28 +34,28 @@ namespace Ninefold.Compute.Messages
         {
             return new Template
                        {
-                           Id = long.Parse(ExtractValue("id", templateElement)),
-                           Name = ExtractValue("name", templateElement),
-                           DisplayText = ExtractValue("displayText", templateElement),
-                           Public = bool.Parse(ExtractValue("isPublic", templateElement)),
-                           Created = DateTime.Parse(ExtractValue("created", templateElement)),
-                           Ready = bool.Parse(ExtractValue("isReady", templateElement)),
-                           PasswordEnabled = bool.Parse(ExtractValue("passwordEnabled", templateElement)),
-                           Format = ExtractValue("format", templateElement),
-                           Featured = bool.Parse(ExtractValue("isFeatured", templateElement)),
-                           CrossZones = bool.Parse(ExtractValue("crossZones", templateElement)),
-                           OSTypeId = int.Parse(ExtractValue("osTypeId", templateElement)),
-                           OSType = ExtractValue("osTypeName", templateElement),
-                           Account = ExtractValue("account", templateElement),
-                           ZoneId = int.Parse(ExtractValue("zoneId", templateElement)),
-                           Zone = ExtractValue("zoneName", templateElement),
-                           Status = ExtractValue("status", templateElement),
-                           Size = long.Parse(ExtractValue("size", templateElement)),
-                           TemplateType = ExtractValue("templateType", templateElement),
-                           Hypervisor = ExtractValue("hypervisor", templateElement),
-                           Domain = ExtractValue("domain", templateElement),
-                           DomainId = int.Parse(ExtractValue("domainId", templateElement)),
-                           Extractable = bool.Parse(ExtractValue("isExtractable", templateElement))
+                           Id = long.Parse(templateElement.ExtractValue("id")),
+                           Name = templateElement.ExtractValue("name"),
+                           DisplayText = templateElement.ExtractValue("displayText"),
+                           Public = bool.Parse(templateElement.ExtractValue("isPublic")),
+                           Created = DateTime.Parse(templateElement.ExtractValue("created")),
+                           Ready = bool.Parse(templateElement.ExtractValue("isReady")),
+                           PasswordEnabled = bool.Parse(templateElement.ExtractValue("passwordEnabled")),
+                           Format = templateElement.ExtractValue("format"),
+                           Featured = bool.Parse(templateElement.ExtractValue("isFeatured")),
+                           CrossZones = bool.Parse(templateElement.ExtractValue("crossZones")),
+                           OSTypeId = int.Parse(templateElement.ExtractValue("osTypeId")),
+                           OSType = templateElement.ExtractValue("osTypeName"),
+                           Account = templateElement.ExtractValue("account"),
+                           ZoneId = int.Parse(templateElement.ExtractValue("zoneId")),
+                           Zone = templateElement.ExtractValue("zoneName"),
+                           Status = templateElement.ExtractValue("status"),
+                           Size = long.Parse(templateElement.ExtractValue("size")),
+                           TemplateType = templateElement.ExtractValue("templateType"),
+                           Hypervisor = templateElement.ExtractValue("hypervisor"),
+                           Domain = templateElement.ExtractValue("domain"),
+                           DomainId = int.Parse(templateElement.ExtractValue("domainId")),
+                           Extractable = bool.Parse(templateElement.ExtractValue("isExtractable"))
                        };
         }
 
