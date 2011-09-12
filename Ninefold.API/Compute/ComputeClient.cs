@@ -47,6 +47,12 @@ namespace Ninefold.Compute
             return (ListServiceOfferingsResponse)((ICommandExecutor)this).Execute(command);
         }
 
+        public ListVirtualMachinesResponse ListVirtualMachines(ListVirtualMachinesRequest request)
+        {
+            var command = new ListVirtualMachines(_apiKey, _secret, _baseUri, _authenticator, _builder) { Parameters = request };
+            return (ListVirtualMachinesResponse)((ICommandExecutor)this).Execute(command);
+        }
+
         ICommandResponse ICommandExecutor.Execute(ICommand command)
         {
             var request = command.Prepare();

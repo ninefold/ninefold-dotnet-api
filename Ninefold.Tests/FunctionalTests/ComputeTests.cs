@@ -37,6 +37,24 @@ namespace Ninefold.API.Tests.FunctionalTests
         }
 
         [TestMethod]
+        public void ListVirtualMachines()
+        {
+            try
+            {
+                var response = _compute.ListVirtualMachines(new ListVirtualMachinesRequest());
+
+                Assert.IsNotNull(response);
+                Assert.IsTrue(response.Machines.Count() > 0);
+                Assert.IsFalse(string.IsNullOrWhiteSpace(response.Machines.ElementAt(0).Name));
+            }
+            catch (NinefoldApiException ex)
+            {
+                Assert.Fail("Ninefold Exception thrown: {0}", ex.ErrorMessage);
+            }
+
+        }
+
+        [TestMethod]
         public void ListTemplates()
         {
             try
@@ -72,12 +90,18 @@ namespace Ninefold.API.Tests.FunctionalTests
         [TestMethod]
         public void ListServiceOfferings()
         {
-            var response = _compute.ListServiceOfferings(new ListServiceOfferingsRequest());
+            try
+            {
+                var response = _compute.ListServiceOfferings(new ListServiceOfferingsRequest());
 
-            Assert.IsNotNull(response);
-            Assert.IsTrue(response.ServiceOfferings.Count() > 0);
-            Assert.IsFalse(string.IsNullOrWhiteSpace(response.ServiceOfferings.ElementAt(0).Name));
+                Assert.IsNotNull(response);
+                Assert.IsTrue(response.ServiceOfferings.Count() > 0);
+                Assert.IsFalse(string.IsNullOrWhiteSpace(response.ServiceOfferings.ElementAt(0).Name));
+            }
+            catch (NinefoldApiException ex)
+            {
+                Assert.Fail("Ninefold Exception thrown: {0}", ex.ErrorMessage);
+            }
         }
-
     }
 }

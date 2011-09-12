@@ -43,8 +43,15 @@
   <ItemGroup>
     <Compile Include="Compute\Commands\ListAccounts.cs" />
     <Compile Include="Compute\Commands\ListServiceOfferings.cs" />
+    <Compile Include="Compute\Commands\ListVirtualMachines.cs" />
+    <Compile Include="Compute\Messages\IngressRule.cs" />
+    <Compile Include="Compute\Messages\ListVirtualMachinesRequest.cs" />
+    <Compile Include="Compute\Messages\ListVirtualMachinesResponse.cs" />
+    <Compile Include="Compute\Messages\Machine.cs" />
     <Compile Include="Compute\Messages\ListServiceOfferingsRequest.cs" />
     <Compile Include="Compute\Messages\ListServiceOfferingsResponse.cs" />
+    <Compile Include="Compute\Messages\NetworkInterface.cs" />
+    <Compile Include="Compute\Messages\SecurityGroup.cs" />
     <Compile Include="Compute\Messages\ServiceOffering.cs" />
     <Compile Include="Compute\Messages\Account.cs" />
     <Compile Include="Compute\Commands\ListTemplates.cs" />
@@ -57,6 +64,7 @@
     <Compile Include="Compute\IComputeCommandAuthenticator.cs" />
     <Compile Include="Compute\Messages\Template.cs" />
     <Compile Include="Compute\Messages\User.cs" />
+    <Compile Include="Core\Extensions.cs" />
     <Compile Include="Storage\IStorageCommandAuthenticator.cs" />
     <Compile Include="Storage\IStorageCommandRequest.cs" />
     <Compile Include="Compute\IComputeClient.cs" />

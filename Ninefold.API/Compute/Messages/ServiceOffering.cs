@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Xml.Linq;
+using Ninefold.Core;
 
 namespace Ninefold.Compute.Messages
 {
@@ -22,29 +23,21 @@ namespace Ninefold.Compute.Messages
         {
             var offering =  new ServiceOffering
                        {
-                           Id = int.Parse(ExtractValue("id", serviceOfferingElement)),
-                           CPUNumber = int.Parse(ExtractValue("cpuNumber", serviceOfferingElement)),
-                           CPUSpeed = int.Parse(ExtractValue("cpuSpeed", serviceOfferingElement)),
-                           Created = string.IsNullOrWhiteSpace(ExtractValue("created", serviceOfferingElement)) ? 
-                                                    DateTime.MinValue : DateTime.Parse(ExtractValue("created", serviceOfferingElement)),
-                           DisplayText = ExtractValue("displayText", serviceOfferingElement),
-                           Domain = ExtractValue("domain", serviceOfferingElement),
-                           DomainId =  string.IsNullOrWhiteSpace(ExtractValue("domainId", serviceOfferingElement)) ? 0 : int.Parse(ExtractValue("domainId", serviceOfferingElement)),
-                           Memory = int.Parse(ExtractValue("memory", serviceOfferingElement)),
-                           Name = ExtractValue("name", serviceOfferingElement),
-                           OffersHighAvailability = bool.Parse(ExtractValue("offerha", serviceOfferingElement)),
-                           StorageType = ExtractValue("storageType", serviceOfferingElement),
+                           Id = int.Parse(serviceOfferingElement.ExtractValue("id")),
+                           CPUNumber = int.Parse(serviceOfferingElement.ExtractValue("cpuNumber")),
+                           CPUSpeed = int.Parse(serviceOfferingElement.ExtractValue("cpuSpeed")),
+                           Created = string.IsNullOrWhiteSpace(serviceOfferingElement.ExtractValue("created")) ?
+                                                    DateTime.MinValue : DateTime.Parse(serviceOfferingElement.ExtractValue("created")),
+                           DisplayText = serviceOfferingElement.ExtractValue("displayText"),
+                           Domain = serviceOfferingElement.ExtractValue("domain"),
+                           DomainId = string.IsNullOrWhiteSpace(serviceOfferingElement.ExtractValue("domainId")) ? 0 : int.Parse(serviceOfferingElement.ExtractValue("domainId")),
+                           Memory = int.Parse(serviceOfferingElement.ExtractValue("memory")),
+                           Name = serviceOfferingElement.ExtractValue("name"),
+                           OffersHighAvailability = bool.Parse(serviceOfferingElement.ExtractValue("offerha")),
+                           StorageType = serviceOfferingElement.ExtractValue("storageType"),
                        };
 
             return offering;
         }
-
-        private static string ExtractValue(string fieldName, XContainer document)
-        {
-            var node = document.Elements()
-                .Where(e => e.Name.LocalName.Equals(fieldName, StringComparison.InvariantCultureIgnoreCase));
-
-            return node.Count() > 0 ? node.First().Value : string.Empty;
-        } 
     }
 }
