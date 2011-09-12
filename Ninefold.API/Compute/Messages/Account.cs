@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Xml.Linq;
+using Ninefold.Core;
 
 namespace Ninefold.Compute.Messages
 {
@@ -37,40 +38,33 @@ namespace Ninefold.Compute.Messages
         {
             return new Account
                        {
-                           Id = int.Parse(ExtractValue("id", accountElement)),
-                           Name = ExtractValue("name", accountElement),
-                           Type = ExtractValue("accountType", accountElement),
-                           DomainId = int.Parse(ExtractValue("domainId", accountElement)),
-                           Domain = ExtractValue("domain", accountElement),
-                           ReceivedBytes = ExtractValue("receivedBytes", accountElement),
-                           SentBytes = ExtractValue("sentBytes", accountElement),
-                           VMLimit = int.Parse(ExtractValue("vmLimit", accountElement)),
-                           VMTotal = int.Parse(ExtractValue("vmTotal", accountElement)),
-                           VMAvailable = int.Parse(ExtractValue("vmAvailable", accountElement)),
-                           IPLimit = int.Parse(ExtractValue("ipLimit", accountElement)),
-                           IPTotal = int.Parse(ExtractValue("ipTotal", accountElement)),
-                           IPAvailable = int.Parse(ExtractValue("ipAvailable", accountElement)),
-                           VolumeLimit = int.Parse(ExtractValue("volumeLimit", accountElement)),
-                           VolumeTotal = int.Parse(ExtractValue("volumeTotal", accountElement)),
-                           VolumeAvailable = int.Parse(ExtractValue("volumeAvailable", accountElement)),
-                           SnapshotLimit = int.Parse(ExtractValue("snapshotLimit", accountElement)),
-                           SnapshotTotal = int.Parse(ExtractValue("snapshotTotal", accountElement)),
-                           SnapshotAvailable = int.Parse(ExtractValue("snapshotAvailable", accountElement)),
-                           TemplateLimit = int.Parse(ExtractValue("templateLimit", accountElement)),
-                           TemplateTotal = int.Parse(ExtractValue("templateTotal", accountElement)),
-                           TemplateAvailable = int.Parse(ExtractValue("templateAvailable", accountElement)),
-                           VMStopped = int.Parse(ExtractValue("vmStopped", accountElement)),
-                           VMRunning = int.Parse(ExtractValue("vmRunning", accountElement)),
-                           State = ExtractValue("state", accountElement),
+                           Id = int.Parse(accountElement.ExtractValue("id")),
+                           Name = accountElement.ExtractValue("name"),
+                           Type = accountElement.ExtractValue("accountType"),
+                           DomainId = int.Parse(accountElement.ExtractValue("domainId")),
+                           Domain = accountElement.ExtractValue("domain"),
+                           ReceivedBytes = accountElement.ExtractValue("receivedBytes"),
+                           SentBytes = accountElement.ExtractValue("sentBytes"),
+                           VMLimit = int.Parse(accountElement.ExtractValue("vmLimit")),
+                           VMTotal = int.Parse(accountElement.ExtractValue("vmTotal")),
+                           VMAvailable = int.Parse(accountElement.ExtractValue("vmAvailable")),
+                           IPLimit = int.Parse(accountElement.ExtractValue("ipLimit")),
+                           IPTotal = int.Parse(accountElement.ExtractValue("ipTotal")),
+                           IPAvailable = int.Parse(accountElement.ExtractValue("ipAvailable")),
+                           VolumeLimit = int.Parse(accountElement.ExtractValue("volumeLimit")),
+                           VolumeTotal = int.Parse(accountElement.ExtractValue("volumeTotal")),
+                           VolumeAvailable = int.Parse(accountElement.ExtractValue("volumeAvailable")),
+                           SnapshotLimit = int.Parse(accountElement.ExtractValue("snapshotLimit")),
+                           SnapshotTotal = int.Parse(accountElement.ExtractValue("snapshotTotal")),
+                           SnapshotAvailable = int.Parse(accountElement.ExtractValue("snapshotAvailable")),
+                           TemplateLimit = int.Parse(accountElement.ExtractValue("templateLimit")),
+                           TemplateTotal = int.Parse(accountElement.ExtractValue("templateTotal")),
+                           TemplateAvailable = int.Parse(accountElement.ExtractValue("templateAvailable")),
+                           VMStopped = int.Parse(accountElement.ExtractValue("vmStopped")),
+                           VMRunning = int.Parse(accountElement.ExtractValue("vmRunning")),
+                           State = accountElement.ExtractValue("state"),
                            User = User.From(accountElement.Elements().First(e => e.Name.LocalName.Equals("user")))
                        };
         }
-
-        private static string ExtractValue(string fieldName, XContainer document)
-        {
-            return document.Elements()
-                                .First(e => e.Name.LocalName.Equals(fieldName, StringComparison.InvariantCultureIgnoreCase))
-                                .Value;
-        }    
     }
 }
