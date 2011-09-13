@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Ninefold.Compute;
-using Ninefold.Compute.Commands;
 using Ninefold.Compute.Messages;
 using Ninefold.Core;
 
