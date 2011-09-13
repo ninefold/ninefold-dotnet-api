@@ -71,6 +71,12 @@ namespace Ninefold.Compute
             return (ListIsoPermissionsResponse)((ICommandExecutor)this).Execute(command);
         }
 
+        public ListVolumesResponse ListVolumes(ListVolumesRequest request)
+        {
+            var command = new ListVolumes(_apiKey, _secret, _baseUri, _authenticator, _builder) { Parameters = request };
+            return (ListVolumesResponse)((ICommandExecutor)this).Execute(command);
+        }
+
         ICommandResponse ICommandExecutor.Execute(ICommand command)
         {
             var request = command.Prepare();

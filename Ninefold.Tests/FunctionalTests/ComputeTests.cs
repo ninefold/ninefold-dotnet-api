@@ -149,5 +149,20 @@ namespace Ninefold.API.Tests.FunctionalTests
                 Assert.Fail("Ninefold Exception thrown: {0}", ex.ErrorMessage);
             }
         }
+
+        [TestMethod]
+        public void ListVolumes()
+        {
+            try
+            {
+                var response = _compute.ListVolumes(new ListVolumesRequest());
+                Assert.IsNotNull(response);
+                Assert.AreNotEqual(0, response.Volumes.Count());
+            }
+            catch (NinefoldApiException ex)
+            {
+                Assert.Fail("Ninefold Exception thrown: {0}", ex.ErrorMessage);
+            }
+        }
     }
 }
