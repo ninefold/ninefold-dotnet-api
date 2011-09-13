@@ -1,5 +1,4 @@
-﻿using Ninefold.Compute.Commands;
-using Ninefold.Compute.Messages;
+﻿using Ninefold.Compute.Messages;
 
 namespace Ninefold.Compute
 {
@@ -11,5 +10,6 @@ namespace Ninefold.Compute
         ListVirtualMachinesResponse ListVirtualMachines(ListVirtualMachinesRequest request);
         ListTemplatePermissionsResponse ListTemplatePermissions(ListTemplatePermissionsRequest request);
         ListIsosResponse ListIsos(ListIsosRequest request);
+        ListIsoPermissionsResponse ListIsoPermissions(ListIsoPermissionsRequest request);
     }
 }

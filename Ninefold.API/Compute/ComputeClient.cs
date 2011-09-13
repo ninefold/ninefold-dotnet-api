@@ -65,6 +65,12 @@ namespace Ninefold.Compute
             return (ListIsosResponse)((ICommandExecutor)this).Execute(command);
         }
 
+        public ListIsoPermissionsResponse ListIsoPermissions(ListIsoPermissionsRequest request)
+        {
+            var command = new ListIsoPermissions(_apiKey, _secret, _baseUri, _authenticator, _builder) { Parameters = request };
+            return (ListIsoPermissionsResponse)((ICommandExecutor)this).Execute(command);
+        }
+
         ICommandResponse ICommandExecutor.Execute(ICommand command)
         {
             var request = command.Prepare();

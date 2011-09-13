@@ -135,5 +135,20 @@ namespace Ninefold.API.Tests.FunctionalTests
                 Assert.Fail("Ninefold Exception thrown: {0}", ex.ErrorMessage);
             }
         }
+
+        [TestMethod]
+        public void ListIsoPermisssions()
+        {
+            try
+            {
+                var response = _compute.ListIsoPermissions(new ListIsoPermissionsRequest { Id = "494" });
+                Assert.IsNotNull(response);
+                Assert.AreNotEqual(0, response.Id);
+            }
+            catch (NinefoldApiException ex)
+            {
+                Assert.Fail("Ninefold Exception thrown: {0}", ex.ErrorMessage);
+            }
+        }
     }
 }

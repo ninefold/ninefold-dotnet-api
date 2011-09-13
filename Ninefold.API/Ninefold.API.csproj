@@ -42,6 +42,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Compute\Commands\ListAccounts.cs" />
+    <Compile Include="Compute\Commands\ListIsoPermissions.cs" />
+    <Compile Include="Compute\Messages\ListIsoPermissionsRequest.cs" />
+    <Compile Include="Compute\Messages\ListIsoPermissionsResponse.cs" />
     <Compile Include="Compute\Commands\ListIsos.cs" />
     <Compile Include="Compute\Messages\ListIsosRequest.cs" />
     <Compile Include="Compute\Messages\ListIsosResponse.cs" />
