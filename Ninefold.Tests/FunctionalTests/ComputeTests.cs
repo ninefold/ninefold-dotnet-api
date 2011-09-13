@@ -120,5 +120,20 @@ namespace Ninefold.API.Tests.FunctionalTests
                 Assert.Fail("Ninefold Exception thrown: {0}", ex.ErrorMessage);
             }
         }
+
+        [TestMethod]
+        public void ListIsos()
+        {
+            try
+            {
+                var response = _compute.ListIsos(new ListIsosRequest { Id = "494" });
+                Assert.IsNotNull(response);
+                Assert.AreEqual(1, response.Isos.Count());
+            }
+            catch (NinefoldApiException ex)
+            {
+                Assert.Fail("Ninefold Exception thrown: {0}", ex.ErrorMessage);
+            }
+        }
     }
 }

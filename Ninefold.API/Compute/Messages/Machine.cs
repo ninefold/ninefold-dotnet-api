@@ -56,18 +56,22 @@ namespace Ninefold.Compute.Messages
                                {
                                    Id = int.Parse(machineElement.ExtractValue("id")),
                                    Account = machineElement.ExtractValue("account"),
-                                   CPUNumber = int.Parse(machineElement.ExtractValue("cpuNumber")),
+                                   CPUNumber = string.IsNullOrWhiteSpace(machineElement.ExtractValue("cpuNumber")) ?
+                                                                0 : int.Parse(machineElement.ExtractValue("cpuNumber")),
                                    CPUUsed = machineElement.ExtractValue("cpuUsed"),
                                    Created = DateTime.Parse(machineElement.ExtractValue("created")),
                                    DisplayName = machineElement.ExtractValue("displayName"),
                                    Domain = machineElement.ExtractValue("domain"),
-                                   DomainId = int.Parse(machineElement.ExtractValue("domainId")),
+                                   DomainId = string.IsNullOrWhiteSpace(machineElement.ExtractValue("domainId")) ?
+                                                                0 : int.Parse(machineElement.ExtractValue("domainId")),
                                    ForVirtualNetwork = machineElement.ExtractValue("forVirtualNetwork"),
                                    Group = machineElement.ExtractValue("group"),
                                    GroupId = string.IsNullOrWhiteSpace(machineElement.ExtractValue("groupId")) ? 
                                                                 0 : int.Parse(machineElement.ExtractValue("groupId")),
-                                   GuestOSId = int.Parse(machineElement.ExtractValue("guestOsId")),
-                                   HighAvailabilityEnabled = bool.Parse(machineElement.ExtractValue("haEnable")),
+                                   GuestOSId = string.IsNullOrWhiteSpace(machineElement.ExtractValue("guestOsId")) ?
+                                                                0 : int.Parse(machineElement.ExtractValue("guestOsId")),
+                                   HighAvailabilityEnabled = string.IsNullOrWhiteSpace(machineElement.ExtractValue("haEnable")) ?
+                                                                false : bool.Parse(machineElement.ExtractValue("haEnable")),
                                    HostId = string.IsNullOrWhiteSpace(machineElement.ExtractValue("hostId")) ? 
                                                                 0 :  int.Parse(machineElement.ExtractValue("hostId")),
                                    HostName = machineElement.ExtractValue("hostname"),
@@ -79,21 +83,27 @@ namespace Ninefold.Compute.Messages
                                    ISOName = machineElement.ExtractValue("isoName"),
                                    JobId = machineElement.ExtractValue("jobId"),
                                    JobStatus = machineElement.ExtractValue("jobStatus"),
-                                   Memory = int.Parse(machineElement.ExtractValue("memory")),
+                                   Memory = string.IsNullOrWhiteSpace(machineElement.ExtractValue("memory")) ?
+                                                                0 : int.Parse(machineElement.ExtractValue("memory")),
                                    Name = machineElement.ExtractValue("name"),
                                    NetworkKbsRead = machineElement.ExtractValue("networkKbsRead"),
                                    NetworkKbsWrite = machineElement.ExtractValue("networkKbsWrite"),
                                    Password = machineElement.ExtractValue("password"),
-                                   PasswordEnabled = bool.Parse(machineElement.ExtractValue("passwordEnabled")),
-                                   RootDeviceId = int.Parse(machineElement.ExtractValue("rootDeviceId")),
+                                   PasswordEnabled = string.IsNullOrWhiteSpace(machineElement.ExtractValue("passwordEnabled")) ?
+                                                                false : bool.Parse(machineElement.ExtractValue("passwordEnabled")),
+                                   RootDeviceId = string.IsNullOrWhiteSpace(machineElement.ExtractValue("rootDeviceId")) ?
+                                                                0 : int.Parse(machineElement.ExtractValue("rootDeviceId")),
                                    RootDeviceType = machineElement.ExtractValue("rootDeviceType"),
-                                   ServiceOfferingId = int.Parse(machineElement.ExtractValue("serviceOfferingId")),
+                                   ServiceOfferingId = string.IsNullOrWhiteSpace(machineElement.ExtractValue("serviceOfferingId")) ?
+                                                                0 : int.Parse(machineElement.ExtractValue("serviceOfferingId")),
                                    ServiceOfferingName = machineElement.ExtractValue("serviceOfferingName"),
                                    State = machineElement.ExtractValue("state"),
                                    TemplateDisplayText = machineElement.ExtractValue("templateDisplayText"),
-                                   TemplateId = int.Parse(machineElement.ExtractValue("templateId")),
+                                   TemplateId = string.IsNullOrWhiteSpace(machineElement.ExtractValue("templateId")) ?
+                                                                0 : int.Parse(machineElement.ExtractValue("templateId")),
                                    TemplateName = machineElement.ExtractValue("templateName"),
-                                   ZoneId = int.Parse(machineElement.ExtractValue("zoneId")),
+                                   ZoneId = string.IsNullOrWhiteSpace(machineElement.ExtractValue("zoneId")) ?
+                                                                0 : int.Parse(machineElement.ExtractValue("zoneId")),
                                    ZoneName = machineElement.ExtractValue("zoneName"),
                                    AttachedNetworkInterfaces = machineElement.Elements()
                                        .Where(
