@@ -43,7 +43,10 @@
   <ItemGroup>
     <Compile Include="Compute\Commands\ListAccounts.cs" />
     <Compile Include="Compute\Commands\ListIsoPermissions.cs" />
+    <Compile Include="Compute\Commands\ListSnapshots.cs" />
+    <Compile Include="Compute\Messages\ListSnapshotsRequest.cs" />
     <Compile Include="Compute\Commands\ListVolumes.cs" />
+    <Compile Include="Compute\Messages\ListSnapshotsResponse.cs" />
     <Compile Include="Compute\Messages\ListVolumesRequest.cs" />
     <Compile Include="Compute\Messages\ListVolumesResponse.cs" />
     <Compile Include="Compute\Messages\ListIsoPermissionsRequest.cs" />
@@ -74,6 +77,7 @@
     <Compile Include="Compute\Messages\ListTemplatesResponse.cs" />
     <Compile Include="Compute\ComputeCommandBuilder.cs" />
     <Compile Include="Compute\IComputeCommandAuthenticator.cs" />
+    <Compile Include="Compute\Messages\Snapshot.cs" />
     <Compile Include="Compute\Messages\Template.cs" />
     <Compile Include="Compute\Messages\User.cs" />
     <Compile Include="Core\Extensions.cs" />
