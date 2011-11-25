@@ -11,7 +11,7 @@ namespace Ninefold.Core
             var node = element.Elements()
                 .Where(e => e.Name.LocalName.Equals(fieldName, StringComparison.InvariantCultureIgnoreCase));
 
-            return node.Count() > 0 ? node.First().Value : string.Empty;
+            return node.Any() ? node.First().Value : string.Empty;
         }
     }
 }

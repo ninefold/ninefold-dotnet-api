@@ -22,7 +22,7 @@ namespace Ninefold.Compute.Messages
 
         public static Snapshot From(XElement snapshotElement)
         {
-            return new Snapshot
+            var snapshot = new Snapshot
             {
                 Id = int.Parse(snapshotElement.ExtractValue("id")),
                 Account = snapshotElement.ExtractValue("account"),
@@ -38,6 +38,8 @@ namespace Ninefold.Compute.Messages
                 VolumeName = snapshotElement.ExtractValue("volumeName"),
                 VolumeType = snapshotElement.ExtractValue("volumeType")
             };
+
+            return snapshot;
         }
     }
 }

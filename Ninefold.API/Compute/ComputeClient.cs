@@ -83,6 +83,12 @@ namespace Ninefold.Compute
             return (ListSnapshotsResponse)((ICommandExecutor)this).Execute(command);
         }
 
+        public ListSnapshotPoliciesResponse ListSnapshotPolicies(ListSnapshotPoliciesRequest request)
+        {
+            var command = new ListSnapshotPolicies(_apiKey, _secret, _baseUri, _authenticator, _builder) { Parameters = request };
+            return (ListSnapshotPoliciesResponse)((ICommandExecutor)this).Execute(command);
+        }
+
         ICommandResponse ICommandExecutor.Execute(ICommand command)
         {
             var request = command.Prepare();

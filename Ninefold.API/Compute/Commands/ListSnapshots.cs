@@ -40,7 +40,7 @@ namespace Ninefold.Compute.Commands
                 var responseDocument = XDocument.Load(responseStream);
                 response.Snapshots =
                     responseDocument.Root.Elements()
-                        .Where(e => e.Name.LocalName.Equals("serviceOffering", StringComparison.InvariantCultureIgnoreCase))
+                        .Where(e => e.Name.LocalName.Equals("snapshotplicy", StringComparison.InvariantCultureIgnoreCase))
                         .Select(Snapshot.From);
             }
 

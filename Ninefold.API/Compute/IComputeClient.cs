@@ -13,5 +13,6 @@ namespace Ninefold.Compute
         ListIsoPermissionsResponse ListIsoPermissions(ListIsoPermissionsRequest request);
         ListVolumesResponse ListVolumes(ListVolumesRequest request);
         ListSnapshotsResponse ListSnapshots(ListSnapshotsRequest listSnapshotsRequest);
+        ListSnapshotPoliciesResponse ListSnapshotPolicies(ListSnapshotPoliciesRequest request);
     }
 }

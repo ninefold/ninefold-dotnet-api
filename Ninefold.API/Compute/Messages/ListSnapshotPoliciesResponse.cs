@@ -5,6 +5,6 @@ namespace Ninefold.Compute.Messages
 {
     public class ListSnapshotPoliciesResponse : ICommandResponse
     {
-        public IEnumerable<Account> SnapshotPolicies { get; set; }
+        public IEnumerable<SnapshotPolicy> SnapshotPolicies { get; set; }
     }
 }

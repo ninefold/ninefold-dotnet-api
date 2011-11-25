@@ -179,5 +179,20 @@ namespace Ninefold.API.Tests.FunctionalTests
                 Assert.Fail("Ninefold Exception thrown: {0}", ex.ErrorMessage);
             }
         }
+
+        [TestMethod]
+        public void ListSnapshotPolicies()
+        {
+            try
+            {
+                var response = _compute.ListSnapshotPolicies(new ListSnapshotPoliciesRequest { VolumeId = "4912"});
+                Assert.IsNotNull(response);
+                Assert.AreNotEqual(0, response.SnapshotPolicies.Count());
+            }
+            catch (NinefoldApiException ex)
+            {
+                Assert.Fail("Ninefold Exception thrown: {0}", ex.ErrorMessage);
+            }
+        }
     }
 }

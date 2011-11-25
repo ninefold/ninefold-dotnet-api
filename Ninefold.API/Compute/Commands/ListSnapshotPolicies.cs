@@ -40,8 +40,8 @@ namespace Ninefold.Compute.Commands
                 var responseDocument = XDocument.Load(responseStream);
                 response.SnapshotPolicies =
                     responseDocument.Root.Elements()
-                        .Where(e => e.Name.LocalName.Equals("policy", StringComparison.InvariantCultureIgnoreCase))
-                        .Select(Account.From);
+                        .Where(e => e.Name.LocalName.Equals("snapshotpolicy", StringComparison.InvariantCultureIgnoreCase))
+                        .Select(SnapshotPolicy.From);
             }
 
             return response;
