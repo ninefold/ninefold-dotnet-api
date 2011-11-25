@@ -43,6 +43,9 @@
   <ItemGroup>
     <Compile Include="Compute\Commands\ListAccounts.cs" />
     <Compile Include="Compute\Commands\ListIsoPermissions.cs" />
+    <Compile Include="Compute\Commands\ListSnapshotPolicies.cs" />
+    <Compile Include="Compute\Messages\ListSnapshotPoliciesRequest.cs" />
+    <Compile Include="Compute\Messages\ListSnapshotPoliciesResponse.cs" />
     <Compile Include="Compute\Commands\ListSnapshots.cs" />
     <Compile Include="Compute\Messages\ListSnapshotsRequest.cs" />
     <Compile Include="Compute\Commands\ListVolumes.cs" />
