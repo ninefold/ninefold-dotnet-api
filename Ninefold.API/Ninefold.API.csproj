@@ -42,8 +42,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Compute\Commands\ListAccounts.cs" />
+    <Compile Include="Compute\Commands\ListAsyncJobs.cs" />
+    <Compile Include="Compute\Messages\Job.cs" />
+    <Compile Include="Compute\Messages\ListAsyncJobsRequest.cs" />
     <Compile Include="Compute\Commands\ListIsoPermissions.cs" />
     <Compile Include="Compute\Commands\ListSnapshotPolicies.cs" />
+    <Compile Include="Compute\Messages\ListAsyncJobsResponse.cs" />
     <Compile Include="Compute\Messages\SnapshotPolicy.cs" />
     <Compile Include="Compute\Messages\ListSnapshotPoliciesRequest.cs" />
     <Compile Include="Compute\Messages\ListSnapshotPoliciesResponse.cs" />

@@ -125,7 +125,7 @@ namespace Ninefold.API.Tests.FunctionalTests
         {
             try
             {
-                var response = _compute.ListIsos(new ListIsosRequest { Id = "494" });
+                var response = _compute.ListIsos(new ListIsosRequest { Id = "200" });
                 Assert.IsNotNull(response);
                 Assert.AreEqual(1, response.Isos.Count());
             }
@@ -140,7 +140,7 @@ namespace Ninefold.API.Tests.FunctionalTests
         {
             try
             {
-                var response = _compute.ListIsoPermissions(new ListIsoPermissionsRequest { Id = "494" });
+                var response = _compute.ListIsoPermissions(new ListIsoPermissionsRequest { Id = "200" });
                 Assert.IsNotNull(response);
                 Assert.AreNotEqual(0, response.Id);
             }
@@ -193,6 +193,21 @@ namespace Ninefold.API.Tests.FunctionalTests
             {
                 Assert.Fail("Ninefold Exception thrown: {0}", ex.ErrorMessage);
             }
+        }
+
+        [TestMethod]
+        public void ListAsyncJobs()
+        {
+            try
+            {
+                var response = _compute.ListAsyncJobs(new ListAsyncJobsRequest());
+                Assert.IsNotNull(response);
+                Assert.AreNotEqual(0, response.Jobs.Count());
+            }
+            catch (NinefoldApiException ex)
+            {
+                Assert.Fail("Ninefold Exception thrown: {0}", ex.ErrorMessage);
+            }  
         }
     }
 }

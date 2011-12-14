@@ -24,17 +24,17 @@ namespace Ninefold.Compute.Messages
         {
             var snapshot = new Snapshot
             {
-                Id = int.Parse(snapshotElement.ExtractValue("id")),
+                Id = snapshotElement.ExtractValue<int>("id"),
                 Account = snapshotElement.ExtractValue("account"),
-                Created = DateTime.Parse(snapshotElement.ExtractValue("created")),
+                Created = snapshotElement.ExtractValue<DateTime>("created"),
                 Domain = snapshotElement.ExtractValue("domain"),
-                DomainId = int.Parse(snapshotElement.ExtractValue("domainId")),
+                DomainId = snapshotElement.ExtractValue<int>("domainId"),
                 IntervalType = snapshotElement.ExtractValue("intervalType"),
-                JobId = int.Parse(snapshotElement.ExtractValue("jobId")),
+                JobId = snapshotElement.ExtractValue<int>("jobId"),
                 JobStatus = snapshotElement.ExtractValue("jobStatus"),
                 Name = snapshotElement.ExtractValue("name"),
                 SnapshotType = snapshotElement.ExtractValue("snapshotType"),
-                VolumeId = int.Parse(snapshotElement.ExtractValue("volumeId")),
+                VolumeId = snapshotElement.ExtractValue<int>("volumeId"),
                 VolumeName = snapshotElement.ExtractValue("volumeName"),
                 VolumeType = snapshotElement.ExtractValue("volumeType")
             };
