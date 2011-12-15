@@ -95,6 +95,12 @@ namespace Ninefold.Compute
             return (ListAsyncJobsResponse)((ICommandExecutor)this).Execute(command);
         }
 
+        public ListEventsResponse ListEvents(ListEventsRequest request)
+        {
+            var command = new ListEvents(_apiKey, _secret, _baseUri, _authenticator, _builder) { Parameters = request };
+            return (ListEventsResponse)((ICommandExecutor)this).Execute(command);
+        }
+
         ICommandResponse ICommandExecutor.Execute(ICommand command)
         {
             var request = command.Prepare();

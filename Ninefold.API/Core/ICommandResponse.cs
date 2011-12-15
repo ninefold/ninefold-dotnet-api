@@ -1,7 +1,4 @@
 ﻿namespace Ninefold.Core
 {
-    public interface ICommandResponse
-    {
-        
-    }
+    public interface ICommandResponse { }
 }

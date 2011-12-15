@@ -15,5 +15,6 @@ namespace Ninefold.Compute
         ListSnapshotsResponse ListSnapshots(ListSnapshotsRequest listSnapshotsRequest);
         ListSnapshotPoliciesResponse ListSnapshotPolicies(ListSnapshotPoliciesRequest request);
         ListAsyncJobsResponse ListAsyncJobs(ListAsyncJobsRequest request);
+        ListEventsResponse ListEvents(ListEventsRequest request);
     }
 }
