@@ -5,19 +5,19 @@ using System.Xml.Linq;
 using Ninefold.Compute.Messages;
 using Ninefold.Core;
 
-namespace Ninefold.Compute.Commands
+namespace Ninefold.Compute.Queries
 {
-    public class ListSnapshotPolicies : ICommand
+    public class ListVirtualMachines : ICommand
     {
-        readonly IComputeCommandAuthenticator _authenticator;
+         readonly IComputeCommandAuthenticator _authenticator;
         readonly IComputeRequestBuilder _builder;
         readonly string _apiKey;
         readonly string _secret;
         readonly string _baseUri;
 
-        public ListSnapshotPoliciesRequest Parameters { get; set; }
+        public ListVirtualMachinesRequest Parameters { get; set; }
 
-        public ListSnapshotPolicies(string apiKey, string secret, string baseUri, IComputeCommandAuthenticator authenticator, IComputeRequestBuilder builder)
+        public ListVirtualMachines(string apiKey, string secret, string baseUri, IComputeCommandAuthenticator authenticator, IComputeRequestBuilder builder)
         {
             _apiKey = apiKey;
             _secret = secret;
@@ -28,20 +28,20 @@ namespace Ninefold.Compute.Commands
 
         public HttpWebRequest Prepare()
         {
-            return (HttpWebRequest)_builder.GenerateRequest(Parameters, _authenticator, _baseUri, _apiKey, _secret);
+            return (HttpWebRequest) _builder.GenerateRequest(Parameters, _authenticator, _baseUri, _apiKey, _secret);
         }
 
         public ICommandResponse ParseResponse(WebResponse webResponse)
         {
-            var response = new ListSnapshotPoliciesResponse();
+            var response = new ListVirtualMachinesResponse();
             var responseStream = webResponse.GetResponseStream();
             if ((responseStream != null) && (responseStream.CanRead))
             {
                 var responseDocument = XDocument.Load(responseStream);
-                response.SnapshotPolicies =
+                response.Machines =
                     responseDocument.Root.Elements()
-                        .Where(e => e.Name.LocalName.Equals("snapshotpolicy", StringComparison.InvariantCultureIgnoreCase))
-                        .Select(SnapshotPolicy.From);
+                        .Where(e => e.Name.LocalName.Equals("virtualMachine", StringComparison.InvariantCultureIgnoreCase))
+                        .Select(Machine.From);
             }
 
             return response;

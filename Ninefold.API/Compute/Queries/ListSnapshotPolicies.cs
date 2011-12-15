@@ -5,9 +5,9 @@ using System.Xml.Linq;
 using Ninefold.Compute.Messages;
 using Ninefold.Core;
 
-namespace Ninefold.Compute.Commands
+namespace Ninefold.Compute.Queries
 {
-    public class ListServiceOfferings : ICommand
+    public class ListSnapshotPolicies : ICommand
     {
         readonly IComputeCommandAuthenticator _authenticator;
         readonly IComputeRequestBuilder _builder;
@@ -15,9 +15,9 @@ namespace Ninefold.Compute.Commands
         readonly string _secret;
         readonly string _baseUri;
 
-        public ListServiceOfferingsRequest Parameters { get; set; }
+        public ListSnapshotPoliciesRequest Parameters { get; set; }
 
-        public ListServiceOfferings(string apiKey, string secret, string baseUri, IComputeCommandAuthenticator authenticator, IComputeRequestBuilder builder)
+        public ListSnapshotPolicies(string apiKey, string secret, string baseUri, IComputeCommandAuthenticator authenticator, IComputeRequestBuilder builder)
         {
             _apiKey = apiKey;
             _secret = secret;
@@ -28,20 +28,20 @@ namespace Ninefold.Compute.Commands
 
         public HttpWebRequest Prepare()
         {
-            return (HttpWebRequest) _builder.GenerateRequest(Parameters, _authenticator, _baseUri, _apiKey, _secret);
+            return (HttpWebRequest)_builder.GenerateRequest(Parameters, _authenticator, _baseUri, _apiKey, _secret);
         }
 
         public ICommandResponse ParseResponse(WebResponse webResponse)
         {
-            var response = new ListServiceOfferingsResponse();
+            var response = new ListSnapshotPoliciesResponse();
             var responseStream = webResponse.GetResponseStream();
             if ((responseStream != null) && (responseStream.CanRead))
             {
                 var responseDocument = XDocument.Load(responseStream);
-                response.ServiceOfferings =
+                response.SnapshotPolicies =
                     responseDocument.Root.Elements()
-                        .Where(e => e.Name.LocalName.Equals("serviceOffering", StringComparison.InvariantCultureIgnoreCase))
-                        .Select(ServiceOffering.From);
+                        .Where(e => e.Name.LocalName.Equals("snapshotpolicy", StringComparison.InvariantCultureIgnoreCase))
+                        .Select(SnapshotPolicy.From);
             }
 
             return response;

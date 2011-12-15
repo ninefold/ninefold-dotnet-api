@@ -5,9 +5,9 @@ using System.Xml.Linq;
 using Ninefold.Compute.Messages;
 using Ninefold.Core;
 
-namespace Ninefold.Compute.Commands
+namespace Ninefold.Compute.Queries
 {
-    public class ListAsyncJobs : ICommand
+    public class ListVolumes : ICommand
     {
         readonly IComputeCommandAuthenticator _authenticator;
         readonly IComputeRequestBuilder _builder;
@@ -15,9 +15,9 @@ namespace Ninefold.Compute.Commands
         readonly string _secret;
         readonly string _baseUri;
 
-        public ListAsyncJobsRequest Parameters { get; set; }
+        public ListVolumesRequest Parameters { get; set; }
 
-        public ListAsyncJobs(string apiKey, string secret, string baseUri, IComputeCommandAuthenticator authenticator, IComputeRequestBuilder builder)
+        public ListVolumes(string apiKey, string secret, string baseUri, IComputeCommandAuthenticator authenticator, IComputeRequestBuilder builder)
         {
             _apiKey = apiKey;
             _secret = secret;
@@ -28,20 +28,20 @@ namespace Ninefold.Compute.Commands
 
         public HttpWebRequest Prepare()
         {
-            return (HttpWebRequest)_builder.GenerateRequest(Parameters, _authenticator, _baseUri, _apiKey, _secret);
+            return (HttpWebRequest) _builder.GenerateRequest(Parameters, _authenticator, _baseUri, _apiKey, _secret);
         }
 
         public ICommandResponse ParseResponse(WebResponse webResponse)
         {
-            var response = new ListAsyncJobsResponse();
+            var response = new ListVolumesResponse();
             var responseStream = webResponse.GetResponseStream();
             if ((responseStream != null) && (responseStream.CanRead))
             {
                 var responseDocument = XDocument.Load(responseStream);
-                response.Jobs =
+                response.Volumes =
                     responseDocument.Root.Elements()
-                        .Where(e => e.Name.LocalName.Equals("asyncjobs", StringComparison.InvariantCultureIgnoreCase))
-                        .Select(Job.From);
+                        .Where(e => e.Name.LocalName.Equals("volume", StringComparison.InvariantCultureIgnoreCase))
+                        .Select(Machine.From);
             }
 
             return response;

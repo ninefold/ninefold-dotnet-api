@@ -1,13 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using System.Text;
 using System.Xml.Linq;
 using Ninefold.Compute.Messages;
 using Ninefold.Core;
 
-namespace Ninefold.Compute.Commands
+namespace Ninefold.Compute.Queries
 {
     public class ListIsoPermissions : ICommand
     {

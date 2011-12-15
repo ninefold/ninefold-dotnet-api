@@ -2,8 +2,8 @@
 using System.Linq;
 using System.Net;
 using System.Xml.Linq;
-using Ninefold.Compute.Commands;
 using Ninefold.Compute.Messages;
+using Ninefold.Compute.Queries;
 using Ninefold.Core;
 
 namespace Ninefold.Compute

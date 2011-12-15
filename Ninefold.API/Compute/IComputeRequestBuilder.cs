@@ -1,5 +1,4 @@
 ﻿using System.Net;
-using Ninefold.Compute.Commands;
 
 namespace Ninefold.Compute
 {

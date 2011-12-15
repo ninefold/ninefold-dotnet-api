@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Linq;
 using System.Net;
-using System.Text;
 using System.Xml.Linq;
 using Ninefold.Compute.Messages;
 using Ninefold.Core;
 
-namespace Ninefold.Compute.Commands
+namespace Ninefold.Compute.Queries
 {
-    public class ListVolumes : ICommand
+    public class ListAccounts : ICommand
     {
         readonly IComputeCommandAuthenticator _authenticator;
         readonly IComputeRequestBuilder _builder;
@@ -16,9 +15,9 @@ namespace Ninefold.Compute.Commands
         readonly string _secret;
         readonly string _baseUri;
 
-        public ListVolumesRequest Parameters { get; set; }
+        public ListAccountsRequest Parameters { get; set; }
 
-        public ListVolumes(string apiKey, string secret, string baseUri, IComputeCommandAuthenticator authenticator, IComputeRequestBuilder builder)
+        public ListAccounts(string apiKey, string secret, string baseUri, IComputeCommandAuthenticator authenticator, IComputeRequestBuilder builder)
         {
             _apiKey = apiKey;
             _secret = secret;
@@ -34,15 +33,15 @@ namespace Ninefold.Compute.Commands
 
         public ICommandResponse ParseResponse(WebResponse webResponse)
         {
-            var response = new ListVolumesResponse();
+            var response = new ListAccountsResponse();
             var responseStream = webResponse.GetResponseStream();
             if ((responseStream != null) && (responseStream.CanRead))
             {
                 var responseDocument = XDocument.Load(responseStream);
-                response.Volumes =
+                response.Accounts =
                     responseDocument.Root.Elements()
-                        .Where(e => e.Name.LocalName.Equals("volume", StringComparison.InvariantCultureIgnoreCase))
-                        .Select(Machine.From);
+                        .Where(e => e.Name.LocalName.Equals("account", StringComparison.InvariantCultureIgnoreCase))
+                        .Select(Account.From);
             }
 
             return response;
