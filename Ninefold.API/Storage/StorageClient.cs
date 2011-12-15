@@ -5,6 +5,7 @@ using System.Xml.Linq;
 using Ninefold.Core;
 using Ninefold.Storage.Commands;
 using Ninefold.Storage.Messages;
+using Ninefold.Storage.Queries;
 
 namespace Ninefold.Storage
 {

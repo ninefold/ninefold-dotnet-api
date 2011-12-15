@@ -4,18 +4,18 @@ using System.Xml.Linq;
 using Ninefold.Core;
 using Ninefold.Storage.Messages;
 
-namespace Ninefold.Storage.Commands
+namespace Ninefold.Storage.Queries
 {
-    public class ListObjects : ICommand
+    public class ListNamespace : ICommand
     {
         readonly IStorageCommandBuilder _commandBuilder;
         readonly IStorageCommandAuthenticator _authenticator;
         readonly string _secret;
         readonly string _userId;
         
-        public ListObjectsRequest Parameters { get; set; }
+        public ListNamespaceRequest Parameters { get; set; }
 
-        public ListObjects(string userId,
+        public ListNamespace(string userId,
                                         string base64Secret, 
                                         IStorageCommandBuilder commandBuilder, 
                                         IStorageCommandAuthenticator authenticator)
@@ -34,19 +34,21 @@ namespace Ninefold.Storage.Commands
             return request;
         }
 
-        public ICommandResponse ParseResponse(WebResponse webResponse)
+        public ICommandResponse ParseResponse(WebResponse response)
         {
-            var listResponse = new ListObjectsResponse
+            var listResponse = new ListNamespaceResponse
             {
-                Policy = webResponse.Headers["x-emc-policy"],
-                Token = webResponse.Headers["x-emc-token"] ?? string.Empty
+                GroupAcl = response.Headers["x-emc-groupacl"],
+                UserAcl = response.Headers["x-emc-useracl"],
+                Policy = response.Headers["x-emc-policy"],
+                Meta = response.Headers["x-emc-meta"],
             };
 
-            var responseStream = webResponse.GetResponseStream();
+            var responseStream = response.GetResponseStream();
             if ((responseStream != null) && (responseStream.CanRead))
             {
                 var reader = new StreamReader(responseStream);
-                listResponse.Content =  XDocument.Load(reader);
+                listResponse.Content = XDocument.Load(reader);
             }
 
             return listResponse;

@@ -3,7 +3,7 @@ using System.Net;
 using Ninefold.Core;
 using Ninefold.Storage.Messages;
 
-namespace Ninefold.Storage.Commands
+namespace Ninefold.Storage.Queries
 {
     public class GetObject : ICommand
     {

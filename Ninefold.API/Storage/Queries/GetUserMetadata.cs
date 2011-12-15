@@ -3,16 +3,16 @@ using System.Net;
 using Ninefold.Core;
 using Ninefold.Storage.Messages;
 
-namespace Ninefold.Storage.Commands
+namespace Ninefold.Storage.Queries
 {
-    public class GetListableTags : ICommand
+    public class GetUserMetadata : ICommand
     {
         readonly IStorageCommandBuilder _commandBuilder;
         readonly IStorageCommandAuthenticator _authenticator;
         readonly string _secret;
         readonly string _userId;
 
-        public GetListableTags(string userId, string secret, IStorageCommandBuilder commandBuilder, IStorageCommandAuthenticator authenticator)
+        public GetUserMetadata(string userId, string secret, IStorageCommandBuilder commandBuilder, IStorageCommandAuthenticator authenticator)
         {
             _commandBuilder = commandBuilder;
             _userId = userId;
@@ -20,13 +20,13 @@ namespace Ninefold.Storage.Commands
             _authenticator = authenticator;
         }
 
-        public GetListableTagsRequest Parameters { get; set; }
+        public GetUserMetadataRequest Parameters { get; set; }
 
         public HttpWebRequest Prepare()
         {
-            if (!Parameters.Resource.PathAndQuery.Contains("listabletags"))
+            if (!Parameters.Resource.PathAndQuery.Contains("metadata/tags"))
             {
-                Parameters.Resource = new Uri(Parameters.Resource, "?listabletags");
+                Parameters.Resource = new Uri(Parameters.Resource, "?metadata/tags");
             }
 
             var request = _commandBuilder.GenerateRequest(Parameters, _userId, WebRequestMethods.Http.Get);
@@ -37,12 +37,12 @@ namespace Ninefold.Storage.Commands
 
         public ICommandResponse ParseResponse(WebResponse webResponse)
         {
-            return new GetListableTagsResponse
-                       {
-                           Policy = webResponse.Headers["x-emc-policy"],
-                           Tags = webResponse.Headers["x-emc-listable-tags"],
-                           Token = webResponse.Headers["x-emc-token"] ?? string.Empty
-                       };
+            return new GetUserMetadataResponse
+            {
+                Policy = webResponse.Headers["x-emc-policy"],
+                Tags = webResponse.Headers["x-emc-tags"],
+                ListableTags = webResponse.Headers["x-emc-listable-tags"],
+            };
         }
     }
 }

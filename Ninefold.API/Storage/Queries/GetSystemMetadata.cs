@@ -3,16 +3,18 @@ using System.Net;
 using Ninefold.Core;
 using Ninefold.Storage.Messages;
 
-namespace Ninefold.Storage.Commands
+namespace Ninefold.Storage.Queries
 {
-    public class GetUserMetadata : ICommand
+    public class GetSystemMetadata : ICommand
     {
         readonly IStorageCommandBuilder _commandBuilder;
         readonly IStorageCommandAuthenticator _authenticator;
         readonly string _secret;
         readonly string _userId;
 
-        public GetUserMetadata(string userId, string secret, IStorageCommandBuilder commandBuilder, IStorageCommandAuthenticator authenticator)
+        public GetSystemMetadataRequest Parameters { get; set; }
+
+        public GetSystemMetadata(string userId, string secret, IStorageCommandBuilder commandBuilder, IStorageCommandAuthenticator authenticator)
         {
             _commandBuilder = commandBuilder;
             _userId = userId;
@@ -20,13 +22,11 @@ namespace Ninefold.Storage.Commands
             _authenticator = authenticator;
         }
 
-        public GetUserMetadataRequest Parameters { get; set; }
-
         public HttpWebRequest Prepare()
         {
-            if (!Parameters.Resource.PathAndQuery.Contains("metadata/tags"))
+            if (!Parameters.Resource.PathAndQuery.Contains("metadata/system"))
             {
-                Parameters.Resource = new Uri(Parameters.Resource, "?metadata/tags");
+                Parameters.Resource = new Uri(Parameters.Resource, "?metadata/system");
             }
 
             var request = _commandBuilder.GenerateRequest(Parameters, _userId, WebRequestMethods.Http.Get);
@@ -37,12 +37,11 @@ namespace Ninefold.Storage.Commands
 
         public ICommandResponse ParseResponse(WebResponse webResponse)
         {
-            return new GetUserMetadataResponse
-            {
-                Policy = webResponse.Headers["x-emc-policy"],
-                Tags = webResponse.Headers["x-emc-tags"],
-                ListableTags = webResponse.Headers["x-emc-listable-tags"],
-            };
+            return new GetSystemMetadataResponse
+                       {
+                            Metadata = webResponse.Headers["x-emc-meta"],
+                            Policy = webResponse.Headers["x-emc-policy"]
+                       };
         }
     }
 }
