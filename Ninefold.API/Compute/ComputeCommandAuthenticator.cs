@@ -9,7 +9,7 @@ namespace Ninefold.Compute
         public string AuthenticateRequest(string queryString, string base64Secret)
         {
             var queryBytes = Encoding.UTF8.GetBytes(queryString.ToLower());
-            var secret = Convert.FromBase64String(base64Secret);
+            var secret = Encoding.UTF8.GetBytes(base64Secret);
             var hashingAlg = new System.Security.Cryptography.HMACSHA1(secret);
             var hashedQuery = hashingAlg.ComputeHash(queryBytes);
             var base64Hash = Convert.ToBase64String(hashedQuery);
